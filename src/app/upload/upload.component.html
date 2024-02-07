@@ -1,0 +1,32 @@
+<table border="1">
+  <thead>
+    <th>user</th>
+    <th>description</th>
+    <th>category</th>
+    <th>sub category</th>
+    <th>imageUrl</th>
+    <th>likes</th>
+    <th>createdAt</th>
+    <th>comments</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let po of post">
+      <td>{{ po.user }}</td>
+      <td>{{ po.description }}</td>
+      <td>{{ po.category }}</td>
+      <td>{{ po.sub_category }}</td>
+      <td>{{ po.imageUrl }}</td>
+      <td>{{ po.likes.length }}</td>
+      <td>{{ po.createdAt }}</td>
+      <td>{{ po.comments }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>{{ category }} - {{ sub_category }}</h1>
+
+<div style="margin-top: 5rem">
+  <input type="text" [(ngModel)]="file" name="hi" placeholder="i" />
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="uploadImage()">Upload Image</button>
+</div>

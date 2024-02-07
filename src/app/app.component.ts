@@ -1,50 +1,42 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { ImageServiceService } from './service/image-service.service';
 import { FormsModule } from '@angular/forms';
+import { UploadComponent } from './upload/upload.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule],
+  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'testing';
-  src!: string;
-  selectedFile: File | null = null;
-  file: string = "";
-  user: any;
 
-  constructor(private imageService: ImageServiceService) { }
+  category!: string;
+  sub_category: string | null = null;
 
-  ngOnInit(): void {
-    this.imageService.getUsers().subscribe((users) => {
-      this.user = users;
-    })
-  }
+  show_sub_category_tren: boolean = false;
+  show_sub_category_new: boolean = false;
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
+  setCategory(category: string) {
+    this.sub_category = null;
+    if (category === 'trending') {
+      this.show_sub_category_new = this.show_sub_category_new ? false : false;
 
-  uploadImage() {
-    if (this.selectedFile) {
-      this.imageService.uploadImage(this.selectedFile, this.file, this.user.username).subscribe(
-        (response: any) => {
-          this.src = response.path;
-
-          console.log('Image uploaded successfully', response);
-
-          // Handle the server response as needed
-        },
-        error => {
-          console.error('Error uploading image', error);
-          // Handle the error
-        }
-      );
+      this.show_sub_category_tren = this.show_sub_category_tren ? false : true;
     }
+    else if (category === 'New') {
+
+      this.show_sub_category_tren = this.show_sub_category_tren ? false : false;
+      this.show_sub_category_new = this.show_sub_category_new ? false : true;
+    }
+    else {
+      this.show_sub_category_tren = false;
+      this.show_sub_category_new = false;
+    }
+    this.category = category;
   }
+
 }
