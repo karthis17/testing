@@ -8,6 +8,7 @@
     <th>likes</th>
     <th>createdAt</th>
     <th>comments</th>
+    <th>likes</th>
   </thead>
   <tbody>
     <tr *ngFor="let po of post">
@@ -15,10 +16,14 @@
       <td>{{ po.description }}</td>
       <td>{{ po.category }}</td>
       <td>{{ po.sub_category }}</td>
-      <td>{{ po.imageUrl }}</td>
+      <td>
+        <a href="{{ po.imageUrl }}" target="_blank">{{ po.imageUrl }}</a>
+      </td>
       <td>{{ po.likes.length }}</td>
       <td>{{ po.createdAt }}</td>
       <td>{{ po.comments }}</td>
+      <td><button (click)="like(po._id)">Like</button></td>
+      <td><button (click)="follow(po.user)">Follow</button></td>
     </tr>
   </tbody>
 </table>

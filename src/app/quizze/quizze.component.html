@@ -1,0 +1,97 @@
+<h1>quizze</h1>
+<div>
+  <label for="">question</label>
+  <input type="file" (change)="selected_file($event)" />
+</div>
+
+<div>
+  <label for="">statement 1</label>
+  <label for="">select how many option.</label>
+  <select
+    name="option"
+    id=""
+    [(ngModel)]="selected_option"
+    title="choess the option"
+  >
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <div *ngIf="selected_option == 2">
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+  </div>
+  <div *ngIf="selected_option == 3">
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+  </div>
+  <div *ngIf="selected_option == 4">
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+    <input type="file" (change)="selected_file($event, 1)" />
+  </div>
+</div>
+
+<div>
+  <label for="">statement 1</label>
+  <label for="">select how many option.</label>
+  <select
+    name="option"
+    id=""
+    [(ngModel)]="selected_option"
+    title="choess the option"
+  >
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <div *ngIf="selected_option == 2">
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+  </div>
+  <div *ngIf="selected_option == 3">
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+  </div>
+  <div *ngIf="selected_option == 4">
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+    <input type="file" (change)="selected_file($event, 2)" />
+  </div>
+</div>
+
+<div>
+  <label for="">statement 1</label>
+  <label for="">select how many option.</label>
+  <select
+    name="option"
+    id=""
+    [(ngModel)]="selected_option"
+    title="choess the option"
+  >
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+  </select>
+  <div *ngIf="selected_option == 2">
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+  </div>
+  <div *ngIf="selected_option == 3">
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+  </div>
+  <div *ngIf="selected_option == 4">
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+    <input type="file" (change)="selected_file($event, 3)" />
+  </div>
+</div>
+
+<button (click)="submit()">submit</button>

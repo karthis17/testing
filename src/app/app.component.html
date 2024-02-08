@@ -1,4 +1,4 @@
-<div style="display: flex; gap: 10rem; margin-top: 5rem">
+<!-- <div style="display: flex; gap: 10rem; margin-top: 5rem">
   <ul>
     <li>
       <button (click)="setCategory('trending')">trending</button>
@@ -47,4 +47,14 @@
   </ul>
 
   <app-upload [category]="category" [sub_category]="sub_category"></app-upload>
+  <button style="height: 60px" [routerLink]="['/login']">
+    Signin / signup
+  </button>
+  <button style="height: 60px" (click)="show()">Signin / signup</button>
 </div>
+
+<main style="position: absolute; top: 0; background-color: #fff">
+  <router-outlet></router-outlet>
+</main> -->
+
+<app-quizze></app-quizze>

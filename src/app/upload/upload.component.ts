@@ -48,21 +48,34 @@ export class UploadComponent {
   }
 
   uploadImage() {
-    if (this.selectedFile) {
-      this.imageService.uploadImage(this.selectedFile, this.file, this.category, this.sub_category).subscribe(
-        (response: any) => {
-          this.src = response.imageUrl;
 
-          console.log('Image uploaded successfully', response);
-          this.getPostt()
+    this.imageService.uploadImage(this.selectedFile, this.file, this.category, this.sub_category).subscribe(
+      (response: any) => {
+        this.src = response.imageUrl;
 
-          // Handle the server response as needed
-        },
-        error => {
-          console.error('Error uploading image', error);
-          // Handle the error
-        }
-      );
-    }
+        console.log('Image uploaded successfully', response);
+        this.getPostt()
+
+        // Handle the server response as needed
+      },
+      error => {
+        console.error('Error uploading image', error);
+        // Handle the error
+      }
+    );
+
   }
+
+  like(id: any) {
+    this.imageService.like(id).subscribe(res => {
+      console.log(res);
+    })
+  }
+
+  follow(id: any) {
+    this.imageService.follow(id).subscribe(res => {
+      console.log(res);
+    });
+  }
+
 }

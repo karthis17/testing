@@ -1,19 +1,24 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UploadComponent } from './upload/upload.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './service/auth.service';
+import { QuizzeComponent } from './quizze/quizze.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'testing';
 
+
+  constructor(private auth: AuthService) { }
   category!: string;
   sub_category: string | null = null;
 
@@ -37,6 +42,12 @@ export class AppComponent {
       this.show_sub_category_new = false;
     }
     this.category = category;
+  }
+
+  show() {
+    this.auth.getUser().subscribe(user => {
+      console.log(user);
+    })
   }
 
 }
