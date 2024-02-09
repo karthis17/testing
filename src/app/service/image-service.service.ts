@@ -53,7 +53,7 @@ export class ImageServiceService {
     formData.append('question', file);
 
     state1.forEach((stateFile, index) => {
-      formData.append(`state_1`, stateFile);
+      formData.append(`images`, stateFile);
     });
 
     state2.forEach((stateFile, index) => {
@@ -67,7 +67,7 @@ export class ImageServiceService {
       console.log(stateFile);
     });
 
-    return this.http.post('http://localhost:3000/img/upload-question', formData);
+    return this.http.post('http://localhost:3000/img/upload', formData);
   }
 
 }

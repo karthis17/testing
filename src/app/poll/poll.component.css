@@ -1,0 +1,15 @@
+div {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  gap: 10px;
+}
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+div.d-flex {
+  display: flex;
+  justify-content: space-between;
+}

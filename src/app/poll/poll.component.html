@@ -1,0 +1,106 @@
+<h1>Add Poll</h1>
+
+<div>
+  <h3>choose question type</h3>
+  <label for="">
+    <input
+      type="radio"
+      name="option"
+      (click)="questionType = 'text'"
+      value="text"
+      title="Text"
+    />
+    Text</label
+  >
+  <label for="">
+    <input
+      type="radio"
+      name="option"
+      value="image"
+      (click)="questionType = 'image'"
+      title="Image"
+    />
+    Image</label
+  >
+  <input
+    *ngIf="questionType === 'text'"
+    type="text"
+    placeholder="Enter question"
+    [(ngModel)]="question"
+  />
+  <input
+    *ngIf="questionType === 'image'"
+    type="file"
+    (change)="addQnFile($event)"
+    title="Choose question."
+  />
+  <h3>choose options type</h3>
+  <label for="">
+    <input
+      type="radio"
+      name="option"
+      (click)="checkSelectedOption('text')"
+      value="text"
+      title="Text"
+    />
+    Text</label
+  >
+  <label for="">
+    <input
+      type="radio"
+      name="option"
+      value="image"
+      (click)="checkSelectedOption('image')"
+      title="Image"
+    />
+    Image</label
+  >
+  <ng-container *ngIf="selectedOption === 'text'">
+    <div *ngFor="let option of textOptions; let i = index; trackBy: trackByFn">
+      <input
+        type="text"
+        placeholder="Enter option"
+        [(ngModel)]="textOptions[i]"
+        [id]="'option' + i"
+      />
+    </div>
+    <button (click)="addTextOption()">Add option</button>
+    <button (click)="submit()">submit</button>
+  </ng-container>
+  <ng-container *ngIf="selectedOption === 'image'">
+    <div *ngFor="let option of imgOptions; let i = index; trackBy: trackByFn">
+      <input type="file" title="choess image" (change)="addFile($event, i)" />
+    </div>
+    <button (click)="imgOptions.push('')">Add option</button>
+    <button (click)="submitImg()">submit</button>
+  </ng-container>
+</div>
+
+<table border="1">
+  <tr>
+    <th>poll id</th>
+    <th>question</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let poll of polls">
+    <td>{{ poll._id }}</td>
+    <td>{{ poll.question }}</td>
+    <td><button (click)="show(poll)">show poll</button></td>
+  </tr>
+</table>
+
+<div class="d-flex">
+  <div *ngIf="data">
+    <h2>{{ data.question }}</h2>
+    <p *ngFor="let option of data.option">
+      {{ option }} <button *ngIf="showVote" (click)="vote(option)">vote</button>
+    </p>
+  </div>
+  <div *ngIf="resData">
+    <h1>Result</h1>
+    <ng-container *ngFor="let res of resData.votes">
+      <h3>{{ res.option }}</h3>
+      <p>{{ res.percentage }}</p>
+    </ng-container>
+  </div>
+</div>
