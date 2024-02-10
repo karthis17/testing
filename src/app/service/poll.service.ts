@@ -45,6 +45,12 @@ export class PollService {
   getPollById(id: any) {
     return this.http.get("http://localhost:3000/api/poll/get-poll/" + id);
   }
+
+  like(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post("http://localhost:3000/api/poll/likes", { pollId: id }, _options)
+  }
 }
 
 

@@ -86,4 +86,10 @@ export class PollComponent {
     });
   }
 
+  lik(poll_id: any) {
+    this.poll.like(poll_id).subscribe(data => {
+      console.log(data);
+    });
+  }
+
 }

@@ -52,16 +52,16 @@ export class ImageServiceService {
 
     formData.append('question', file);
 
-    state1.forEach((stateFile, index) => {
-      formData.append(`images`, stateFile);
+    state1.forEach((stateFile) => {
+      formData.append('state1', stateFile);
     });
 
     state2.forEach((stateFile, index) => {
-      formData.append(`state_2`, stateFile);
+      formData.append(`state2`, stateFile);
     });
 
     state3.forEach((stateFile, index) => {
-      formData.append(`state_3`, stateFile);
+      formData.append(`state3`, stateFile);
     });
     formData.forEach((stateFile) => {
       console.log(stateFile);

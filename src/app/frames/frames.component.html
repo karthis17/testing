@@ -1,0 +1,31 @@
+<input type="text" [(ngModel)]="frameName" />
+<input type="file" name="frame" id="f" (change)="addFile($event)" />
+<button (click)="submit()">submit</button>
+
+<table [border]="1">
+  <tr>
+    <th>frame id</th>
+    <th>frame name</th>
+    <th>frame url</th>
+    <th>Uploads</th>
+    <th>likes</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let frame of data">
+    <td>{{ frame._id }}</td>
+    <td>{{ frame.frameName }}</td>
+    <td>{{ frame.frameUrl }}</td>
+    <td>
+      <p *ngFor="let upload of frame.uploads">
+        {{ upload.image }} <span>{{ upload.user }}</span>
+      </p>
+    </td>
+    <td>
+      <p *ngFor="let like of frame.like">{{ like }}</p>
+    </td>
+    <td>
+      <input type="file" name="image" id="i" (change)="addImageFile($event)" />
+      <button (click)="uloadImage(frame._id)">submit</button>
+    </td>
+  </tr>
+</table>
