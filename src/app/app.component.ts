@@ -8,11 +8,12 @@ import { AuthService } from './service/auth.service';
 import { QuizzeComponent } from './quizze/quizze.component';
 import { PollComponent } from './poll/poll.component';
 import { FramesComponent } from './frames/frames.component';
+import { FlamesComponent } from './flames/flames.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

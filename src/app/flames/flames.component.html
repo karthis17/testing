@@ -1,0 +1,21 @@
+<h2>upload frame for flames</h2>
+
+<label for="fl">
+  Select flames word
+  <select id="fl" title="select flame word" [(ngModel)]="selectedFlames">
+    <option *ngFor="let word of flames" [value]="word">{{ word }}</option>
+  </select>
+</label>
+<input type="file" name="flame" id="f" (change)="addFile($event)" />
+<button (click)="submit()">submit</button>
+
+<h2>flames</h2>
+<label for="name1">
+  Enter name 1 <input type="text" id="name1" [(ngModel)]="name1"
+/></label>
+<label for="name2">
+  Enter name 2 <input type="text" id="name2" [(ngModel)]="name2"
+/></label>
+<button (click)="submitFlames()">ss</button>
+
+<h1 *ngIf="result">{{ result }}</h1>
