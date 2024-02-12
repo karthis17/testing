@@ -46,28 +46,60 @@ export class ImageServiceService {
     return this.http.post('http://localhost:3000/api/img/follow', { following_id }, _options)
   }
 
-  up(file: any, state1: any[], state2: any[], state3: any[]) {
+  upload(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
     console.log(file, state1, state2, state3);
     const formData = new FormData();
 
     formData.append('question', file);
 
     state1.forEach((stateFile) => {
-      formData.append('state1', stateFile);
+      formData.append('state1', stateFile.option);
     });
 
-    state2.forEach((stateFile, index) => {
-      formData.append(`state2`, stateFile);
+    state2.forEach((stateFile) => {
+      formData.append(`state2`, stateFile.option);
     });
 
-    state3.forEach((stateFile, index) => {
-      formData.append(`state3`, stateFile);
+    state3.forEach((stateFile) => {
+      formData.append(`state3`, stateFile.option);
     });
-    formData.forEach((stateFile) => {
-      console.log(stateFile);
+    result.forEach((resFile) => {
+      formData.append(`answer`, resFile.resultImg);
     });
 
-    return this.http.post('http://localhost:3000/img/upload', formData);
+
+    this.http.post('http://localhost:3000/img/upload', formData).subscribe((data: any) => {
+      console.log(data);
+      data.state1.forEach((state: any, index: number) => {
+        state1[index]['option'] = state;
+      });
+      data.state2.forEach((state: any, index: number) => {
+        state2[index]['option'] = state;
+      });
+      data.state3.forEach((state: any, index: number) => {
+        state3[index]['option'] = state;
+      });
+
+      data.answer.forEach((state: any, index: number) => {
+        result[index]['resultImg'] = state;
+      });
+
+
+      this.http.post("http://localhost:3000/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }).subscribe(data1 => {
+        console.log(data1);
+      })
+
+    });
+  }
+
+  getQuizzes() {
+    return this.http.get('http://localhost:3000/api/quizzes/get-all-quizzes');
+  }
+
+  result(quizze_id: any, score: number) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/quizzes/get-result', { score, quizze_id }, _options)
   }
 
 }

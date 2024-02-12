@@ -10,94 +10,105 @@
   /></label>
 </div>
 
+<label for="">select how many option.</label>
+<select
+  name="option"
+  id=""
+  title="choess the option"
+  [(ngModel)]="selected_option"
+  (change)="setHowManyOptions()"
+>
+  <option [value]="2">2</option>
+  <option [value]="3">3</option>
+  <option [value]="4">4</option>
+</select>
 <div>
   <label for="">statement 1</label>
-  <label for="">select how many option.</label>
-  <select
-    name="option"
-    id=""
-    [(ngModel)]="selected_option"
-    title="choess the option"
-  >
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
-  <div *ngIf="selected_option == 2">
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
+  <div *ngFor="let q of quizze.state1; let i = index">
+    <input type="file" (change)="selected_file($event, 1, i)" />
+    <input type="text" [(ngModel)]="q.point" />
   </div>
-  <div *ngIf="selected_option == 3">
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
+</div>
+<div>
+  <label for="">statement 2</label>
+  <div *ngFor="let q of quizze.state2; let i = index">
+    <input type="file" (change)="selected_file($event, 2, i)" />
+    <input type="text" [(ngModel)]="q.point" />
   </div>
-  <div *ngIf="selected_option == 4">
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
-    <input type="file" (change)="selected_file($event, 1)" />
+</div>
+<div>
+  <label for="">statement 3</label>
+  <div *ngFor="let q of quizze.state3; let i = index">
+    <input type="file" (change)="selected_file($event, 3, i)" />
+    <input type="text" [(ngModel)]="q.point" />
   </div>
 </div>
 
-<div>
-  <label for="">statement 1</label>
-  <label for="">select how many option.</label>
-  <select
-    name="option"
-    id=""
-    [(ngModel)]="selected_option"
-    title="choess the option"
-  >
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
-  <div *ngIf="selected_option == 2">
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-  </div>
-  <div *ngIf="selected_option == 3">
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-  </div>
-  <div *ngIf="selected_option == 4">
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-    <input type="file" (change)="selected_file($event, 2)" />
-  </div>
-</div>
-
-<div>
-  <label for="">statement 1</label>
-  <label for="">select how many option.</label>
-  <select
-    name="option"
-    id=""
-    [(ngModel)]="selected_option"
-    title="choess the option"
-  >
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-  </select>
-  <div *ngIf="selected_option == 2">
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-  </div>
-  <div *ngIf="selected_option == 3">
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-  </div>
-  <div *ngIf="selected_option == 4">
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-    <input type="file" (change)="selected_file($event, 3)" />
-  </div>
+<h2>add result</h2>
+<div *ngFor="let res of quizze.result; let i = index">
+  <input type="file" (change)="addFileRes($event, i)" />
+  <label for="">
+    Enter min score:
+    <input
+      type="number"
+      [(ngModel)]="quizze.result[i].minScore"
+      min="1"
+      max="{{ quizze.result[i].maxScore - 1 }}"
+  /></label>
+  <label for="">
+    Enter max score:
+    <input
+      type="number"
+      [(ngModel)]="quizze.result[i].maxScore"
+      min="{{ quizze.result[i].minScore + 1 }}"
+  /></label>
 </div>
 
 <button (click)="submit()">submit</button>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>play</th>
+  </tr>
+  <tr *ngFor="let q of quizzes">
+    <td>{{ q._id }}</td>
+    <td (click)="showQuizzes(q._id)"><button>Play</button></td>
+  </tr>
+</table>
+
+<div *ngIf="data">
+  <h2>Quizze</h2>
+  <img src="{{ data.questionImage }}" alt="" />
+  <h5>answer follow</h5>
+  <img
+    *ngFor="let src of data.statement_1"
+    src="{{ src.option }}"
+    alt=""
+    width="300"
+    height="300"
+    (click)="score = score + +src.point"
+  />
+  <h5>answer follow</h5>
+  <img
+    *ngFor="let src of data.statement_2"
+    src="{{ src.option }}"
+    alt=""
+    width="300"
+    (click)="score = score + +src.point"
+    height="300"
+  />
+  <h5>answer follow</h5>
+  <img
+    *ngFor="let src of data.statement_3"
+    src="{{ src.option }}"
+    alt=""
+    (click)="score = score + +src.point"
+    width="300"
+    height="300"
+  />
+
+  <h1>Score: {{ score }}</h1>
+
+  <button (click)="showRes()">get result</button>
+</div>
