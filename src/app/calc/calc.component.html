@@ -1,0 +1,52 @@
+<h2>upload text and result image</h2>
+
+<label for="fl">
+  Select love or friend
+  <select id="fl" title="select flame word" [(ngModel)]="selectedType">
+    <option value="love">love</option>
+    <option value="friend">friend</option>
+  </select> </label
+><br />
+<p>Upload resultImage : <input type="file" (change)="addFile($event)" /></p>
+Enter min percentage: <input type="number" [(ngModel)]="min" /><br />
+Enter max percentage: <input type="number" [(ngModel)]="max" /> <br />
+<ng-container *ngFor="let text of textList; let i = index; trackBy: trackByFn">
+  <label for="">
+    Enter Quotes
+    <input type="text" [(ngModel)]="textList[i]" /><br />
+  </label>
+</ng-container>
+
+<button (click)="textList.push(' ')">Add text</button>
+
+<button (click)="selectedType === 'love' ? submit() : submitFr()">
+  submit
+</button>
+
+<h2>Love Calculator</h2>
+<label for="name1">
+  Enter name 1 <input type="text" id="name1" [(ngModel)]="name1"
+/></label>
+<label for="name2">
+  Enter name 2 <input type="text" id="name2" [(ngModel)]="name2"
+/></label>
+<button *ngIf="selectedType == 'love'" (click)="calculateLove()">submit</button>
+<button *ngIf="selectedType == 'friend'" (click)="calculateFriendship()">
+  submit
+</button>
+
+<ng-container *ngIf="result && selectedType === 'love'">
+  <h1>{{ result.lovePercentage }}%</h1>
+  <img src="{{ result.resultImage }}" />
+  <p>{{ result.name1 }}</p>
+  <p>loves</p>
+  <p>{{ result.name2 }}</p>
+</ng-container>
+
+<ng-container *ngIf="result && selectedType === 'friend'">
+  <h1>{{ result.friendshipPercentage }}%</h1>
+  <img src="{{ result.resultImage }}" />
+  <p>{{ result.name1 }}</p>
+  <p>friends</p>
+  <p>{{ result.name2 }}</p>
+</ng-container>

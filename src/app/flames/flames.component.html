@@ -18,4 +18,10 @@
 /></label>
 <button (click)="submitFlames()">ss</button>
 
-<h1 *ngIf="result">{{ result }}</h1>
+<ng-container *ngIf="result">
+  <h1>{{ result.result }}</h1>
+  <img src="{{ result.flamesFrame }}" />
+  <p>{{ result.name1 }}</p>
+  <p>&</p>
+  <p>{{ result.name2 }}</p>
+</ng-container>

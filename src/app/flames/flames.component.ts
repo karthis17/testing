@@ -23,13 +23,13 @@ export class FlamesComponent {
 
   }
 
-  selectedFlames!: string;
+  selectedFlames: string = '';
   flamesImg!: File;
   flames = ['Friends', 'Love', 'Affection', 'Marriage', 'Enmity', 'Sibling'];
 
-  name1!: string;
-  name2!: string;
-  result!: string;
+  name1: string = '';
+  name2: string = '';
+  result: any;
 
   addFile(e: any) {
     this.flamesImg = e.target.files[0];
@@ -38,7 +38,7 @@ export class FlamesComponent {
   submitFlames() {
     this.flame.flamesFind(this.name1, this.name2).subscribe((flames: any) => {
       console.log(flames);
-      this.result = flames.result;
+      this.result = flames;
     }
     );
   }
