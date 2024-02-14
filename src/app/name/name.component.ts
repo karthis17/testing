@@ -20,6 +20,7 @@ export class NameComponent {
   meaning!: string;
   fact!: string;
   result!: any;
+  resultFact!: any;
 
   constructor(private nameSer: NameService) { }
 
@@ -40,7 +41,7 @@ export class NameComponent {
   }
 
   getFact() {
-    this.nameSer.findfact(this.nameFact).subscribe(data => { console.log(data) });
+    this.nameSer.findfact(this.nameFact).subscribe(data => { console.log(data); this.resultFact = data });
 
   }
 

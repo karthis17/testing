@@ -33,3 +33,8 @@
     {{ result[letter].slice(1, result[letter].length) }}
   </div>
 </div>
+
+<div *ngIf="resultFact">
+  <h2>{{ nameFact }}</h2>
+  <p>{{ resultFact.fact }}</p>
+</div>
