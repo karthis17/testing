@@ -10,11 +10,12 @@ import { PollComponent } from './poll/poll.component';
 import { FramesComponent } from './frames/frames.component';
 import { FlamesComponent } from './flames/flames.component';
 import { CalcComponent } from './calc/calc.component';
+import { NameComponent } from './name/name.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent, CalcComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent, CalcComponent, NameComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

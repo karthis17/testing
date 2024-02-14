@@ -1,0 +1,35 @@
+<div>
+  <h1>add letter and meaning</h1>
+  <p>Enter letter <input type="text" [(ngModel)]="letter" /></p>
+  <p>Enter meaning <input type="text" [(ngModel)]="meaning" /></p>
+  <button (click)="submitNameMeaning()">submit</button>
+</div>
+
+<div>
+  <h1>add name and fact</h1>
+  <p>Enter name <input type="text" [(ngModel)]="name" /></p>
+  <p>Enter fact <input type="text" [(ngModel)]="fact" /></p>
+  <button (click)="submitNameFact()">submit</button>
+</div>
+
+<div>
+  <h1>name meaning</h1>
+  <p>Enter name <input type="text" [(ngModel)]="nameMean" /></p>
+  <button (click)="getMeaning()">submit</button>
+</div>
+
+<div>
+  <h1>name fact</h1>
+  <p>Enter name <input type="text" [(ngModel)]="nameFact" /></p>
+  <button (click)="getFact()">submit</button>
+</div>
+
+<div *ngIf="result">
+  <div
+    *ngFor="let letter of nameMean.split('')"
+    style="display: flex; align-items: baseline"
+  >
+    <h1>{{ letter }}</h1>
+    {{ result[letter].slice(1, result[letter].length) }}
+  </div>
+</div>
