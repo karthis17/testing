@@ -11,11 +11,12 @@ import { FramesComponent } from './frames/frames.component';
 import { FlamesComponent } from './flames/flames.component';
 import { CalcComponent } from './calc/calc.component';
 import { NameComponent } from './name/name.component';
+import { PickNdKickComponent } from './pick-nd-kick/pick-nd-kick.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent, CalcComponent, NameComponent],
+  imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink, QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent, CalcComponent, NameComponent, PickNdKickComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

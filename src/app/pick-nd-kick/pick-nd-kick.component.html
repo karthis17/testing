@@ -1,0 +1,30 @@
+<h1>Add question</h1>
+<p>Upload image : <input type="file" (change)="addFile($event)" /></p>
+<p>option 1 : <input type="text" [(ngModel)]="option1" /></p>
+<p>point : <input type="number" [(ngModel)]="point1" /></p>
+<p>option 2 : <input type="text" [(ngModel)]="option2" /></p>
+<p>point : <input type="number" [(ngModel)]="point2" /></p>
+<button (click)="submit()">Submit</button>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>question</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let res of all">
+    <td>{{ res._id }}</td>
+    <td>{{ res.question }}</td>
+    <td><button (click)="showOtions(res)">play</button></td>
+  </tr>
+</table>
+
+<div *ngIf="showOption">
+  <h4>{{ showOption.question }}</h4>
+  <p *ngFor="let op of showOption.options">
+    {{ op.option }}
+    <button (click)="play(showOption._id, op.option)">select</button>
+  </p>
+</div>
+
+<h1 *ngIf="score">Score: {{ score }}</h1>
