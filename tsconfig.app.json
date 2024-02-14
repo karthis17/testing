@@ -3,6 +3,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
+    "target": "esnext",
+    "module": "commonjs",
+    "importHelpers": true,
+    "moduleResolution": "node",
     "types": []
   },
   "files": [
