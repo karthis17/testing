@@ -17,6 +17,7 @@ export class CalcService {
     formData.append('minPercentage', min);
 
     formData.append('maxPercentage', max);
+    console.log(formData.get('image'));
 
     return this.http.post("http://localhost:3000/api/love-friendship-calc/add-love-quotes", formData);
 
@@ -33,7 +34,7 @@ export class CalcService {
 
     formData.append('maxPercentage', max);
 
-    return this.http.post("http://localhost:3000/api/love-friendship-calc/add-love-quotes", formData);
+    return this.http.post("http://localhost:3000/api/love-friendship-calc/add-friend-quotes", formData);
 
   }
 

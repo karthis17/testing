@@ -34,7 +34,8 @@ export class CalcComponent {
   }
 
   submit() {
-    console.log(this.textList)
+
+    console.log(this.textList, "l")
     console.log(this.file)
     console.log(this.min)
     console.log(this.max)
@@ -42,7 +43,7 @@ export class CalcComponent {
     this.ca.addLove(this.textList, this.min, this.max, this.file).subscribe(data => { console.log(data) })
   }
   submitFr() {
-    console.log(this.textList)
+    console.log(this.textList, "fr")
     console.log(this.file)
     console.log(this.min)
     console.log(this.max)
