@@ -20,9 +20,9 @@ import { PickNdKickComponent } from './pick-nd-kick/pick-nd-kick.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   title = 'testing';
-
 
   constructor(private auth: AuthService) { }
   category!: string;
@@ -39,7 +39,6 @@ export class AppComponent {
       this.show_sub_category_tren = this.show_sub_category_tren ? false : true;
     }
     else if (category === 'New') {
-
       this.show_sub_category_tren = this.show_sub_category_tren ? false : false;
       this.show_sub_category_new = this.show_sub_category_new ? false : true;
     }

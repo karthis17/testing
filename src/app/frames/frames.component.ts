@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FramService } from '../service/fram.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 @Component({
   selector: 'app-frames',
   standalone: true,
@@ -10,6 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './frames.component.html',
   styleUrl: './frames.component.css'
 })
+
 export class FramesComponent {
 
   farmeFile!: File;
@@ -17,6 +17,7 @@ export class FramesComponent {
   imageFile!: File;
 
   frameName!: string;
+
   data!: any;
 
   ngOnInit(): void {
@@ -29,6 +30,7 @@ export class FramesComponent {
       this.data = frames;
     })
   }
+
 
   addFile(e: any) {
     this.farmeFile = e.target.files[0];
@@ -52,5 +54,6 @@ export class FramesComponent {
       this.getData()
     })
   }
+
 
 }
