@@ -1,7 +1,28 @@
 <h1>Add question</h1>
 
-<p>upload qestion: <input type="file" (change)="addQuestion($event)" /></p>
-<p>upload qestion: <input type="text" [(ngModel)]="question" /></p>
+<label for="q">
+  Select question type
+  <select name="question" id="q" [(ngModel)]="questionType">
+    <option value="text">text</option>
+    <option value="image">image</option>
+  </select>
+</label>
+
+<label for="o">
+  Select option type
+  <select name="option" id="o" [(ngModel)]="optionType">
+    <option value="text" selected>text</option>
+    <option value="image">image</option>
+  </select>
+</label>
+
+<p *ngIf="questionType === 'image'">
+  upload qestion: <input type="file" (change)="addQuestion($event)" />
+</p>
+<p *ngIf="questionType === 'text'">
+  Enter qestion: <input type="text" [(ngModel)]="question" />
+</p>
+
 <table>
   <tr>
     <th>Upload option</th>
@@ -11,7 +32,12 @@
     *ngFor="let option of options; let i = index; trackBy: trackByFn"
   >
     <tr>
-      <td><input type="text" [(ngModel)]="options[i]" /></td>
+      <td *ngIf="optionType === 'text'">
+        <input type="text" [(ngModel)]="options[i]" />
+      </td>
+      <td *ngIf="optionType === 'image'">
+        <input type="file" (change)="addOptions($event, i)" />
+      </td>
       <td><input type="radio" name="answer" (click)="setAnswer(i)" /></td>
     </tr>
   </ng-container>

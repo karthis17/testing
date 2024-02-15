@@ -14,7 +14,11 @@ export class GuessComponent {
 
   constructor(private guesss: GuessService) { }
 
-  question!: File;
+  question!: any;
+
+  questionType: string = "text";
+
+  optionType: string = "text";
 
   options: any[] = ['', ''];
 
