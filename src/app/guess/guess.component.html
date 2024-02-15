@@ -1,6 +1,7 @@
 <h1>Add question</h1>
 
 <p>upload qestion: <input type="file" (change)="addQuestion($event)" /></p>
+<p>upload qestion: <input type="text" [(ngModel)]="question" /></p>
 <table>
   <tr>
     <th>Upload option</th>
@@ -10,7 +11,7 @@
     *ngFor="let option of options; let i = index; trackBy: trackByFn"
   >
     <tr>
-      <td><input type="file" (change)="addOptions($event, i)" /></td>
+      <td><input type="text" [(ngModel)]="options[i]" /></td>
       <td><input type="radio" name="answer" (click)="setAnswer(i)" /></td>
     </tr>
   </ng-container>

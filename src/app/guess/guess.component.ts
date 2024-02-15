@@ -51,6 +51,7 @@ export class GuessComponent {
 
   setAnswer(index: any) {
     this.answer = this.options[index].name
+    if (!this.answer) this.answer = this.options[index]
   }
 
   play(data: any) {
