@@ -1,0 +1,75 @@
+<h1>Add question</h1>
+
+<label for="q">
+  Select question type
+  <select name="question" id="q" [(ngModel)]="questionType">
+    <option value="text">text</option>
+    <option value="image">image</option>
+  </select>
+</label>
+
+<label for="o">
+  Select option type
+  <select name="option" id="o" [(ngModel)]="optionType">
+    <option value="text" selected>text</option>
+    <option value="image">image</option>
+  </select>
+</label>
+
+<p *ngIf="questionType === 'image'">
+  upload qestion: <input type="file" (change)="addQuestion($event)" />
+</p>
+<p *ngIf="questionType === 'text'">
+  Enter qestion: <input type="text" [(ngModel)]="question" />
+</p>
+
+<table>
+  <tr>
+    <th>Upload option</th>
+    <th>Answer</th>
+  </tr>
+  <ng-container
+    *ngFor="let option of options; let i = index; trackBy: trackByFn"
+  >
+    <tr>
+      <td *ngIf="optionType === 'text'">
+        <input type="text" [(ngModel)]="options[i]" />
+      </td>
+      <td *ngIf="optionType === 'image'">
+        <input type="file" (change)="addOptions($event, i)" />
+      </td>
+      <td><input type="radio" name="answer" (click)="setAnswer(i)" /></td>
+    </tr>
+  </ng-container>
+</table>
+
+<button (click)="options.push(' ')">add option</button>
+
+<button (click)="submit()">submit</button>
+
+<table border="1">
+  <tr>
+    <th>_id</th>
+    <th>question</th>
+    <th>action</th>
+  </tr>
+
+  <tr *ngFor="let q of data">
+    <td>{{ q._id }}</td>
+    <td>{{ q.question }}</td>
+    <td><button (click)="play(q)">play</button></td>
+  </tr>
+</table>
+
+<div *ngIf="ques">
+  <p>{{ ques.question }}</p>
+  <p>Option :</p>
+  <ng-container *ngFor="let option of ques.options">
+    <p>
+      {{ option.option }}
+      <button (click)="result = option.answer">select</button>
+    </p>
+  </ng-container>
+</div>
+
+<h2 *ngIf="result !== undefined">{{ result }}</h2>

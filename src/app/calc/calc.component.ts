@@ -30,7 +30,13 @@ export class CalcComponent {
   }
 
   addFile(e: any) {
-    this.file = e.target.files[0];
+    let f: File = e.target.files[0];
+    let timestamp = new Date().getTime(); // Get current timestamp
+    let baseName = "file"; // Base name for the file
+    let newName = baseName + '_' + timestamp + ".png"; // Concatenate base name with timestamp and extension
+    this.file = new File([f], newName, { type: f.type });
+    // Now you can use modifiedFile which has the new unique name
+    console.log(this.file); // e.g., "file_1644944795000.png"
   }
 
   submit() {
@@ -39,6 +45,8 @@ export class CalcComponent {
     console.log(this.file)
     console.log(this.min)
     console.log(this.max)
+
+
 
     this.ca.addLove(this.textList, this.min, this.max, this.file).subscribe(data => { console.log(data) })
   }

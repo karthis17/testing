@@ -1,0 +1,32 @@
+<h1>Add ruddles</h1>
+
+<p>Enter qestion: <input type="text" [(ngModel)]="question" /></p>
+<p>Enter answer: <input type="text" [(ngModel)]="answer" /></p>
+
+<button (click)="submit()">submit</button>
+
+<table border="1">
+  <tr>
+    <th>_id</th>
+    <th>question</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let riddle of riddles">
+    <td>{{ riddle._id }}</td>
+    <td>{{ riddle.question }}</td>
+    <td><button (click)="data = riddle">play</button></td>
+  </tr>
+</table>
+
+<div *ngIf="data">
+  <h3>{{ data.question }}</h3>
+  <p>Enter answer: <input type="text" [(ngModel)]="user_answer" /></p>
+  <!-- <button
+    (click)="result = user_answer.toLowerCase() === data.answer.toLowerCase()"
+  > -->
+  <button (click)="checkAnswer(data._id)">Submit answer</button>
+  <p>Enter comment: <input type="text" [(ngModel)]="comment" /></p>
+  <button (click)="addComment(data._id)">sumbit comment</button>
+</div>
+
+<h2 *ngIf="result !== undefined">{{ result }}</h2>
