@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ReelsService } from '../service/reels.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FeedService } from '../service/feed.service';
@@ -20,6 +19,7 @@ export class FeedComponent {
   discription!: string;
   category!: string;
   data: any;
+  comment: any[] = [];
 
   file!: File;
 
@@ -42,7 +42,14 @@ export class FeedComponent {
   }
 
   like(id: any) {
-    this.feeds.like(id).subscribe(data => { console.log(data); this.getAll() })
+    this.feeds.like(id).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+  share(id: any) {
+    this.feeds.share(id).subscribe(data => { console.log(data); this.getAll() });
+  }
+  comm(id: any, index: number) {
+    this.feeds.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getAll() });
   }
 
 }

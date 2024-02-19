@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ReelsComponent {
 
+
   constructor(private reelsService: ReelsService) { }
 
   title!: string;
@@ -19,6 +20,7 @@ export class ReelsComponent {
   hashtags!: string;
   category!: string;
   data: any;
+  comment: any[] = [];
 
   file!: File;
 
@@ -31,6 +33,7 @@ export class ReelsComponent {
   }
 
   getAll() {
+    this.comment = [];
     this.reelsService.getAll().subscribe(data => { this.data = data });
 
   }
@@ -42,6 +45,14 @@ export class ReelsComponent {
 
   like(id: any) {
     this.reelsService.like(id).subscribe(data => { console.log(data); this.getAll() })
+  }
+
+  share(id: any) {
+    this.reelsService.share(id).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+  comm(id: any, index: any) {
+    this.reelsService.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getAll() });
   }
 
 }

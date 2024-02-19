@@ -9,10 +9,14 @@
     <th>frame url</th>
     <th>Uploads</th>
     <th>likes</th>
+    <th>shares</th>
+    <th>comment</th>
+    <th>Action</th>
+    <th>Action</th>
     <th>Action</th>
     <th>Action</th>
   </tr>
-  <tr *ngFor="let frame of data">
+  <tr *ngFor="let frame of data; let i = index">
     <td>{{ frame._id }}</td>
     <td>{{ frame.frameName }}</td>
     <td>{{ frame.frameUrl }}</td>
@@ -24,10 +28,22 @@
     <td>
       <p *ngFor="let like of frame.likes">{{ like }}</p>
     </td>
+    <th>{{ frame.shares }}</th>
+    <th>
+      <p *ngFor="let comment of frame.comments">{{ comment.text }}</p>
+    </th>
     <td>
       <input type="file" name="image" id="i" (change)="addImageFile($event)" />
       <button (click)="uloadImage(frame._id)">submit</button>
     </td>
     <td><button (click)="like(frame._id)">like</button></td>
+    <th><button (click)="share(frame._id)">share</button></th>
+    <th>
+      <input
+        type="text"
+        [(ngModel)]="comment[i]"
+        placeholder="enter comment"
+      /><button (click)="comm(frame._id, i)">comment</button>
+    </th>
   </tr>
 </table>

@@ -22,14 +22,30 @@
     <th>discription</th>
     <th>reel</th>
     <th>likes</th>
+    <th>share</th>
+    <th>Comments</th>
+    <th>action</th>
+    <th>action</th>
     <th>action</th>
   </tr>
-  <tr *ngFor="let da of data">
+  <tr *ngFor="let da of data; let i = index">
     <th>{{ da._id }}</th>
     <th>{{ da.title }}</th>
     <th>{{ da.description }}</th>
     <th>{{ da.imageUrl }}</th>
     <th>{{ da.likes.length }}</th>
+    <th>{{ da.shares }}</th>
+    <th>
+      <p *ngFor="let comment of da.comments">{{ comment.text }}</p>
+    </th>
     <th><button (click)="like(da._id)">like</button></th>
+    <th><button (click)="share(da._id)">share</button></th>
+    <th>
+      <input
+        type="text"
+        [(ngModel)]="comment[i]"
+        placeholder="enter comment"
+      /><button (click)="comm(da._id, i)">comment</button>
+    </th>
   </tr>
 </table>

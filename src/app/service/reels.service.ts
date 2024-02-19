@@ -41,10 +41,14 @@ export class ReelsService {
     return this.http.post('http://localhost:3000/api/reels/like', { reelId }, _options)
   }
 
-  follow(following_id: any) {
+  share(reelId: any) {
+    return this.http.post('http://localhost:3000/api/reels/share', { reelId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+  }
+
+  commet(reelId: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('http://localhost:3000/api/reels/follow', { following_id }, _options)
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/reels/add-comment', { reelId, comment }, _options)
   }
 
 }

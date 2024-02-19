@@ -51,6 +51,17 @@ export class PollService {
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
     return this.http.post("http://localhost:3000/api/poll/likes", { pollId: id }, _options)
   }
+
+  share(pollId: any) {
+    return this.http.post('http://localhost:3000/api/poll/share', { pollId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+  }
+
+  commet(pollId: any, comment: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/poll/add-comment', { pollId, comment }, _options)
+  }
+
 }
 
 

@@ -47,4 +47,14 @@ export class FramService {
     return this.http.post("http://localhost:3000/api/frame/likes", { frame_id: id }, _options);
   }
 
+  share(frame_id: any) {
+    return this.http.post('http://localhost:3000/api/frame/share', { frame_id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+  }
+
+  commet(frame_id: any, comment: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/frame/add-comment', { frame_id, comment }, _options)
+  }
+
 }

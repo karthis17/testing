@@ -20,6 +20,8 @@ export class FramesComponent {
 
   data!: any;
 
+  comment: any[] = [];
+
   ngOnInit(): void {
     this.getData()
   }
@@ -58,6 +60,16 @@ export class FramesComponent {
   like(id: any) {
     this.frame.like(id).subscribe(frame => { console.log(`Like`, frame); this.getData() });
   }
+
+
+  share(id: any) {
+    this.frame.share(id).subscribe(data => { console.log(data); this.getData() });
+  }
+
+  comm(id: any, index: any) {
+    this.frame.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getData() });
+  }
+
 
 
 }

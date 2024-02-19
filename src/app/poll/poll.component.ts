@@ -26,6 +26,8 @@ export class PollComponent {
 
   showVote: boolean = true;
 
+  comment: any[] = []
+
   constructor(private poll: PollService) { }
 
 
@@ -95,6 +97,15 @@ export class PollComponent {
       console.log(data);
       this.getData()
     });
+  }
+
+
+  share(id: any) {
+    this.poll.share(id).subscribe(data => { console.log(data); this.getData() });
+  }
+
+  comm(id: any, index: any) {
+    this.poll.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getData() });
   }
 
 }

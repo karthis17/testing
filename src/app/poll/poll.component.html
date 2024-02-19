@@ -81,17 +81,33 @@
     <th>poll id</th>
     <th>question</th>
     <th>liked user</th>
+    <th>shares</th>
+    <th>comments</th>
+    <th>action</th>
+    <th>action</th>
     <th>action</th>
     <th>action</th>
   </tr>
-  <tr *ngFor="let poll of polls">
+  <tr *ngFor="let poll of polls; let i = index">
     <td>{{ poll._id }}</td>
     <td>{{ poll.question }}</td>
     <td>
       <p *ngFor="let user of poll.likes">{{ user }}</p>
     </td>
+    <td>{{ poll.shares }}</td>
+    <th>
+      <p *ngFor="let comment of poll.comments">{{ comment.text }}</p>
+    </th>
     <td><button (click)="show(poll)">show poll</button></td>
     <td><button (click)="lik(poll._id)">like</button></td>
+    <td><button (click)="share(poll._id)">share</button></td>
+    <th>
+      <input
+        type="text"
+        [(ngModel)]="comment[i]"
+        placeholder="enter comment"
+      /><button (click)="comm(poll._id, i)">comment</button>
+    </th>
   </tr>
 </table>
 
