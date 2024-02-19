@@ -1,0 +1,48 @@
+<h2>Add reel</h2>
+
+<p>
+  upload reel: <input type="file" accept="/video" (change)="addFile($event)" />
+</p>
+
+<p>Enter title: <input type="text" name="" id="title" [(ngModel)]="title" /></p>
+<p>
+  Enter discription:
+  <input type="text" name="" id="des" [(ngModel)]="discription" />
+</p>
+<p>
+  Enter category: <input type="text" name="" id="cate" [(ngModel)]="category" />
+</p>
+
+<p>
+  ENter hashtags:
+  <textarea
+    name=""
+    id="y"
+    cols="30"
+    rows="10"
+    [(ngModel)]="hashtags"
+  ></textarea>
+</p>
+
+<button (click)="submit()">submit</button>
+
+<table border="1">
+  <tr>
+    <th>_id</th>
+    <th>title</th>
+    <th>discription</th>
+    <th>reel</th>
+    <th>hashtags</th>
+    <th>likes</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let da of data">
+    <th>{{ da._id }}</th>
+    <th>{{ da.title }}</th>
+    <th>{{ da.description }}</th>
+    <th>{{ da.filePath }}</th>
+    <th>{{ da.hashtags }}</th>
+    <th>{{ da.likes.length }}</th>
+    <th><button (click)="like(da._id)">like</button></th>
+  </tr>
+</table>
