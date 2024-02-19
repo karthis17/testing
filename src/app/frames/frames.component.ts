@@ -55,5 +55,9 @@ export class FramesComponent {
     })
   }
 
+  like(id: any) {
+    this.frame.like(id).subscribe(frame => { console.log(`Like`, frame); this.getData() });
+  }
+
 
 }

@@ -39,4 +39,12 @@ export class FramService {
     return this.http.get("http://localhost:3000/api/frame/get-frames");
   }
 
+  like(id: any) {
+
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'Application/json' }) };
+
+    return this.http.post("http://localhost:3000/api/frame/likes", { frame_id: id }, _options);
+  }
+
 }

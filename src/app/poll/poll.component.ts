@@ -30,6 +30,10 @@ export class PollComponent {
 
 
   ngOnInit() {
+    this.getData()
+  }
+
+  getData() {
     this.poll.getAllpoll().subscribe((data: any) => {
       console.log(data);
       this.polls = data.poll;
@@ -63,7 +67,7 @@ export class PollComponent {
   }
 
   submit() {
-    this.poll.addPoll(this.question, this.textOptions).subscribe(data => { console.log(data); }, err => { console.log(err); });
+    this.poll.addPoll(this.question, this.textOptions).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
   }
   submitImg() {
     console.log(this.imgOptions)
@@ -89,6 +93,7 @@ export class PollComponent {
   lik(poll_id: any) {
     this.poll.like(poll_id).subscribe(data => {
       console.log(data);
+      this.getData()
     });
   }
 

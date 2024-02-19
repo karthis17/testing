@@ -10,6 +10,7 @@
     <th>Uploads</th>
     <th>likes</th>
     <th>Action</th>
+    <th>Action</th>
   </tr>
   <tr *ngFor="let frame of data">
     <td>{{ frame._id }}</td>
@@ -21,11 +22,12 @@
       </p>
     </td>
     <td>
-      <p *ngFor="let like of frame.like">{{ like }}</p>
+      <p *ngFor="let like of frame.likes">{{ like }}</p>
     </td>
     <td>
       <input type="file" name="image" id="i" (change)="addImageFile($event)" />
       <button (click)="uloadImage(frame._id)">submit</button>
     </td>
+    <td><button (click)="like(frame._id)">like</button></td>
   </tr>
 </table>
