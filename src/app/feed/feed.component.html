@@ -1,0 +1,35 @@
+<h2>Add reel</h2>
+
+<p>
+  upload reel: <input type="file" accept="/video" (change)="addFile($event)" />
+</p>
+
+<p>Enter title: <input type="text" name="" id="title" [(ngModel)]="title" /></p>
+<p>
+  Enter discription:
+  <input type="text" name="" id="des" [(ngModel)]="discription" />
+</p>
+<p>
+  Enter category: <input type="text" name="" id="cate" [(ngModel)]="category" />
+</p>
+
+<button (click)="submit()">submit</button>
+
+<table border="1">
+  <tr>
+    <th>_id</th>
+    <th>title</th>
+    <th>discription</th>
+    <th>reel</th>
+    <th>likes</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let da of data">
+    <th>{{ da._id }}</th>
+    <th>{{ da.title }}</th>
+    <th>{{ da.description }}</th>
+    <th>{{ da.imageUrl }}</th>
+    <th>{{ da.likes.length }}</th>
+    <th><button (click)="like(da._id)">like</button></th>
+  </tr>
+</table>

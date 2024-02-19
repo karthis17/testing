@@ -16,13 +16,14 @@ import { GuessComponent } from './guess/guess.component';
 import { FunQuizzesComponent } from './fun-quizzes/fun-quizzes.component';
 import { RiddlesComponent } from './riddles/riddles.component';
 import { ReelsComponent } from './reels/reels.component';
+import { FeedComponent } from './feed/feed.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet, FormsModule, UploadComponent, LoginComponent, RouterLink,
     QuizzeComponent, PollComponent, LoginComponent, FramesComponent, FlamesComponent,
-    CalcComponent, NameComponent, PickNdKickComponent, GuessComponent, FunQuizzesComponent, RiddlesComponent, ReelsComponent],
+    CalcComponent, NameComponent, PickNdKickComponent, GuessComponent, FunQuizzesComponent, RiddlesComponent, ReelsComponent, FeedComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
