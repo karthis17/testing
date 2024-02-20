@@ -1,77 +1,27 @@
-<!-- <div style="display: flex; gap: 10rem; margin-top: 5rem">
-  <ul>
-    <li>
-      <button (click)="setCategory('trending')">trending</button>
-      <ul *ngIf="show_sub_category_tren">
-        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
-        <li>
-          <button (click)="sub_category = 'Devotional'">Devotional</button>
-        </li>
-        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
-        <li><button (click)="sub_category = 'Kids'">Kids</button></li>
-        <li><button (click)="sub_category = 'Family'">Family</button></li>
-        <li><button (click)="sub_category = 'Troll'">Troll</button></li>
-      </ul>
-    </li>
-    <li>
-      <button (click)="setCategory('New')">New</button>
-      <ul *ngIf="show_sub_category_new">
-        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
-        <li>
-          <button (click)="sub_category = 'Devotional'">Devotional</button>
-        </li>
-        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
-        <li><button (click)="sub_category = 'Love Song'">Love Song</button></li>
-        <li><button (click)="sub_category = 'Effects'">Effects</button></li>
-        <li><button (click)="sub_category = 'Alphabets'">Alphabets</button></li>
-        <li><button (click)="sub_category = 'Couples'">Couples</button></li>
-      </ul>
-    </li>
-
-    <li>
-      <button
-        (click)="sub_category = 'Fun filetrs'; setCategory('Fun Filters')"
-      >
-        Fun filetrs
-      </button>
-    </li>
-    <li>
-      <button
-        (click)="
-          sub_category = 'Birthday Wishes'; setCategory('Birthday Wishes')
-        "
-      >
-        Birthday Wishes
-      </button>
-    </li>
-  </ul>
-
-  <app-upload [category]="category" [sub_category]="sub_category"></app-upload>
-  <button style="height: 60px" [routerLink]="['/login']">
-    Signin / signup
-  </button>
-  <button style="height: 60px" (click)="show()">Signin / signup</button>
+<div
+  style="
+    margin: 3rem;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 4rem;
+    margin-right: 4rem;
+  "
+>
+  <button [routerLink]="['']">Post</button>
+  <button routerLink="/reels">Reels</button>
+  <button routerLink="/feeds">Feeds</button>
+  <button routerLink="/poll">Pull</button>
+  <button routerLink="/quizzes">Quizzes</button>
+  <button routerLink="/fun-quizzes">Fun Quizzes</button>
+  <button routerLink="/frames">Frames</button>
+  <button routerLink="/flames">Flames</button>
+  <button routerLink="/friend-love-calc">Friend love calc</button>
+  <button routerLink="/name-mean-fact">Name mean fact</button>
+  <button routerLink="/guess">Guess</button>
+  <button routerLink="/pick-kick">Pick Kick</button>
+  <button routerLink="/riddles">riddles</button>
 </div>
 
-<main style="position: absolute; top: 0; background-color: #fff">
-  <router-outlet></router-outlet>
-</main> -->
-
-<!-- <app-quizze></app-quizze> -->
-<!-- <app-poll></app-poll> -->
-<!-- <app-frames></app-frames> -->
-
-<!-- <app-flames></app-flames> -->
-<!-- <app-calc></app-calc> -->
-<!-- <app-name></app-name> -->
-<!-- <app-pick-nd-kick></app-pick-nd-kick> -->
-<!-- <app-guess></app-guess> -->
-
-<!-- <app-fun-quizzes></app-fun-quizzes> -->
-
-<!-- <app-riddles></app-riddles> -->
-
-<!-- <app-reels></app-reels> -->
-<app-feed></app-feed>
+<router-outlet></router-outlet>
 
 <app-login></app-login>

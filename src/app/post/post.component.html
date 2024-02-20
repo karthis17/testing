@@ -1,0 +1,50 @@
+<div style="display: flex; gap: 10rem; margin-top: 5rem">
+  <ul>
+    <li>
+      <button (click)="setCategory('trending')">trending</button>
+      <ul *ngIf="show_sub_category_tren">
+        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
+        <li>
+          <button (click)="sub_category = 'Devotional'">Devotional</button>
+        </li>
+        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
+        <li><button (click)="sub_category = 'Kids'">Kids</button></li>
+        <li><button (click)="sub_category = 'Family'">Family</button></li>
+        <li><button (click)="sub_category = 'Troll'">Troll</button></li>
+      </ul>
+    </li>
+    <li>
+      <button (click)="setCategory('New')">New</button>
+      <ul *ngIf="show_sub_category_new">
+        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
+        <li>
+          <button (click)="sub_category = 'Devotional'">Devotional</button>
+        </li>
+        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
+        <li><button (click)="sub_category = 'Love Song'">Love Song</button></li>
+        <li><button (click)="sub_category = 'Effects'">Effects</button></li>
+        <li><button (click)="sub_category = 'Alphabets'">Alphabets</button></li>
+        <li><button (click)="sub_category = 'Couples'">Couples</button></li>
+      </ul>
+    </li>
+
+    <li>
+      <button
+        (click)="sub_category = 'Fun filetrs'; setCategory('Fun Filters')"
+      >
+        Fun filetrs
+      </button>
+    </li>
+    <li>
+      <button
+        (click)="
+          sub_category = 'Birthday Wishes'; setCategory('Birthday Wishes')
+        "
+      >
+        Birthday Wishes
+      </button>
+    </li>
+  </ul>
+
+  <app-upload [category]="category" [sub_category]="sub_category"></app-upload>
+</div>

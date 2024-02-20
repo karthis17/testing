@@ -7,7 +7,7 @@
 .main-container {
   display: grid;
   place-content: center;
-  width: 100vw;
+  width: 95vw;
   height: 100vh;
 }
 

@@ -20,6 +20,7 @@ export class UploadComponent {
   file: string = "";
   user: any;
   post!: any[];
+  comment: any[] = []
 
   constructor(private imageService: ImageServiceService) { }
 
@@ -72,10 +73,12 @@ export class UploadComponent {
     })
   }
 
-  follow(id: any) {
-    this.imageService.follow(id).subscribe(res => {
-      console.log(res);
-    });
+
+  share(id: any) {
+    this.imageService.share(id).subscribe(data => { console.log(data); this.getPostt() });
   }
 
+  comm(id: any, index: any) {
+    this.imageService.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getPostt() });
+  }
 }

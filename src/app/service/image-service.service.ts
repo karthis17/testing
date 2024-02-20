@@ -40,11 +40,16 @@ export class ImageServiceService {
     return this.http.post('http://localhost:3000/api/img/likes', { postId }, _options)
   }
 
-  follow(following_id: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('http://localhost:3000/api/img/follow', { following_id }, _options)
+  share(postId: any) {
+    return this.http.post('http://localhost:3000/api/img/share', { postId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
+
+  commet(postId: any, comment: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/img/add-comment', { postId, comment }, _options)
+  }
+
 
   upload(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
     console.log(file, state1, state2, state3);

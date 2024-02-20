@@ -6,12 +6,14 @@
     <th>sub category</th>
     <th>imageUrl</th>
     <th>likes</th>
-    <th>createdAt</th>
+    <th>shares</th>
     <th>comments</th>
-    <th>likes</th>
+    <th>action</th>
+    <th>action</th>
+    <th>action</th>
   </thead>
   <tbody>
-    <tr *ngFor="let po of post">
+    <tr *ngFor="let po of post; let i = index">
       <td>{{ po.user }}</td>
       <td>{{ po.description }}</td>
       <td>{{ po.category }}</td>
@@ -20,10 +22,19 @@
         <a href="{{ po.imageUrl }}" target="_blank">{{ po.imageUrl }}</a>
       </td>
       <td>{{ po.likes.length }}</td>
-      <td>{{ po.createdAt }}</td>
-      <td>{{ po.comments }}</td>
+      <td>{{ po.shares }}</td>
+      <td>
+        <p *ngFor="let com of po.comments">{{ com.text }}</p>
+      </td>
       <td><button (click)="like(po._id)">Like</button></td>
-      <td><button (click)="follow(po.user)">Follow</button></td>
+      <td><button (click)="share(po._id)">share</button></td>
+      <th>
+        <input
+          type="text"
+          [(ngModel)]="comment[i]"
+          placeholder="enter comment"
+        /><button (click)="comm(po._id, i)">comment</button>
+      </th>
     </tr>
   </tbody>
 </table>
