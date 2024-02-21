@@ -17,7 +17,7 @@ export class PostComponent {
   constructor(private auth: AuthService, private post: ImageServiceService) { }
   category!: any;
   cat: any;
-  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "punjabi", "odisha"];
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
 
   selectedCategory!: string;
 
