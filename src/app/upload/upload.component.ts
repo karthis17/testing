@@ -13,14 +13,16 @@ import { CommonModule } from '@angular/common';
 export class UploadComponent {
 
   @Input() category!: string;
-  @Input() sub_category: string | null = null;
 
   src!: string;
   selectedFile: File | null = null;
-  file: string = "";
+
   user: any;
   post!: any[];
   comment: any[] = []
+  title!: string;
+  description!: string;
+  type: any = "new";
 
   constructor(private imageService: ImageServiceService) { }
 
@@ -39,7 +41,7 @@ export class UploadComponent {
   }
 
   getPostt() {
-    this.imageService.getPost(this.category, this.sub_category).subscribe((post: any) => {
+    this.imageService.getPost(this.category).subscribe((post: any) => {
       this.post = post;
     });
   }
@@ -50,7 +52,7 @@ export class UploadComponent {
 
   uploadImage() {
 
-    this.imageService.uploadImage(this.selectedFile, this.file, this.category, this.sub_category).subscribe(
+    this.imageService.uploadImage(this.selectedFile, this.description, this.category, this.title, this.type).subscribe(
       (response: any) => {
         this.src = response.imageUrl;
 

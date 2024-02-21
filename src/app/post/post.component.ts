@@ -3,6 +3,7 @@ import { AuthService } from '../service/auth.service';
 import { UploadComponent } from '../upload/upload.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ImageServiceService } from '../service/image-service.service';
 
 @Component({
   selector: 'app-post',
@@ -13,35 +14,65 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostComponent {
 
-  constructor(private auth: AuthService) { }
-  category!: string;
-  sub_category: string | null = null;
+  constructor(private auth: AuthService, private post: ImageServiceService) { }
+  category!: any;
+  cat: any;
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "punjabi", "odisha"];
 
-  show_sub_category_tren: boolean = false;
-  show_sub_category_new: boolean = false;
+  selectedCategory!: string;
 
-  setCategory(category: string) {
-    this.sub_category = null;
-    if (category === 'trending') {
-      this.show_sub_category_new = this.show_sub_category_new ? false : false;
+  selectedLang!: string;
 
-      this.show_sub_category_tren = this.show_sub_category_tren ? false : true;
-    }
-    else if (category === 'New') {
-      this.show_sub_category_tren = this.show_sub_category_tren ? false : false;
-      this.show_sub_category_new = this.show_sub_category_new ? false : true;
-    }
-    else {
-      this.show_sub_category_tren = false;
-      this.show_sub_category_new = false;
-    }
-    this.category = category;
+  title: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+  setLanguage() {
+    console.log(this.selectedLang)
+    localStorage.setItem('lang', this.selectedLang);
+    this.getCategory(this.selectedLang)
   }
 
   show() {
     this.auth.getUser().subscribe(user => {
       console.log(user);
     })
+  }
+
+  ngOnInit() {
+    let lan = localStorage.getItem("lang")
+    if (lan) {
+      this.selectedLang = lan;
+      this.getCategory(lan);
+    } else {
+      this.selectedLang = "english";
+      this.getCategory("english");
+    }
+
+
+  }
+
+  getCategory(lang: any) {
+    this.post.getCategory(lang).subscribe(category => { this.category = category });
+  }
+
+  submit() {
+
+    console.log(this.title.filter(tit => { if (tit.text) return tit; else return false }));
+
+    this.post.addCategory(this.cat, this.title.filter(tit => { if (tit.text) return tit; else return false })).subscribe(category => { console.log(category) })
+  }
+  trackByFn(index: any, item: any) {
+    return index;
   }
 
 }

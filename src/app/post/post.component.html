@@ -1,50 +1,39 @@
+<h3>
+  select language
+  <select
+    name="lan"
+    id="e"
+    title="select language"
+    [(ngModel)]="selectedLang"
+    (change)="setLanguage()"
+  >
+    <option value="english" selected>english</option>
+    <ng-container *ngFor="let lan of langg">
+      <option [value]="lan">{{ lan }}</option>
+    </ng-container>
+  </select>
+</h3>
+
 <div style="display: flex; gap: 10rem; margin-top: 5rem">
   <ul>
-    <li>
-      <button (click)="setCategory('trending')">trending</button>
-      <ul *ngIf="show_sub_category_tren">
-        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
-        <li>
-          <button (click)="sub_category = 'Devotional'">Devotional</button>
-        </li>
-        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
-        <li><button (click)="sub_category = 'Kids'">Kids</button></li>
-        <li><button (click)="sub_category = 'Family'">Family</button></li>
-        <li><button (click)="sub_category = 'Troll'">Troll</button></li>
-      </ul>
-    </li>
-    <li>
-      <button (click)="setCategory('New')">New</button>
-      <ul *ngIf="show_sub_category_new">
-        <li><button (click)="sub_category = 'Birthday'">Birthday</button></li>
-        <li>
-          <button (click)="sub_category = 'Devotional'">Devotional</button>
-        </li>
-        <li><button (click)="sub_category = 'Wedding'">Wedding</button></li>
-        <li><button (click)="sub_category = 'Love Song'">Love Song</button></li>
-        <li><button (click)="sub_category = 'Effects'">Effects</button></li>
-        <li><button (click)="sub_category = 'Alphabets'">Alphabets</button></li>
-        <li><button (click)="sub_category = 'Couples'">Couples</button></li>
-      </ul>
-    </li>
-
-    <li>
-      <button
-        (click)="sub_category = 'Fun filetrs'; setCategory('Fun Filters')"
-      >
-        Fun filetrs
-      </button>
-    </li>
-    <li>
-      <button
-        (click)="
-          sub_category = 'Birthday Wishes'; setCategory('Birthday Wishes')
-        "
-      >
-        Birthday Wishes
+    <li *ngFor="let cate of category">
+      <button (click)="selectedCategory = cate._id">
+        {{ cate.text ? cate.text : cate.default }}
       </button>
     </li>
   </ul>
 
-  <app-upload [category]="category" [sub_category]="sub_category"></app-upload>
+  <app-upload [category]="selectedCategory"></app-upload>
+</div>
+<div>
+  <h2>Add category</h2>
+  <input type="text" placeholder="enter category" [(ngModel)]="cat" />
+  <h3>add languages</h3>
+  <ng-container *ngFor="let text of title; trackBy: trackByFn">
+    <p>
+      Enter category name in {{ text.lang }} language
+      <input type="text" [(ngModel)]="text.text" />
+    </p>
+  </ng-container>
+  <button (click)="submit()">submit</button>
 </div>

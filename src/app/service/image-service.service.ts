@@ -17,7 +17,7 @@ export class ImageServiceService {
 
     return this.http.get('http://localhost:3000/api/users/me', _options)
   }
-  uploadImage(file: any, description: string, category: any, sub_category: any) {
+  uploadImage(file: any, description: string, category: any, title: any, type: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
@@ -25,13 +25,26 @@ export class ImageServiceService {
     formData.append('image', file);
     formData.append('description', description);
     formData.append('category', category);
-    formData.append('sub_category', sub_category);
+    formData.append('type', type);
+    formData.append('title', title);
 
     return this.http.post('http://localhost:3000/api/img/upload', formData, _options);
   }
 
-  getPost(category: any = null, sub_category: any = null) {
-    return this.http.get('http://localhost:3000/api/img/get-post', { params: { category, sub_category } });
+  getCategory(lang: any) {
+    return this.http.get('http://localhost:3000/api/img/categories', { params: { lang: lang } });
+
+  }
+  addCategory(category: any, title: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post('http://localhost:3000/api/img/add-category', { category, title }, _options);
+
+  }
+
+  getPost(category: any) {
+
+    return this.http.get('http://localhost:3000/api/img/post-category/' + category);
   }
 
   like(postId: any) {

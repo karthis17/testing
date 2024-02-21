@@ -17,7 +17,7 @@
       <td>{{ po.user }}</td>
       <td>{{ po.description }}</td>
       <td>{{ po.category }}</td>
-      <td>{{ po.sub_category }}</td>
+      <td>{{ po.type }}</td>
       <td>
         <a href="{{ po.imageUrl }}" target="_blank">{{ po.imageUrl }}</a>
       </td>
@@ -39,10 +39,20 @@
   </tbody>
 </table>
 
-<h1>{{ category }} - {{ sub_category }}</h1>
+<h1>{{ category }}</h1>
 
 <div style="margin-top: 5rem">
-  <input type="text" [(ngModel)]="file" name="hi" placeholder="i" />
+  <h1>upload post</h1>
+  <p>enter title <input type="text" [(ngModel)]="title" /></p>
+  <p>enter description <input type="text" [(ngModel)]="description" /></p>
+  <p>
+    select type
+    <select name="type" id="t" title="select type" [(ngModel)]="type">
+      <option value="new">new</option>
+      <option value="trending">trending</option>
+      <!-- <option value="fun filter">fun filter</option> -->
+    </select>
+  </p>
   <input type="file" (change)="onFileSelected($event)" />
   <button (click)="uploadImage()">Upload Image</button>
 </div>
