@@ -1,6 +1,25 @@
-<input type="text" [(ngModel)]="frameName" />
-<input type="file" name="frame" id="f" (change)="addFile($event)" />
-<button (click)="submit()">submit</button>
+<p>
+  Enter name fo the frame:
+  <input type="text" [(ngModel)]="frameName" placeholder="enter" />
+</p>
+<div class="flex">
+  <canvas width="500" height="500" #canvasElement></canvas>
+  <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
+</div>
+<input type="file" (change)="handleFileInput($event)" accept="image/*" />
+<button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="addSquare()">
+  Add Square
+</button>
+<button
+  class="px-3 py-2 rounded-sm mx-3 bg-teal-200"
+  (click)="logSquareProperties()"
+>
+  Log Square Properties
+</button>
+
+<button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="submit()">
+  submit
+</button>
 
 <table [border]="1">
   <tr>

@@ -8,7 +8,7 @@ export class FramService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFrame(fileName: string, file: File) {
+  uploadFrame(fileName: string, file: File, frame_size: any, coordinates: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -16,6 +16,12 @@ export class FramService {
     const formData = new FormData;
 
     formData.append('frameName', fileName);
+    formData.append('frameW', frame_size.width);
+    formData.append('frameH', frame_size.height);
+    formData.append('x', coordinates.x);
+    formData.append('y', coordinates.y);
+    formData.append('coordinateW', coordinates.width);
+    formData.append('coordinateH', coordinates.height);
     formData.append('frame', file);
 
     return this.http.post("http://localhost:3000/api/frame/upload-frame", formData, _options);

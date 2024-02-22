@@ -18,7 +18,7 @@ export const routes: Routes = [
     { path: 'reels', component: ReelsComponent },
     { path: 'feeds', component: FeedComponent },
     { path: 'quizzes', component: QuizzeComponent },
-    { path: 'poll', component: PollComponent },
+    { path: 'pull', component: PollComponent },
     { path: 'fun-quizzes', component: FunQuizzesComponent },
     { path: 'frames', component: FramesComponent },
     { path: 'flames', component: FlamesComponent },
