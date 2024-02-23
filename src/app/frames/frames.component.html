@@ -1,11 +1,34 @@
+<div class="flex mt-10 gap-7">
+  <div class="">
+    Select Image Size <br />
+    <select
+      name=""
+      id=""
+      title="select image size"
+      [(ngModel)]="size"
+      (change)="setSize()"
+    >
+      <option
+        *ngFor="let option of canvasSizeOptions; let i = index"
+        [value]="i"
+      >
+        {{ option.width }} x {{ option.height }}
+      </option>
+    </select>
+  </div>
+
+  <div class="border-2 max-w-min rounded-md border-slate-950">
+    <canvas #canvasElement></canvas>
+  </div>
+</div>
+
+<div class="flex">
+  <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
+</div>
 <p>
   Enter name fo the frame:
   <input type="text" [(ngModel)]="frameName" placeholder="enter" />
 </p>
-<div class="flex">
-  <canvas width="500" height="500" #canvasElement></canvas>
-  <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
-</div>
 <input type="file" (change)="handleFileInput($event)" accept="image/*" />
 <button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="addSquare()">
   Add Square
@@ -41,7 +64,14 @@
     <td>{{ frame.frameUrl }}</td>
     <td>
       <p *ngFor="let upload of frame.uploads">
-        {{ upload.image }} <span>{{ upload.user }}</span>
+        <a
+          [href]="upload.image"
+          class="text-blue-800"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{ upload.image }}</a
+        >
+        <span>{{ upload.user }}</span>
       </p>
     </td>
     <td>
@@ -52,8 +82,16 @@
       <p *ngFor="let comment of frame.comments">{{ comment.text }}</p>
     </th>
     <td>
-      <input type="file" name="image" id="i" (change)="addImageFile($event)" />
-      <button (click)="uloadImage(frame._id)">submit</button>
+      <input
+        *ngFor="let upload of frame.coordinates"
+        type="file"
+        name="image"
+        id="i"
+        (change)="addImageFile($event)"
+      />
+      <button class="px-3 py-2 bg-teal-300" (click)="uloadImage(frame._id)">
+        submit
+      </button>
     </td>
     <td><button (click)="like(frame._id)">like</button></td>
     <th><button (click)="share(frame._id)">share</button></th>

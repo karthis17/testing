@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FramService } from '../service/fram.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ export class FramesComponent {
 
   farmeFile!: File;
 
-  imageFile!: File;
+  imageFile: File[] = [];
 
   frameName!: string;
 
@@ -26,6 +26,28 @@ export class FramesComponent {
   canvasWidth!: number;
   canvasHeight!: number;
   resIma: any;
+
+  size: any = 0;
+
+  width: number = 720;
+  height: number = 720;
+
+  constructor(private cdr: ChangeDetectorRef, private frame: FramService) { }
+
+  canvasSizeOptions: { width: number, height: number }[] = [
+    { width: 720, height: 720 }, // Facebook Profile Picture (recommended)
+    { width: 820, height: 312 }, // Facebook Cover Photo
+    { width: 1080, height: 1080 }, // Instagram Post (square)
+    { width: 1080, height: 1350 }, // Instagram Post (portrait)
+    { width: 1080, height: 608 }, // Instagram Post (landscape)
+    { width: 1500, height: 500 }, // Twitter Header Photo
+    { width: 400, height: 400 }, // LinkedIn Profile Picture
+    { width: 1584, height: 396 }, // LinkedIn Cover Photo
+    { width: 1200, height: 300 }, // Website Banner/Header
+    { width: 1280, height: 720 },
+    { width: 800, height: 600 }
+  ];
+
 
   @ViewChild('canvasElement') canvasContainer!: ElementRef<HTMLCanvasElement>;
   private canvas: fabric.Canvas | undefined;
@@ -45,6 +67,7 @@ export class FramesComponent {
           this.canvasWidth = this.canvas.width ?? 0;
           this.canvasHeight = this.canvas.height ?? 0;
           const scaleFactor = Math.min(this.canvasWidth / img.width, this.canvasHeight / img.height);
+          console.log(scaleFactor)
           this.canvas.setBackgroundImage(img.src, this.canvas.renderAll.bind(this.canvas), {
             scaleX: scaleFactor,
             scaleY: scaleFactor,
@@ -60,16 +83,10 @@ export class FramesComponent {
 
   ngAfterViewInit() {
     this.canvas = new fabric.Canvas(this.canvasContainer.nativeElement);
-    this.canvas.on('object:modified', (event: any) => {
-      const modifiedObject = event.target;
-      if (modifiedObject && modifiedObject instanceof fabric.Rect) {
-        // Get the updated width and height directly from the modified object
-        const width = (modifiedObject.width ?? 0) * (modifiedObject.scaleX ?? 1); // Use 0 as default width if width is undefined
-        const height = (modifiedObject.height ?? 0) * (modifiedObject.scaleY ?? 1); // Use 0 as default height if height is undefined
-        console.log(`Square X: ${modifiedObject.left}, Y: ${modifiedObject.top}, Width: ${width}, Height: ${height}`);
-      }
-    });
+    this.setSize(); // Initialize canvas size
+    this.canvas.on('object:modified', this.logSquareProperties.bind(this));
   }
+
 
 
 
@@ -102,8 +119,23 @@ export class FramesComponent {
     }
   }
 
+  setSize() {
+    this.width = this.canvasSizeOptions[this.size].width;
+    this.height = this.canvasSizeOptions[this.size].height;
+    const canvas = this.canvasContainer.nativeElement;
+    canvas.width = this.width;
+    canvas.height = this.height;
+    this.canvas?.setDimensions({ width: this.width, height: this.height }); // Update Fabric.js canvas dimensions
+    this.canvas?.renderAll(); // Redraw canvas content
+    this.cdr.detectChanges(); // Trigger change detection
+  }
+
+
+
+
   ngOnInit(): void {
-    this.getData()
+    this.getData();
+
   }
 
 
@@ -118,17 +150,16 @@ export class FramesComponent {
     this.farmeFile = e.target.files[0];
   }
   addImageFile(e: any) {
-    this.imageFile = e.target.files[0];
+    this.imageFile.push(e.target.files[0]);
   }
 
-  constructor(private frame: FramService) { }
 
   submit() {
-    let size;
+    let size = [];
     for (const square of this.squares) {
       const width = (square.width ?? 0) * (square.scaleX ?? 1);
       const height = (square.height ?? 0) * (square.scaleY ?? 1);
-      size = { x: square.left, y: square.top, width, height };
+      size.push({ x: square.left, y: square.top, width, height });
     }
 
     console.log(this.frameName, this.farmeFile, { widht: this.canvasWidth, height: this.canvasHeight }, size)

@@ -16,25 +16,25 @@ export class FramService {
     const formData = new FormData;
 
     formData.append('frameName', fileName);
-    formData.append('frameW', frame_size.width);
-    formData.append('frameH', frame_size.height);
-    formData.append('x', coordinates.x);
-    formData.append('y', coordinates.y);
-    formData.append('coordinateW', coordinates.width);
-    formData.append('coordinateH', coordinates.height);
+
+    formData.append('frame_size', JSON.stringify(frame_size));
+    formData.append('coordinates', JSON.stringify(coordinates));
     formData.append('frame', file);
 
     return this.http.post("http://localhost:3000/api/frame/upload-frame", formData, _options);
 
   }
-  uploadImage(file: File, id: any) {
+  uploadImage(files: File[], id: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
     const formData = new FormData;
 
-    formData.append('image', file);
+    files.forEach(file => {
+
+      formData.append('image', file);
+    })
     formData.append('frame_id', id);
 
     return this.http.post("http://localhost:3000/api/frame/upload-image", formData, _options);
