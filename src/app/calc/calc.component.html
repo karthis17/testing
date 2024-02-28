@@ -7,6 +7,7 @@
     <option value="friend">friend</option>
   </select> </label
 ><br />
+<img *ngIf="showUpdateButton" class="max-h-64" [src]="file" alt="" srcset="" />
 <p>Upload resultImage : <input type="file" (change)="addFile($event)" /></p>
 Enter min percentage: <input type="number" [(ngModel)]="min" /><br />
 Enter max percentage: <input type="number" [(ngModel)]="max" /> <br />
@@ -17,12 +18,32 @@ Enter max percentage: <input type="number" [(ngModel)]="max" /> <br />
   </label>
 </ng-container>
 
-<button (click)="textList.push(' ')">Add text</button>
+<button
+  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+  (click)="textList.push(' ')"
+>
+  Add text
+</button>
 
-<button (click)="selectedType === 'love' ? submit() : submitFr()">
+<button
+  (click)="selectedType === 'love' ? submit() : submitFr()"
+  *ngIf="!showUpdateButton"
+  class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
+>
   submit
 </button>
 
+<ng-container *ngIf="showUpdateButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
 <h2>Love Calculator</h2>
 <label for="name1">
   Enter name 1 <input type="text" id="name1" [(ngModel)]="name1"
@@ -50,3 +71,48 @@ Enter max percentage: <input type="number" [(ngModel)]="max" /> <br />
   <p>friends</p>
   <p>{{ result.name2 }}</p>
 </ng-container>
+
+<table class="table">
+  <tr>
+    <th>_id</th>
+    <th>min</th>
+    <th>max</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let fr of friendCalc">
+    <td>{{ fr._id }}</td>
+    <td>{{ fr.minPercentage }}</td>
+    <td>{{ fr.maxPercentage }}</td>
+    <td>
+      <i
+        (click)="delete(fr._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i (click)="setUpdate(fr)" class="text-teal-500 bi bi-pencil-square"></i>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>_id</th>
+    <th>min</th>
+    <th>max</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let lov of loveCalc">
+    <td>{{ lov._id }}</td>
+    <td>{{ lov.minPercentage }}</td>
+    <td>{{ lov.maxPercentage }}</td>
+    <td>
+      <i
+        (click)="delete(lov._id, true)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        (click)="setUpdate(lov, true)"
+        class="text-teal-500 bi bi-pencil-square"
+      ></i>
+    </td>
+  </tr>
+</table>

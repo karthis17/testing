@@ -21,14 +21,20 @@ export class FunQuizzesComponent {
   ques: any;
   result: any;
   last: any;
+  id: any;
+  showUpdateButton: boolean = false;
 
   ngOnInit() {
 
+    this.getAll()
+
+  }
+
+  getAll() {
     this.fun.getAll().subscribe(fun => {
       console.log(fun);
       this.data = fun;
     })
-
   }
 
   setAnswer(index: number): void {
@@ -45,7 +51,7 @@ export class FunQuizzesComponent {
 
   submit() {
     console.log(this.options);
-    this.fun.addQuestion(this.question, this.options).subscribe(data => { console.log(data) })
+    this.fun.addQuestion(this.question, this.options).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
 
@@ -57,6 +63,39 @@ export class FunQuizzesComponent {
     return index;
   }
 
+  setUpdate(data: any) {
+    console.log(data);
+    this.options = data.options;
+    this.id = data._id;
+    this.showUpdateButton = true;
+    this.question = data.question;
 
+    this.options.forEach((option, i) => {
+      if (option.answer) {
+        this.last = i;
+        document.getElementById('r' + i)?.setAttribute('checked', 'checked');
+        console.log(this.last);
+        console.log(option.answer);
+        return;
+      }
+    })
+  }
+
+  close() {
+    this.options = [{ option: '', answer: false }];
+    this.id = '';
+    this.showUpdateButton = false;
+    this.question = '';
+    this.last = '';
+  }
+
+  delete(id: any) {
+
+    this.fun.delete(id).subscribe((data: any) => { console.log(data); this.getAll() })
+  }
+
+  update() {
+    this.fun.update(this.id, this.question, this.options).subscribe((data: any) => { console.log(data); this.getAll() });
+  }
 
 }

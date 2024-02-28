@@ -2,15 +2,109 @@
   <h1>add letter and meaning</h1>
   <p>Enter letter <input type="text" [(ngModel)]="letter" /></p>
   <p>Enter meaning <input type="text" [(ngModel)]="meaning" /></p>
-  <button (click)="submitNameMeaning()">submit</button>
+  <button
+    (click)="submitNameMeaning()"
+    *ngIf="!showUpdateButton"
+    class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
+  >
+    submit
+  </button>
+
+  <ng-container *ngIf="showUpdateButton">
+    <button
+      class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+      (click)="updateMean()"
+    >
+      update
+    </button>
+    <button
+      class="px-4 py-2 rounded-md bg-red-600 text-white"
+      (click)="close()"
+    >
+      close
+    </button>
+  </ng-container>
 </div>
+
+<h1>Name meaning</h1>
+<table>
+  <tr>
+    <th>_id</th>
+    <th>letter</th>
+    <th>meaning</th>
+    <th>action</th>
+  </tr>
+
+  <tr *ngFor="let name of nameMeaningData">
+    <td>{{ name._id }}</td>
+    <td>{{ name.letter }}</td>
+    <td>{{ name.meaning }}</td>
+    <td>
+      <i
+        (click)="deleteMean(name._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        (click)="setUpdateMean(name)"
+        class="text-teal-500 bi bi-pencil-square"
+      ></i>
+    </td>
+  </tr>
+</table>
 
 <div>
   <h1>add name and fact</h1>
   <p>Enter name <input type="text" [(ngModel)]="name" /></p>
   <p>Enter fact <input type="text" [(ngModel)]="fact" /></p>
-  <button (click)="submitNameFact()">submit</button>
+  <button
+    (click)="submitNameFact()"
+    *ngIf="!showUpdateButtonf"
+    class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
+  >
+    submit
+  </button>
+
+  <ng-container *ngIf="showUpdateButtonf">
+    <button
+      class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+      (click)="updateFact()"
+    >
+      update
+    </button>
+    <button
+      class="px-4 py-2 rounded-md bg-red-600 text-white"
+      (click)="close()"
+    >
+      close
+    </button>
+  </ng-container>
 </div>
+
+<h1>Name fact</h1>
+<table>
+  <tr>
+    <th>_id</th>
+    <th>name</th>
+    <th>fact</th>
+    <th>action</th>
+  </tr>
+
+  <tr *ngFor="let name of nameFactData">
+    <td>{{ name._id }}</td>
+    <td>{{ name.name }}</td>
+    <td>{{ name.fact }}</td>
+    <td>
+      <i
+        (click)="deleteFact(name._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        (click)="setUpdateFact(name)"
+        class="text-teal-500 bi bi-pencil-square"
+      ></i>
+    </td>
+  </tr>
+</table>
 
 <div>
   <h1>name meaning</h1>

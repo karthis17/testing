@@ -45,12 +45,31 @@
 
 <button (click)="options.push(' ')">add option</button>
 
-<button (click)="submit()">submit</button>
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
+
+<ng-container *ngIf="showUpdateButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
 
 <table border="1">
   <tr>
     <th>_id</th>
     <th>question</th>
+    <th>action</th>
     <th>action</th>
   </tr>
 
@@ -58,6 +77,13 @@
     <td>{{ q._id }}</td>
     <td>{{ q.question }}</td>
     <td><button (click)="play(q)">play</button></td>
+    <td>
+      <i
+        (click)="delete(q._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i (click)="setUpdate(q)" class="text-teal-500 bi bi-pencil-square"></i>
+    </td>
   </tr>
 </table>
 

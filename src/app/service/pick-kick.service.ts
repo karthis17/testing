@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -30,5 +30,28 @@ export class PickKickService {
   play(id: any, option: any) {
     return this.http.post("http://localhost:3000/api/pick-and-kick/play", { questionId: id, option });
   }
+
+  delete(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.delete('http://localhost:3000/api/pick-and-kick/delete/' + id, _options);
+  }
+
+  update(id: any, option1: any, option2: any, point1: any, point2: any, questions: any, filePath: any) {
+    const formData = new FormData();
+
+    formData.append('id', id)
+    formData.append('question', questions)
+    formData.append('option1', option1)
+    formData.append('option2', option2)
+    formData.append('point1', point1)
+    formData.append('point2', point2)
+    formData.append('filePath', filePath)
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.put("http://localhost:3000/api/pick-and-kick/update", formData, _options);
+
+  }
+
 
 }

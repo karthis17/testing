@@ -7,7 +7,46 @@
   </select>
 </label>
 <input type="file" name="flame" id="f" (change)="addFile($event)" />
-<button (click)="submit()">submit</button>
+<button
+  (click)="submit()"
+  *ngIf="!showButton"
+  class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
+
+<ng-container *ngIf="showButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
+
+<table>
+  <tr>
+    <th>_id</th>
+    <th>flames word</th>
+    <th>image</th>
+    <th>action</th>
+  </tr>
+  <tr *ngFor="let da of data">
+    <td>{{ da._id }}</td>
+    <td>{{ da.flamesWord }}</td>
+    <td>{{ da.imageUrl }}</td>
+    <td>
+      <i
+        (click)="delete(da._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i (click)="setUpdate(da)" class="text-teal-500 bi bi-pencil-square"></i>
+    </td>
+  </tr>
+</table>
 
 <h2>flames</h2>
 <label for="name1">

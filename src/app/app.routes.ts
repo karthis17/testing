@@ -12,6 +12,7 @@ import { NameComponent } from './name/name.component';
 import { PickNdKickComponent } from './pick-nd-kick/pick-nd-kick.component';
 import { GuessComponent } from './guess/guess.component';
 import { RiddlesComponent } from './riddles/riddles.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     { path: '', component: PostComponent },
@@ -27,4 +28,5 @@ export const routes: Routes = [
     { path: 'pick-kick', component: PickNdKickComponent },
     { path: 'guess', component: GuessComponent },
     { path: 'riddles', component: RiddlesComponent },
+    { path: 'login', component: LoginComponent },
 ];

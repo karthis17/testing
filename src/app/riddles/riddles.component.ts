@@ -25,11 +25,20 @@ export class RiddlesComponent {
   result: any;
 
   data: any;
+  id: any;
+
+  showUpdateButton: boolean = false;
+
+
 
   ngOnInit(): void {
-    this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
+    this.getAll()
   }
 
+  getAll() {
+    this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
+
+  }
   submit() {
     console.log(this.question, this.answer);
     this.riddlesService.addRiddle(this.question, this.answer).subscribe(r => console.log(r));
@@ -41,6 +50,26 @@ export class RiddlesComponent {
 
   addComment(id: any) {
     this.riddlesService.comment(id, this.comment).subscribe((r: any) => { console.log(r); });
+  }
+
+  delete(id: any) {
+    this.riddlesService.deleteRiddle(id).subscribe(data => {
+      console.log(data); this.getAll();
+    })
+  }
+
+  setUpdate(data: any) {
+
+    this.question = data.question;
+    this.answer = data.answer;
+    this.id = data._id;
+    this.showUpdateButton = true;
+  }
+
+  update() {
+    this.riddlesService.updateRiddle(this.id, this.question, this.answer).subscribe(data => {
+      console.log(data); this.getAll();
+    })
   }
 
 }

@@ -8,7 +8,7 @@ export class CalcService {
 
   constructor(private http: HttpClient) { }
 
-  addLove(text: string[], min: any, max: any, file: File) {
+  addLove(text: string[], min: any, max: any, file: File | string) {
     const formData = new FormData();
     formData.append('image', file);
     text.forEach(text => {
@@ -23,7 +23,7 @@ export class CalcService {
 
   }
 
-  addFriend(text: string[], min: any, max: any, file: File) {
+  addFriend(text: string[], min: any, max: any, file: File | string) {
 
     const formData = new FormData();
     formData.append('image', file);
@@ -48,6 +48,55 @@ export class CalcService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
     return this.http.post("http://localhost:3000/api/love-friendship-calc/friend-calculate", { name1, name2 }, _options)
+  }
+
+  deleteFriendCalc(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.delete('http://localhost:3000/api/love-friendship-calc/friendCalc/delete/' + id, _options);
+  }
+
+  deleteLoveCalc(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.delete('http://localhost:3000/api/love-friendship-calc/loveCalc/delete/' + id, _options);
+  }
+
+  getLoveCalc() {
+    return this.http.get('http://localhost:3000/api/love-friendship-calc/loveCalc/get-all')
+  }
+  getFriendCalc() {
+    return this.http.get('http://localhost:3000/api/love-friendship-calc/friendCalc/get-all')
+  }
+
+  updateFriendCalc(text: string[], min: any, max: any, file: any, filePath: any, id: any) {
+    const formData = new FormData();
+    formData.append('image', file);
+    text.forEach(text => {
+      formData.append('text', text);
+    });
+    formData.append('minPercentage', min);
+    formData.append('id', id);
+    formData.append('maxPercentage', max);
+    formData.append('filePath', filePath);
+
+    return this.http.put("http://localhost:3000/api/love-friendship-calc/friendCalc/update", formData);
+
+  }
+
+  updateLoveCalc(text: string[], min: any, max: any, file: any, filePath: any, id: any) {
+    const formData = new FormData();
+    formData.append('image', file);
+    text.forEach(text => {
+      formData.append('text', text);
+    });
+    formData.append('minPercentage', min);
+    formData.append('id', id);
+    formData.append('maxPercentage', max);
+    formData.append('filePath', filePath);
+
+    return this.http.put("http://localhost:3000/api/love-friendship-calc/loveCalc/update", formData);
+
   }
 
 }

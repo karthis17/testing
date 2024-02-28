@@ -22,7 +22,19 @@ export class NameComponent {
   result!: any;
   resultFact!: any;
 
+  nameMeaningData: any;
+  nameFactData: any;
+
+  showUpdateButton: boolean = false;
+  showUpdateButtonf: boolean = false;
+
+  id: any;
+
   constructor(private nameSer: NameService) { }
+
+  ngOnInit() {
+    this.getAll();
+  }
 
   submitNameMeaning() {
     console.log(this.letter, this.meaning)
@@ -43,6 +55,60 @@ export class NameComponent {
   getFact() {
     this.nameSer.findfact(this.nameFact).subscribe(data => { console.log(data); this.resultFact = data });
 
+  }
+
+  getAll() {
+
+    this.nameSer.getNameMen().subscribe(data => { this.nameMeaningData = data });
+    this.nameSer.getNameFact().subscribe(data => { this.nameFactData = data });
+    this.close()
+  }
+
+  setUpdateMean(data: any) {
+    this.showUpdateButton = true;
+
+    this.letter = data.letter;
+    this.meaning = data.meaning;
+    this.id = data._id;
+
+  }
+
+  close() {
+    this.showUpdateButton = false;
+    this.showUpdateButtonf = false;
+
+    this.letter = '';
+    this.meaning = '';
+    this.id = '';
+    this.name = '';
+    this.fact = '';
+
+  }
+
+  setUpdateFact(data: any) {
+    this.showUpdateButtonf = true;
+
+    this.name = data.name;
+    this.fact = data.fact;
+    this.id = data._id;
+
+  }
+
+  deleteMean(id: any) {
+    this.nameSer.deleteNameMean(id).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+
+  deleteFact(id: any) {
+    this.nameSer.deleteNameFact(id).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+  updateFact() {
+    this.nameSer.updateFact(this.name, this.fact, this.id).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+  updateMean() {
+    this.nameSer.updateMeaning(this.letter, this.meaning, this.id).subscribe(data => { console.log(data); this.getAll() });
   }
 
 }

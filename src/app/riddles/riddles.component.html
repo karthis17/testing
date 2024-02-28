@@ -3,18 +3,49 @@
 <p>Enter qestion: <input type="text" [(ngModel)]="question" /></p>
 <p>Enter answer: <input type="text" [(ngModel)]="answer" /></p>
 
-<button (click)="submit()">submit</button>
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
 
+<ng-container *ngIf="showUpdateButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button
+    class="px-4 py-2 rounded-md bg-red-600 text-white"
+    (click)="showUpdateButton = false"
+  >
+    close
+  </button>
+</ng-container>
 <table border="1">
   <tr>
     <th>_id</th>
     <th>question</th>
+    <th>action</th>
     <th>action</th>
   </tr>
   <tr *ngFor="let riddle of riddles">
     <td>{{ riddle._id }}</td>
     <td>{{ riddle.question }}</td>
     <td><button (click)="data = riddle">play</button></td>
+    <td>
+      <i
+        (click)="delete(riddle._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        (click)="setUpdate(riddle)"
+        class="text-teal-500 bi bi-pencil-square"
+      ></i>
+    </td>
   </tr>
 </table>
 

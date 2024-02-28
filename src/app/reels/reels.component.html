@@ -1,13 +1,32 @@
 <h2>Add reel</h2>
 
+<img *ngIf="fileUrl" src="{{ fileUrl }}" alt="" srcset="" class="max-h-96" />
+
 <p>
   upload reel: <input type="file" accept="/video" (change)="addFile($event)" />
 </p>
 
-<p>Enter title: <input type="text" name="" id="title" [(ngModel)]="title" /></p>
 <p>
-  Enter discription:
+  Enter title in english:
+  <input type="text" name="" id="title" [(ngModel)]="title" />
+</p>
+<p>
+  Enter discription in english:
   <input type="text" name="" id="des" [(ngModel)]="discription" />
+</p>
+
+<p *ngFor="let ti of Title; let i = index">
+  Enter title in {{ ti.lang }} language:
+  <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
+</p>
+<p *ngFor="let dis of Discription; let i = index">
+  Enter discription in {{ dis.lang }} language:
+  <input
+    type="text"
+    name=""
+    id="des{{ i }}"
+    [(ngModel)]="Discription[i].text"
+  />
 </p>
 <p>
   Enter category: <input type="text" name="" id="cate" [(ngModel)]="category" />
@@ -24,7 +43,28 @@
   ></textarea>
 </p>
 
-<button (click)="submit()">submit</button>
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
+
+<ng-container *ngIf="showUpdateButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button
+    class="px-4 py-2 rounded-md bg-red-600 text-white"
+    (click)="showUpdateButton = false"
+  >
+    close
+  </button>
+</ng-container>
 
 <table border="1">
   <tr>
@@ -36,6 +76,7 @@
     <th>likes</th>
     <th>share</th>
     <th>comments</th>
+    <th>action</th>
     <th>action</th>
     <th>action</th>
     <th>action</th>
@@ -60,5 +101,12 @@
         placeholder="enter comment"
       /><button (click)="comm(da._id, i)">comment</button>
     </th>
+    <td>
+      <i
+        (click)="delete(da._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i (click)="setUpdate(da)" class="text-teal-500 bi bi-pencil-square"></i>
+    </td>
   </tr>
 </table>

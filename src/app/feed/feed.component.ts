@@ -20,8 +20,14 @@ export class FeedComponent {
   category!: string;
   data: any;
   comment: any[] = [];
+  showUpdateButton: boolean = false;
+
 
   file!: File;
+
+  imageUrl!: string;
+  imagePath!: string;
+  id: any;
 
   addFile(e: any): void {
     this.file = e.target.files[0];
@@ -50,6 +56,31 @@ export class FeedComponent {
   }
   comm(id: any, index: number) {
     this.feeds.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getAll() });
+  }
+
+  delete(id: any) {
+    this.feeds.deleteFeed(id).subscribe(data => {
+      console.log(data); this.getAll();
+    })
+  }
+
+  setUpdate(data: any) {
+
+    this.showUpdateButton = true;
+    console.log(data)
+    this.title = data.title;
+    this.discription = data.description;
+    this.category = data.category;
+    this.imageUrl = data.imageUrl;
+    this.imagePath = data.imagePath;
+    this.id = data._id;
+
+  }
+
+  update() {
+    this.feeds.updateFeed(this.file, this.discription, this.category, this.title, this.imageUrl, this.imagePath, this.id).subscribe(data => {
+      console.log(data); this.getAll();
+    })
   }
 
 }

@@ -28,9 +28,15 @@ export class GuessComponent {
 
   ques: any;
 
+  showUpdateButton: boolean = false;
+
   result: any;
 
   ngOnInit(): void {
+    this.getAll()
+  }
+
+  getAll() {
     this.guesss.getAll().subscribe(guess => {
       this.data = guess;
     })
@@ -63,7 +69,45 @@ export class GuessComponent {
   }
 
   submit() {
-    this.guesss.addQuestion(this.question, this.answer, this.options).subscribe(response => { console.log(response) })
+    this.guesss.addQuestion(this.question, this.answer, this.options, this.questionType, this.optionType).subscribe(response => { console.log(response), this.getAll() })
+  }
+
+  delete(id: any) {
+
+    // this.servic.delete(id).subscribe((data: any) => { console.log(data); this.getAl() })
+    this.guesss.delete(id).subscribe((data: any) => {
+      console.log(data); this.getAll()
+    });
+  }
+  setUpdate(data: any) {
+    //     console.log(data);
+    // this.options = data.option
+    //     this.id = data._id;
+    //     this.filePath = data.filePath;
+    //     this.showUpdateButton = true;
+    //     this.uploadedImage = data.question;
+    //     this.question = data.question;
+    this.question = data.question;
+    this.options = data.options.map((option: any) => { return option.option });
+  }
+
+  close() {
+    // this.option1 = ''
+    // this.option2 = '';
+    // this.point1 = 0;
+    // this.point2 = 0;
+    // this.id = '';
+    // this.filePath = '';
+    // this.showUpdateButton = false;
+    // this.uploadedImage = '';
+    // this.question = '';
+  }
+
+  update() {
+    // this.servic.update(this.id, this.option1, this.option2, this.point1, this.point2, this.question, this.filePath).subscribe(data => {
+    //   console.log(data);
+    //   this.getAl()
+    // })
   }
 
 }

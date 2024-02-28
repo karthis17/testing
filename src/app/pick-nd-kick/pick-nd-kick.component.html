@@ -1,21 +1,52 @@
 <h1>Add question</h1>
+<h1 *ngIf="uploadedImage">
+  Question image :<br />
+  <img class="max-h-64" [src]="uploadedImage" alt="" srcset="" />
+</h1>
 <p>Upload image : <input type="file" (change)="addFile($event)" /></p>
 <p>option 1 : <input type="text" [(ngModel)]="option1" /></p>
 <p>point : <input type="number" [(ngModel)]="point1" /></p>
 <p>option 2 : <input type="text" [(ngModel)]="option2" /></p>
 <p>point : <input type="number" [(ngModel)]="point2" /></p>
-<button (click)="submit()">Submit</button>
+
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+>
+  submit
+</button>
+
+<ng-container *ngIf="showUpdateButton">
+  <button
+    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
+    (click)="update()"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
 
 <table border="1">
   <tr>
     <th>id</th>
     <th>question</th>
     <th>action</th>
+    <th>action</th>
   </tr>
   <tr *ngFor="let res of all">
     <td>{{ res._id }}</td>
     <td>{{ res.question }}</td>
     <td><button (click)="showOtions(res)">play</button></td>
+    <td>
+      <i
+        (click)="delete(res._id)"
+        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i (click)="setUpdate(res)" class="text-teal-500 bi bi-pencil-square"></i>
+    </td>
   </tr>
 </table>
 

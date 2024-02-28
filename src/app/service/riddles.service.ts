@@ -29,4 +29,17 @@ export class RiddlesService {
     return this.http.post("http://localhost:3000/api/riddles/add-comment", { riddle_id, comment }, _options);
   }
 
+  deleteRiddle(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.delete('http://localhost:3000/api/riddles/delete/' + id, _options);
+  }
+
+  updateRiddle(riddle_id: any, question: any, answer: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+
+    return this.http.put('http://localhost:3000/api/riddles/update', { question, answer, riddle_id }, _options)
+  }
+
 }

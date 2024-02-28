@@ -26,30 +26,63 @@
   <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
 </div>
 <p>
-  Enter name fo the frame:
+  Enter name of the frame:
   <input type="text" [(ngModel)]="frameName" placeholder="enter" />
 </p>
 <input type="file" (change)="handleFileInput($event)" accept="image/*" />
 <button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="addSquare()">
   Add Square
 </button>
-<button
-  class="px-3 py-2 rounded-sm mx-3 bg-teal-200"
-  (click)="logSquareProperties()"
->
-  Log Square Properties
-</button>
 
-<button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="submit()">
+<div *ngFor="let sq of squares; let i = index" class="flex">
+  <p>User {{ i }}</p>
+  <i
+    (click)="removeSquare(i)"
+    class="text-red-500 px-3 bi cursor-pointer bi-trash-fill"
+  ></i>
+</div>
+
+<div class="flex flex-col w-80">
+  <input
+    *ngFor="let text of texts_container; let i = index; trackBy: trackByFn"
+    type="text"
+    [(ngModel)]="texts_container[i]"
+    required
+    class="min-w-0 flex-auto rounded-md border-0 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-black/5 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+    placeholder="Enter text"
+  />
+  <button
+    class="px-3 py-2 rounded-sm mx-3 bg-teal-200"
+    (click)="addTextBox(); texts_container.push('')"
+  >
+    Add text
+  </button>
+</div>
+
+<button
+  *ngIf="!showUpdateButton"
+  (click)="submit()"
+  class="px-4 py-2 m-3 bg-teal-500 rounded-md text-white"
+>
   submit
 </button>
 
+<ng-container *ngIf="showUpdateButton">
+  <button
+    (click)="update()"
+    class="px-4 py-2 m-3 rounded-md text-white mx-5 bg-teal-600"
+  >
+    update
+  </button>
+  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
+    close
+  </button>
+</ng-container>
+
 <table [border]="1">
   <tr>
-    <th>frame id</th>
     <th>frame name</th>
     <th>frame url</th>
-    <th>Uploads</th>
     <th>likes</th>
     <th>shares</th>
     <th>comment</th>
@@ -57,23 +90,12 @@
     <th>Action</th>
     <th>Action</th>
     <th>Action</th>
+    <th>Action</th>
   </tr>
   <tr *ngFor="let frame of data; let i = index">
-    <td>{{ frame._id }}</td>
     <td>{{ frame.frameName }}</td>
     <td>{{ frame.frameUrl }}</td>
-    <td>
-      <p *ngFor="let upload of frame.uploads">
-        <a
-          [href]="upload.image"
-          class="text-blue-800"
-          target="_blank"
-          rel="noopener noreferrer"
-          >{{ upload.image }}</a
-        >
-        <span>{{ upload.user }}</span>
-      </p>
-    </td>
+
     <td>
       <p *ngFor="let like of frame.likes">{{ like }}</p>
     </td>
@@ -81,26 +103,80 @@
     <th>
       <p *ngFor="let comment of frame.comments">{{ comment.text }}</p>
     </th>
+
     <td>
-      <input
-        *ngFor="let upload of frame.coordinates"
-        type="file"
-        name="image"
-        id="i"
-        (change)="addImageFile($event)"
-      />
-      <button class="px-3 py-2 bg-teal-300" (click)="uloadImage(frame._id)">
-        submit
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="like(frame._id)"
+      >
+        like
       </button>
     </td>
-    <td><button (click)="like(frame._id)">like</button></td>
-    <th><button (click)="share(frame._id)">share</button></th>
+    <th>
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="share(frame._id)"
+      >
+        share
+      </button>
+    </th>
     <th>
       <input
         type="text"
         [(ngModel)]="comment[i]"
         placeholder="enter comment"
-      /><button (click)="comm(frame._id, i)">comment</button>
+      /><button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="comm(frame._id, i)"
+      >
+        comment
+      </button>
     </th>
+    <td>
+      <button
+        class="rounded-md bg-teal-400 px-4 py-2"
+        (click)="setupload(frame)"
+      >
+        Upload
+      </button>
+    </td>
+    <td>
+      <i
+        (click)="delete(frame._id)"
+        class="text-red-500 px-3 bi cursor-pointer bi-trash-fill"
+      ></i>
+      <i
+        class="text-teal-500 px-3 cursor-pointer bi bi-pencil-square"
+        (click)="showUpdate(frame)"
+      ></i>
+    </td>
   </tr>
 </table>
+
+<div *ngIf="showUpload" class="m-10">
+  <ng-container *ngFor="let upload of showUpload.coordinates; let i = index">
+    <p>
+      upload image {{ i + 1 }}:
+      <input type="file" (change)="addImageFile($event, i)" />
+    </p>
+  </ng-container>
+  <p class="mt-5" *ngFor="let n of resTexts; let i = index">
+    Enter statement {{ i + 1 }} :<br />
+
+    <ng-container *ngFor="let m of n.text; let j = index; trackBy: trackByFn">
+      Enter name {{ j + 1 }}:
+      <input
+        class="border border-black"
+        type="text"
+        [(ngModel)]="resTexts[i].text[j]"
+      /><br />
+    </ng-container>
+  </p>
+
+  <button
+    class="rounded-md bg-teal-700 text-white"
+    (click)="uloadImage(showUpload._id)"
+  >
+    Submit
+  </button>
+</div>

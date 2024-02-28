@@ -23,13 +23,22 @@ export class FlamesComponent {
 
   }
 
+  ngOnInit() {
+    this.getAll()
+  }
+
   selectedFlames: string = '';
-  flamesImg!: File;
+  flamesImg: any;
   flames = ['Friends', 'Love', 'Affection', 'Marriage', 'Enmity', 'Sibling'];
 
   name1: string = '';
   name2: string = '';
   result: any;
+  data: any;
+
+  showButton: boolean = false;
+  filePath: any;
+  id: any;
 
   addFile(e: any) {
     this.flamesImg = e.target.files[0];
@@ -39,7 +48,40 @@ export class FlamesComponent {
     this.flame.flamesFind(this.name1, this.name2).subscribe((flames: any) => {
       console.log(flames);
       this.result = flames;
+      this.getAll()
     }
     );
   }
+
+  getAll() {
+    this.flame.getAll().subscribe(data => { this.data = data })
+    this.close();
+  }
+
+  delete(id: any) {
+    this.flame.delete(id).subscribe(data => { this.getAll() });
+  }
+
+  setUpdate(data: any) {
+    this.showButton = true;
+    this.selectedFlames = data.flamesWord;
+    this.flamesImg = data.imageUrl;
+    this.id = data._id;
+    this.filePath = data.imagePath;
+  }
+
+  update() {
+
+    this.flame.update(this.selectedFlames, this.flamesImg, this.filePath, this.id).subscribe(data => { console.log(data); this.getAll() });
+
+  }
+
+  close() {
+    this.showButton = false;
+    this.selectedFlames = '';
+    this.flamesImg = '';
+    this.id = '';
+    this.filePath = '';
+  }
+
 }
