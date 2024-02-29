@@ -13,6 +13,8 @@ import { PickNdKickComponent } from './pick-nd-kick/pick-nd-kick.component';
 import { GuessComponent } from './guess/guess.component';
 import { RiddlesComponent } from './riddles/riddles.component';
 import { LoginComponent } from './login/login.component';
+import { RandomImageComponent } from './random-image/random-image.component';
+import { PercentageTypeComponent } from './percentage-type/percentage-type.component';
 
 export const routes: Routes = [
     { path: '', component: PostComponent },
@@ -29,4 +31,6 @@ export const routes: Routes = [
     { path: 'guess', component: GuessComponent },
     { path: 'riddles', component: RiddlesComponent },
     { path: 'login', component: LoginComponent },
+    { path: 'randome-image', component: RandomImageComponent },
+    { path: 'percentage-type', component: PercentageTypeComponent },
 ];

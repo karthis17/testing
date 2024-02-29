@@ -33,6 +33,8 @@ export class AppComponent {
     { text: "Guess", link: "/guess" },
     { text: "Pick Kick", link: "/pick-kick" },
     { text: "Riddles", link: "/riddles" },
+    { text: "Randome image", link: "/randome-image" },
+    { text: "Percentage Type", link: "/percentage-type" },
   ]
 
 
