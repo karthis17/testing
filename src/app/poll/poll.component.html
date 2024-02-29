@@ -22,12 +22,23 @@
     />
     Image</label
   >
-  <input
-    *ngIf="questionType === 'text'"
-    type="text"
-    placeholder="Enter question"
-    [(ngModel)]="question"
-  />
+
+  <ng-container *ngIf="questionType === 'text'">
+    <p>
+      Enter question in english : <input type="text" [(ngModel)]="question" />
+    </p>
+    <p *ngFor="let ti of questionDifLang; let i = index">
+      Enter question in {{ ti.lang }} language:
+      <input
+        *ngIf="questionType === 'text'"
+        type="text"
+        name=""
+        id="title{{ i }}"
+        [(ngModel)]="questionDifLang[i].text"
+      />
+    </p>
+  </ng-container>
+
   <input
     *ngIf="questionType === 'image'"
     type="file"

@@ -43,8 +43,28 @@
 
 <div style="margin-top: 5rem">
   <h1>upload post</h1>
-  <p>enter title <input type="text" [(ngModel)]="title" /></p>
-  <p>enter description <input type="text" [(ngModel)]="description" /></p>
+  <p>
+    Enter title in english:
+    <input type="text" name="" id="title" [(ngModel)]="title" />
+  </p>
+  <p>
+    Enter discription in english:
+    <input type="text" name="" id="des" [(ngModel)]="description" />
+  </p>
+
+  <p *ngFor="let ti of Title; let i = index">
+    Enter title in {{ ti.lang }} language:
+    <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
+  </p>
+  <p *ngFor="let dis of Discription; let i = index">
+    Enter discription in {{ dis.lang }} language:
+    <input
+      type="text"
+      name=""
+      id="des{{ i }}"
+      [(ngModel)]="Discription[i].text"
+    />
+  </p>
   <p>
     select type
     <select name="type" id="t" title="select type" [(ngModel)]="type">

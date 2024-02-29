@@ -8,7 +8,7 @@ export class FramService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFrame(fileName: string, file: File, frame_size: any, coordinates: any, textBox: any[]) {
+  uploadFrame(fileName: string, file: File, frame_size: any, coordinates: any, textBox: any[], titleDifLang: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -20,6 +20,7 @@ export class FramService {
     formData.append('frame_size', JSON.stringify(frame_size));
     formData.append('coordinates', JSON.stringify(coordinates));
     formData.append('frame', file);
+    formData.append('titleDifLang', JSON.stringify(titleDifLang));
 
     return this.http.post("http://localhost:3000/api/frame/upload-frame", formData, _options);
 
@@ -48,7 +49,7 @@ export class FramService {
   }
 
   getFrames() {
-    return this.http.get("http://localhost:3000/api/frame/get-frames");
+    return this.http.get("http://localhost:3000/api/frame/get-frames", { params: { lang: 'hindi' } });
   }
 
   like(id: any) {

@@ -1,28 +1,14 @@
 <h1 class="text-lg">upload question</h1>
 
 <p>Enter the question: <input type="text" [(ngModel)]="question" /></p>
-<p *ngFor="let ti of questionDif; let i = index">
-  Enter question in {{ ti.lang }} language:
-  <input
-    type="text"
-    name=""
-    id="title{{ i }}"
-    [(ngModel)]="questionDif[i].text"
-  />
-</p>
 
-<div class="m-3" *ngFor="let res of result; let i = index">
-  <p class="my-2">Add text, range {{ i + 1 }}</p>
-  <p>
-    Enter Range from : <input type="text" [(ngModel)]="result[i].rangeFrom" />
-  </p>
-  <p>Enter Range to : <input type="text" [(ngModel)]="result[i].rangeTo" /></p>
-  <p>Enter text : <input type="text" [(ngModel)]="result[i].text" /></p>
+<div class="m-3" *ngFor="let res of texts; let i = index; trackBy: trackByFn">
+  <p>Enter text {{ i + 1 }}: <input type="text" [(ngModel)]="texts[i]" /></p>
 </div>
 
 <button
   class="px-4 py-2 mx-3 bg-teal-500 rounded-md text-white"
-  (click)="result.push({ rangeFrom: 0, rangeTo: 1, text: '' })"
+  (click)="texts.push('')"
 >
   Add Text
 </button>
@@ -95,17 +81,7 @@
   </tr>
 </table>
 
-<div *ngIf="play">
+<div class="m-5" *ngIf="play">
   <p>{{ play.question }}</p>
-  <p>
-    <input type="range" [(ngModel)]="range" /> <span>{{ range }}</span>
-  </p>
-  <button
-    (click)="submitAns(play._id)"
-    class="px-4 py-2 bg-teal-500 rounded-md text-white"
-  >
-    submit
-  </button>
+  <p *ngFor="let text of play.texts; let i = index">{{ i + 1 }}) {{ text }}</p>
 </div>
-
-<p *ngIf="ress">{{ ress.text }}</p>

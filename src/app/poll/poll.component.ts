@@ -30,6 +30,20 @@ export class PollComponent {
 
   constructor(private poll: PollService) { }
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDifLang: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
 
   ngOnInit() {
     this.getData()
@@ -38,7 +52,7 @@ export class PollComponent {
   getData() {
     this.poll.getAllpoll().subscribe((data: any) => {
       console.log(data);
-      this.polls = data.poll;
+      this.polls = data;
     });
   }
 
@@ -69,7 +83,7 @@ export class PollComponent {
   }
 
   submit() {
-    this.poll.addPoll(this.question, this.textOptions).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
+    this.poll.addPoll(this.question, this.textOptions, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
   }
   submitImg() {
     console.log(this.imgOptions)

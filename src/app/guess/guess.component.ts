@@ -32,6 +32,21 @@ export class GuessComponent {
 
   result: any;
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDif: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+
   ngOnInit(): void {
     this.getAll()
   }
@@ -69,7 +84,7 @@ export class GuessComponent {
   }
 
   submit() {
-    this.guesss.addQuestion(this.question, this.answer, this.options, this.questionType, this.optionType).subscribe(response => { console.log(response), this.getAll() })
+    this.guesss.addQuestion(this.question, this.answer, this.options, this.questionType, this.optionType, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(response => { console.log(response), this.getAll() })
   }
 
   delete(id: any) {

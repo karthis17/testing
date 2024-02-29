@@ -41,6 +41,20 @@ export class FramesComponent {
   uploadedFrameUrl: any;
   uploadedFramePath: any;
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  Title: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
   constructor(private cdr: ChangeDetectorRef, private frame: FramService) { }
 
   canvasSizeOptions: { width: number, height: number }[] = [
@@ -230,7 +244,7 @@ export class FramesComponent {
       textS.push({ x: text.left, y: text.top, width, height, text: this.texts_container[i++] });
     }
 
-    this.frame.uploadFrame(this.frameName, this.farmeFile, { width: this.canvasWidth, height: this.canvasHeight }, size, textS).subscribe(frame => {
+    this.frame.uploadFrame(this.frameName, this.farmeFile, { width: this.canvasWidth, height: this.canvasHeight }, size, textS, this.Title.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => {
       this.squares = [];
       textS = [];
       this.texts_container = [];

@@ -29,7 +29,32 @@ export class RiddlesComponent {
 
   showUpdateButton: boolean = false;
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDif: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
 
+  answerDif: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
 
   ngOnInit(): void {
     this.getAll()
@@ -41,7 +66,7 @@ export class RiddlesComponent {
   }
   submit() {
     console.log(this.question, this.answer);
-    this.riddlesService.addRiddle(this.question, this.answer).subscribe(r => console.log(r));
+    this.riddlesService.addRiddle(this.question, this.answer, this.questionDif.filter(dis => { if (dis.text) return dis; else return false }), this.answerDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(r => console.log(r));
   }
 
   checkAnswer(id: any) {

@@ -15,6 +15,7 @@ import { RiddlesComponent } from './riddles/riddles.component';
 import { LoginComponent } from './login/login.component';
 import { RandomImageComponent } from './random-image/random-image.component';
 import { PercentageTypeComponent } from './percentage-type/percentage-type.component';
+import { RandomTextComponent } from './random-text/random-text.component';
 
 export const routes: Routes = [
     { path: '', component: PostComponent },
@@ -32,5 +33,6 @@ export const routes: Routes = [
     { path: 'riddles', component: RiddlesComponent },
     { path: 'login', component: LoginComponent },
     { path: 'randome-image', component: RandomImageComponent },
+    { path: 'randome-text', component: RandomTextComponent },
     { path: 'percentage-type', component: PercentageTypeComponent },
 ];

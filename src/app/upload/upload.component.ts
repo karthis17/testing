@@ -26,6 +26,33 @@ export class UploadComponent {
 
   constructor(private imageService: ImageServiceService) { }
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  Title: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+  Discription: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
   ngOnInit(): void {
     this.imageService.getUsers().subscribe((users) => {
       this.user = users;
@@ -52,7 +79,7 @@ export class UploadComponent {
 
   uploadImage() {
 
-    this.imageService.uploadImage(this.selectedFile, this.description, this.category, this.title, this.type).subscribe(
+    this.imageService.uploadImage(this.selectedFile, this.description, this.category, this.title, this.type, this.Discription.filter(tit => { if (tit.text) return tit; else return false }), this.Title.filter(dis => { if (dis.text) return dis; else return false })).subscribe(
       (response: any) => {
         this.src = response.imageUrl;
 

@@ -24,6 +24,21 @@ export class FunQuizzesComponent {
   id: any;
   showUpdateButton: boolean = false;
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDif: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+
   ngOnInit() {
 
     this.getAll()
@@ -51,7 +66,7 @@ export class FunQuizzesComponent {
 
   submit() {
     console.log(this.options);
-    this.fun.addQuestion(this.question, this.options).subscribe(data => { console.log(data); this.getAll(); this.close() })
+    this.fun.addQuestion(this.question, this.options, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
 

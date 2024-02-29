@@ -12,13 +12,14 @@ export class PollService {
       'Content-Type': 'application/json'
     })
   }
-  addPoll(question: any, options: any) {
+  addPoll(question: any, options: any, questionDifLang: any) {
     const formData = new FormData();
 
     options.forEach((option: any) => {
       formData.append('options', option);
     });
     formData.append('question', question);
+    formData.append('questionDifLang', JSON.stringify(questionDifLang));
 
     return this.http.post("http://localhost:3000/api/poll/add-text-poll", formData)
   }
@@ -34,7 +35,7 @@ export class PollService {
   }
 
   getAllpoll() {
-    return this.http.get("http://localhost:3000/api/poll/getAll");
+    return this.http.get("http://localhost:3000/api/poll/getAll", { params: { lang: "tamil" } });
   }
 
   votee(id: any, option: any) {

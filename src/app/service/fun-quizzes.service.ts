@@ -9,14 +9,14 @@ export class FunQuizzesService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, options: any[]) {
+  addQuestion(question: any, options: any[], questionDifLang: any) {
 
-    return this.http.post("http://localhost:3000/api/fun-quizzes/add-question", { question, options }, this._options);
+    return this.http.post("http://localhost:3000/api/fun-quizzes/add-question", { question, options, questionDifLang }, this._options);
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/fun-quizzes/get-all");
+    return this.http.get("http://localhost:3000/api/fun-quizzes/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {

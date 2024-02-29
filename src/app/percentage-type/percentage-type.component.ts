@@ -36,6 +36,21 @@ export class PercentageTypeComponent {
   showUpdateButton: boolean = false;
   idToUpdate: any;
 
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDif: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+
   ngOnInit() {
     this.getAll();
   }
@@ -47,7 +62,7 @@ export class PercentageTypeComponent {
   }
 
   submit() {
-    this.perType.addQuestion(this.question, this.result).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+    this.perType.addQuestion(this.question, this.result, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
   }
 
   setUpdate(data: any) {

@@ -8,7 +8,7 @@ export class GuessService {
 
   constructor(private http: HttpClient) { }
 
-  addQuestion(question: any, answer: any, options: any[], questionType: any, optionsType: any) {
+  addQuestion(question: any, answer: any, options: any[], questionType: any, optionsType: any, questionDifLang: any) {
 
     const formData = new FormData();
 
@@ -20,13 +20,14 @@ export class GuessService {
     formData.append("question", question);
     formData.append("questionType", questionType);
     formData.append("optionsType", optionsType);
+    formData.append("questionDifLang", JSON.stringify(questionDifLang));
 
     return this.http.post("http://localhost:3000/api/guess-game/upload", formData)
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/guess-game/get-all");
+    return this.http.get("http://localhost:3000/api/guess-game/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {

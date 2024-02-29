@@ -11,8 +11,8 @@ export class RiddlesService {
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 
-  addRiddle(question: any, answer: any) {
-    return this.http.post("http://localhost:3000/api/riddles/add-riddle", { question, answer }, this._options);
+  addRiddle(question: any, answer: any, questionDifLang: any, answerDifLang: any) {
+    return this.http.post("http://localhost:3000/api/riddles/add-riddle", { question, answer, questionDifLang, answerDifLang }, this._options);
   }
 
   getAll() {

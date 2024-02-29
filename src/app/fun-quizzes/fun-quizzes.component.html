@@ -1,6 +1,15 @@
 <h1>Add question</h1>
 
 <p>Enter qestion: <input type="text" [(ngModel)]="question" /></p>
+<p *ngFor="let ti of questionDif; let i = index">
+  Enter question in {{ ti.lang }} language:
+  <input
+    type="text"
+    name=""
+    id="title{{ i }}"
+    [(ngModel)]="questionDif[i].text"
+  />
+</p>
 
 <table>
   <tr>

@@ -17,7 +17,7 @@ export class ImageServiceService {
 
     return this.http.get('http://localhost:3000/api/users/me', _options)
   }
-  uploadImage(file: any, description: string, category: any, title: any, type: any) {
+  uploadImage(file: any, description: string, category: any, title: any, type: any, descriptionDifLang: any, titleDifLang: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
@@ -27,6 +27,8 @@ export class ImageServiceService {
     formData.append('category', category);
     formData.append('type', type);
     formData.append('title', title);
+    formData.append('titleDifLang', JSON.stringify(titleDifLang));
+    formData.append('descriptionDifLang', JSON.stringify(descriptionDifLang));
 
     return this.http.post('http://localhost:3000/api/img/upload', formData, _options);
   }
@@ -44,7 +46,7 @@ export class ImageServiceService {
 
   getPost(category: any) {
 
-    return this.http.get('http://localhost:3000/api/img/post-category/' + category);
+    return this.http.get('http://localhost:3000/api/img/post-category/' + category, { params: { lang: 'tamil' } });
   }
 
   like(postId: any) {

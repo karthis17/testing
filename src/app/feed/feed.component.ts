@@ -29,6 +29,35 @@ export class FeedComponent {
   imagePath!: string;
   id: any;
 
+  ress: any;
+
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  Title: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
+  Discription: { text: string, lang: string }[] = [
+    { text: '', lang: this.langg[0] },
+    { text: '', lang: this.langg[1] },
+    { text: '', lang: this.langg[2] },
+    { text: '', lang: this.langg[3] },
+    { text: '', lang: this.langg[4] },
+    { text: '', lang: this.langg[5] },
+    { text: '', lang: this.langg[6] },
+    { text: '', lang: this.langg[7] },
+    { text: '', lang: this.langg[8] },
+    { text: '', lang: this.langg[9] },
+  ];
+
   addFile(e: any): void {
     this.file = e.target.files[0];
   }
@@ -44,7 +73,7 @@ export class FeedComponent {
 
   submit() {
     console.log(this.file, this.discription, this.category, this.title)
-    this.feeds.addFeed(this.file, this.discription, this.category, this.title).subscribe(data => { console.log(data); this.getAll() })
+    this.feeds.addFeed(this.file, this.discription, this.category, this.title, this.Discription.filter(tit => { if (tit.text) return tit; else return false }), this.Title.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll() })
   }
 
   like(id: any) {

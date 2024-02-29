@@ -26,8 +26,13 @@
   <img *ngIf="resIma" [src]="resIma" alt="" srcset="" />
 </div>
 <p>
-  Enter name of the frame:
+  Enter name of the frame english:
   <input type="text" [(ngModel)]="frameName" placeholder="enter" />
+</p>
+
+<p *ngFor="let ti of Title; let i = index">
+  Enter name in {{ ti.lang }} language:
+  <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
 </p>
 <input type="file" (change)="handleFileInput($event)" accept="image/*" />
 <button class="px-3 py-2 rounded-sm mx-3 bg-teal-200" (click)="addSquare()">

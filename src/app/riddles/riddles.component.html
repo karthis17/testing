@@ -3,6 +3,20 @@
 <p>Enter qestion: <input type="text" [(ngModel)]="question" /></p>
 <p>Enter answer: <input type="text" [(ngModel)]="answer" /></p>
 
+<p *ngFor="let ti of questionDif; let i = index">
+  Enter question in {{ ti.lang }} language:
+  <input
+    type="text"
+    name=""
+    id="title{{ i }}"
+    [(ngModel)]="questionDif[i].text"
+  />
+</p>
+<p *ngFor="let dis of answerDif; let i = index">
+  Enter answer in {{ dis.lang }} language:
+  <input type="text" name="" id="des{{ i }}" [(ngModel)]="answerDif[i].text" />
+</p>
+
 <button
   *ngIf="!showUpdateButton"
   (click)="submit()"

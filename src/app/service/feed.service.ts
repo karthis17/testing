@@ -8,13 +8,15 @@ export class FeedService {
 
   constructor(private http: HttpClient) { }
 
-  addFeed(file: File, description: any, category: any, title: any) {
+  addFeed(file: File, description: any, category: any, title: any, descriptionDifLang: any, titleDifLang: any) {
     const formData = new FormData();
 
     formData.append('feed', file);
     formData.append('title', title);
     formData.append('category', category);
     formData.append('description', description);
+    formData.append('titleDifLang', JSON.stringify(titleDifLang));
+    formData.append('descriptionDifLang', JSON.stringify(descriptionDifLang));
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -28,7 +30,7 @@ export class FeedService {
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/feeds/get-all");
+    return this.http.get("http://localhost:3000/api/feeds/get-all", { params: { lang: "hindi" } });
   }
 
   like(feedId: any) {

@@ -4,10 +4,27 @@
   upload reel: <input type="file" accept="/video" (change)="addFile($event)" />
 </p>
 
-<p>Enter title: <input type="text" name="" id="title" [(ngModel)]="title" /></p>
 <p>
-  Enter discription:
+  Enter title in english:
+  <input type="text" name="" id="title" [(ngModel)]="title" />
+</p>
+<p>
+  Enter discription in english:
   <input type="text" name="" id="des" [(ngModel)]="discription" />
+</p>
+
+<p *ngFor="let ti of Title; let i = index">
+  Enter title in {{ ti.lang }} language:
+  <input type="text" name="" id="title{{ i }}" [(ngModel)]="Title[i].text" />
+</p>
+<p *ngFor="let dis of Discription; let i = index">
+  Enter discription in {{ dis.lang }} language:
+  <input
+    type="text"
+    name=""
+    id="des{{ i }}"
+    [(ngModel)]="Discription[i].text"
+  />
 </p>
 <p>
   Enter category: <input type="text" name="" id="cate" [(ngModel)]="category" />
