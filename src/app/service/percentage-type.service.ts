@@ -9,9 +9,23 @@ export class PercentageTypeService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, result: any, questionDifLang: any) {
+  addQuestion(question: any, result: any, images: any[], questionDifLang: any) {
 
-    return this.http.post("http://localhost:3000/api/percentage-type/add-question", { question, result, questionDifLang }, this._options);
+
+    const formData = new FormData();
+
+    formData.append("question", question);
+    formData.append("result", JSON.stringify(result));
+
+    images.forEach(image => {
+      formData.append("image", image);
+    });
+    if (questionDifLang) {
+
+      formData.append("questionDifLang", JSON.stringify(questionDifLang));
+    }
+
+    return this.http.post("http://localhost:3000/api/percentage-type/add-question", formData);
 
   }
 

@@ -1,3 +1,159 @@
+<div
+  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
+>
+  <h1 class="text-xl font-bold text-gray-500">Percentage Type</h1>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Question
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="question"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div
+    *ngFor="let range of result; let i = index; trackBy: trackByFn"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
+    <div class="flex">
+      <div class="w-full px-4">
+        <div class="relative mb-3">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Range From
+          </label>
+          <input
+            type="number"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            [(ngModel)]="result[i].rangeFrom"
+          />
+        </div>
+      </div>
+
+      <div class="w-full px-4">
+        <div class="relative w-full mb-3">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Range To
+          </label>
+          <input
+            type="number"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            [(ngModel)]="result[i].rangeTo"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Image
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addFile($event, i)"
+        />
+      </div>
+    </div>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="mx-5">
+    <button
+      (click)="result.push({ rangeFrom: 0, rangeTo: 1 }); images.push('')"
+      class="btn w-full"
+    >
+      Add Option
+    </button>
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+    Title
+  </h6> -->
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submit()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="update()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
+  </div>
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">Question</th>
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of data; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+
+          <td class="py-3 px-6 text-left">
+            {{ da.question }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="delete(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdate(da)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- 
 <h1 class="text-lg">upload question</h1>
 
 <p>Enter the question: <input type="text" [(ngModel)]="question" /></p>
@@ -108,4 +264,4 @@
   </button>
 </div>
 
-<p *ngIf="ress">{{ ress.text }}</p>
+<p *ngIf="ress">{{ ress.text }}</p> -->

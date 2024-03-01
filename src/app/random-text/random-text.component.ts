@@ -28,6 +28,8 @@ export class RandomTextComponent {
   play: any;
   ress: any;
 
+  file: any;
+
   showUpdateButton: boolean = false;
   idToUpdate: any;
 
@@ -39,6 +41,10 @@ export class RandomTextComponent {
 
     this.perType.getAll().subscribe(r => { this.data = r; console.log(this.data) });
 
+  }
+
+  addFile(e: any) {
+    this.file = e.target.files[0];
   }
 
   submit() {

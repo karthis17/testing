@@ -56,9 +56,6 @@ export class PollComponent {
     });
   }
 
-  addTextOption() {
-    this.textOptions.push('');
-  }
 
   trackByFn(index: any, item: any) {
     return index;

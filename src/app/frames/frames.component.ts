@@ -63,7 +63,6 @@ export class FramesComponent {
     { width: 1080, height: 1080 }, // Instagram Post (square)
     { width: 1080, height: 1350 }, // Instagram Post (portrait)
     { width: 1080, height: 608 }, // Instagram Post (landscape)
-    { width: 1500, height: 500 }, // Twitter Header Photo
     { width: 400, height: 400 }, // LinkedIn Profile Picture
     { width: 1584, height: 396 }, // LinkedIn Cover Photo
     { width: 1200, height: 300 }, // Website Banner/Header

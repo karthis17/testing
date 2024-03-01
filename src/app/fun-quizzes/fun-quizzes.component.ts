@@ -52,16 +52,24 @@ export class FunQuizzesComponent {
     })
   }
 
-  setAnswer(index: number): void {
-    if (this.last !== undefined) {
+  setAnswer(): void {
+    if (this.last !== undefined || this.last === 0) {
       this.options[this.last].answer = false;
-      this.options[index].answer = true;
+      this.options[this.answer].answer = true;
+      this.last = this.answer;
+
       // console.log(this.last)
     } else {
-      this.last = index;
-      this.options[index].answer = true;
+      this.last = this.answer;
+      this.options[this.answer].answer = true;
       // console.log(this.last)
     }
+    console.log(this.answer)
+
+    console.log(this.options)
+
+    // this.options[this.answer].answer = true;
+
   }
 
   submit() {
@@ -88,7 +96,7 @@ export class FunQuizzesComponent {
     this.options.forEach((option, i) => {
       if (option.answer) {
         this.last = i;
-        document.getElementById('r' + i)?.setAttribute('checked', 'checked');
+        this.answer = i
         console.log(this.last);
         console.log(option.answer);
         return;
@@ -97,11 +105,7 @@ export class FunQuizzesComponent {
   }
 
   close() {
-    this.options = [{ option: '', answer: false }];
-    this.id = '';
-    this.showUpdateButton = false;
-    this.question = '';
-    this.last = '';
+    location.reload();
   }
 
   delete(id: any) {

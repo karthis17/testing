@@ -25,9 +25,10 @@ export class PercentageTypeComponent {
     {
       rangeFrom: 0,
       rangeTo: 1,
-      text: ''
     }
   ]
+
+  images: any[] = [];
 
   range!: number;
   play: any;
@@ -62,7 +63,12 @@ export class PercentageTypeComponent {
   }
 
   submit() {
-    this.perType.addQuestion(this.question, this.result, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+    this.perType.addQuestion(this.question, this.result, this.images, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+  }
+
+
+  addFile(e: any, i: any) {
+    this.images[i] = e.target.files[0];
   }
 
   setUpdate(data: any) {
@@ -87,6 +93,10 @@ export class PercentageTypeComponent {
 
   start(id: any) {
     this.perType.getQuestion(id).subscribe((data: any) => this.play = data)
+  }
+
+  trackByFn(index: any, item: any) {
+    return index;
   }
 
   like(id: any) {

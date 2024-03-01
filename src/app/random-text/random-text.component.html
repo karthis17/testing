@@ -1,17 +1,98 @@
-<h1 class="text-lg">upload question</h1>
-
-<p>Enter the question: <input type="text" [(ngModel)]="question" /></p>
-
-<div class="m-3" *ngFor="let res of texts; let i = index; trackBy: trackByFn">
-  <p>Enter text {{ i + 1 }}: <input type="text" [(ngModel)]="texts[i]" /></p>
-</div>
-
-<button
-  class="px-4 py-2 mx-3 bg-teal-500 rounded-md text-white"
-  (click)="texts.push('')"
+<div
+  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
 >
-  Add Text
-</button>
+  <h1 class="text-xl font-bold text-gray-500">Random Text</h1>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Question
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="question"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Image
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addFile($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+    Title
+  </h6> -->
+
+    <div
+      *ngFor="let res of texts; let i = index; trackBy: trackByFn"
+      class="w-full px-4"
+    >
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Text {{ i + 1 }}.
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="texts[i]"
+        />
+      </div>
+    </div>
+    <div class="mx-5">
+      <button (click)="texts.push('')" class="btn w-full">Add text</button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submit()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="update()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
+  </div>
+</div>
 
 <button
   *ngIf="!showUpdateButton"

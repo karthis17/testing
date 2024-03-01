@@ -19,6 +19,7 @@ export class FlamesComponent {
 
     this.flame.uploadFlames(this.selectedFlames, this.flamesImg).subscribe(flames => {
       console.log(flames);
+      this.getAll()
     });
 
   }
@@ -48,7 +49,7 @@ export class FlamesComponent {
     this.flame.flamesFind(this.name1, this.name2).subscribe((flames: any) => {
       console.log(flames);
       this.result = flames;
-      this.getAll()
+
     }
     );
   }

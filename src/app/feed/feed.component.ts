@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FeedService } from '../service/feed.service';
+import { ImageServiceService } from '../service/image-service.service';
 
 @Component({
   selector: 'app-feed',
@@ -13,7 +14,7 @@ import { FeedService } from '../service/feed.service';
 export class FeedComponent {
 
 
-  constructor(private feeds: FeedService) { }
+  constructor(private feeds: FeedService, private Category: ImageServiceService) { }
 
   title!: string;
   discription!: string;
@@ -22,6 +23,7 @@ export class FeedComponent {
   comment: any[] = [];
   showUpdateButton: boolean = false;
 
+  categoryOptions: any;
 
   file!: File;
 
@@ -29,33 +31,19 @@ export class FeedComponent {
   imagePath!: string;
   id: any;
 
+  titlei: any = 'n';
+  descriptioni: any = 'n';
+
   ress: any;
 
   langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  deslangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
   Title: { text: string, lang: string }[] = [
-    { text: '', lang: this.langg[0] },
-    { text: '', lang: this.langg[1] },
-    { text: '', lang: this.langg[2] },
-    { text: '', lang: this.langg[3] },
-    { text: '', lang: this.langg[4] },
-    { text: '', lang: this.langg[5] },
-    { text: '', lang: this.langg[6] },
-    { text: '', lang: this.langg[7] },
-    { text: '', lang: this.langg[8] },
-    { text: '', lang: this.langg[9] },
+
   ];
 
   Discription: { text: string, lang: string }[] = [
-    { text: '', lang: this.langg[0] },
-    { text: '', lang: this.langg[1] },
-    { text: '', lang: this.langg[2] },
-    { text: '', lang: this.langg[3] },
-    { text: '', lang: this.langg[4] },
-    { text: '', lang: this.langg[5] },
-    { text: '', lang: this.langg[6] },
-    { text: '', lang: this.langg[7] },
-    { text: '', lang: this.langg[8] },
-    { text: '', lang: this.langg[9] },
+
   ];
 
   addFile(e: any): void {
@@ -63,12 +51,42 @@ export class FeedComponent {
   }
 
   ngOnInit(): void {
-    this.getAll()
+    this.getAll();
+    this.Category.getCategory("english").subscribe(data1 => {
+      this.categoryOptions = data1;
+      console.log(this.categoryOptions);
+    });
   }
 
   getAll() {
-    this.feeds.getAll().subscribe(data => { this.data = data });
+    this.feeds.getAll().subscribe(data => { this.data = data; console.log(data) });
 
+  }
+
+  addTitleLanguage(lang: any) {
+    this.Title.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.langg.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langg.splice(indexToRemove, 1);
+    }
+    console.log(this.Title)
+    this.titlei = 'n'
+  }
+
+  addDescLanguage(lang: any) {
+    this.Discription.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.deslangg.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.deslangg.splice(indexToRemove, 1);
+    }
+    console.log(this.Discription)
+    this.descriptioni = 'n'
   }
 
   submit() {
@@ -103,6 +121,8 @@ export class FeedComponent {
     this.imageUrl = data.imageUrl;
     this.imagePath = data.imagePath;
     this.id = data._id;
+    this.Title = data.titleDifLang
+    this.Discription = data.descriptionDifLang;
 
   }
 
@@ -110,6 +130,12 @@ export class FeedComponent {
     this.feeds.updateFeed(this.file, this.discription, this.category, this.title, this.imageUrl, this.imagePath, this.id).subscribe(data => {
       console.log(data); this.getAll();
     })
+  }
+
+  getCategoryWish(category: any) {
+    this.feeds.getCategoryWise(category).subscribe(data => {
+      this.data = data;
+    });
   }
 
 }

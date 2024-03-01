@@ -84,4 +84,8 @@ export class ReelsService {
 
   }
 
+  getCategoryWise(categoryId: any) {
+    return this.http.get("http://localhost:3000/api/reels/category/" + categoryId);
+  }
+
 }
