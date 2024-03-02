@@ -88,7 +88,7 @@ export class ImageServiceService {
     });
 
 
-    this.http.post('http://localhost:3000/img/upload', formData).subscribe((data: any) => {
+    this.http.post('http://localhost:3000/api/quizzes/upload', formData).subscribe((data: any) => {
       console.log(data);
       data.state1.forEach((state: any, index: number) => {
         state1[index]['option'] = state;

@@ -1,110 +1,223 @@
-<h1>Add question</h1>
-
-<label for="q">
-  Select question type
-  <select name="question" id="q" [(ngModel)]="questionType">
-    <option value="text">text</option>
-    <option value="image">image</option>
-  </select>
-</label>
-
-<label for="o">
-  Select option type
-  <select name="option" id="o" [(ngModel)]="optionType">
-    <option value="text" selected>text</option>
-    <option value="image">image</option>
-  </select>
-</label>
-
-<p *ngIf="questionType === 'image'">
-  upload qestion: <input type="file" (change)="addQuestion($event)" />
-</p>
-<div *ngIf="questionType === 'text'">
-  Enter qestion: <input type="text" [(ngModel)]="question" />
-  <p *ngFor="let ti of questionDif; let i = index">
-    Enter question in {{ ti.lang }} language:
-    <input
-      type="text"
-      name=""
-      id="title{{ i }}"
-      [(ngModel)]="questionDif[i].text"
-    />
-  </p>
-</div>
-
-<table>
-  <tr>
-    <th>Upload option</th>
-    <th>Answer</th>
-  </tr>
-  <ng-container
-    *ngFor="let option of options; let i = index; trackBy: trackByFn"
-  >
-    <tr>
-      <td *ngIf="optionType === 'text'">
-        <input type="text" [(ngModel)]="options[i]" />
-      </td>
-      <td *ngIf="optionType === 'image'">
-        <input type="file" (change)="addOptions($event, i)" />
-      </td>
-      <td><input type="radio" name="answer" (click)="setAnswer(i)" /></td>
-    </tr>
-  </ng-container>
-</table>
-
-<button (click)="options.push(' ')">add option</button>
-
-<button
-  *ngIf="!showUpdateButton"
-  (click)="submit()"
-  class="px-4 py-2 bg-teal-500 rounded-md text-white"
+<div
+  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
 >
-  submit
-</button>
+  <h1 class="text-xl font-bold text-gray-500">Guess Game</h1>
 
-<ng-container *ngIf="showUpdateButton">
-  <button
-    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
-    (click)="update()"
-  >
-    update
-  </button>
-  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
-    close
-  </button>
-</ng-container>
+  <div class="flex px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Select Question Type
+        </label>
+        <div class="flex gap-5 justify-start align-middle">
+          <label for="">
+            <input
+              type="radio"
+              name="question"
+              (click)="questionType = 'text'"
+              value="text"
+              title="Text"
+              checked
+            />
+            Text</label
+          >
+          <label for="">
+            <input
+              type="radio"
+              name="question"
+              value="image"
+              (click)="questionType = 'image'"
+              title="Image"
+            />
+            Image</label
+          >
+        </div>
+      </div>
+    </div>
 
-<table border="1">
-  <tr>
-    <th>_id</th>
-    <th>question</th>
-    <th>action</th>
-    <th>action</th>
-  </tr>
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Select Option Type
+        </label>
+        <div class="flex gap-5 justify-start align-middle">
+          <label for="">
+            <input
+              type="radio"
+              name="option"
+              (click)="optionType = 'text'"
+              value="text"
+              title="Text"
+              checked
+            />
+            Text</label
+          >
+          <label for="">
+            <input
+              type="radio"
+              name="option"
+              value="image"
+              (click)="optionType = 'image'"
+              title="Image"
+            />
+            Image</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-4 mx-10 border-b-1 border-blueGray-300" />
 
-  <tr *ngFor="let q of data">
-    <td>{{ q._id }}</td>
-    <td>{{ q.question }}</td>
-    <td><button (click)="play(q)">play</button></td>
-    <td>
-      <i
-        (click)="delete(q._id)"
-        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
-      ></i>
-      <i (click)="setUpdate(q)" class="text-teal-500 bi bi-pencil-square"></i>
-    </td>
-  </tr>
-</table>
+  <div *ngIf="questionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Question
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addQuestion($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
 
-<div *ngIf="ques">
-  <p>{{ ques.question }}</p>
-  <p>Option :</p>
-  <ng-container *ngFor="let option of ques.options">
-    <p>
-      {{ option.option }}
-      <button (click)="result = option.answer">select</button>
-    </p>
-  </ng-container>
+  <div *ngIf="questionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Question
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="question"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
+    <div
+      *ngFor="let option of options; let i = index; trackBy: trackByFn"
+      class="w-full px-4"
+    >
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Option {{ i + 1 }}
+        </label>
+        <div class="flex">
+          <input
+            type="file"
+            class="file-input file-input-bordered file-input-md w-full"
+            (change)="addOptions($event, i)"
+          />
+          <button
+            (click)="setAnswer(i)"
+            class="bg-slate-800 min-w-52 text-white py-2 px-4 rounded-md"
+          >
+            Set as Answer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-5">
+      <button (click)="options.push('')" class="btn w-full">Add Option</button>
+      <button
+        class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </div>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+    Title
+  </h6> -->
+
+    <div class="w-full px-4">
+      <div
+        *ngFor="let option of options; let i = index; trackBy: trackByFn"
+        class="relative w-full mb-3"
+      >
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Option {{ i + 1 }}.
+        </label>
+        <div class="flex">
+          <input
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="options[i]"
+          />
+          <button
+            (click)="setAnswer(i)"
+            class="bg-slate-800 min-w-52 text-white py-2 px-4 rounded-md"
+          >
+            Set as Answer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mx-5">
+      <button (click)="options.push('')" class="btn w-full">Add Option</button>
+      <button
+        class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">Question</th>
+          <!-- <th class="py-3 px-5 text-center">action</th> -->
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of data; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-start">
+            {{ da.question }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<h2 *ngIf="result !== undefined">{{ result }}</h2>

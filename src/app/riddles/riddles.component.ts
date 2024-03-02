@@ -97,4 +97,8 @@ export class RiddlesComponent {
     })
   }
 
+  close() {
+    location.reload();
+  }
+
 }

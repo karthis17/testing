@@ -17,7 +17,7 @@ export class CalcComponent {
   constructor(private ca: CalcService) { }
 
   textList: string[] = [''];
-  selectedType!: string;
+  selectedType: string = 'love';
   file!: File | string;
   min: number = 0;
   max: number = 0;

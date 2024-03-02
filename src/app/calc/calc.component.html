@@ -1,118 +1,235 @@
-<h2>upload text and result image</h2>
-
-<label for="fl">
-  Select love or friend
-  <select id="fl" title="select flame word" [(ngModel)]="selectedType">
-    <option value="love">love</option>
-    <option value="friend">friend</option>
-  </select> </label
-><br />
-<img *ngIf="showUpdateButton" class="max-h-64" [src]="file" alt="" srcset="" />
-<p>Upload resultImage : <input type="file" (change)="addFile($event)" /></p>
-Enter min percentage: <input type="number" [(ngModel)]="min" /><br />
-Enter max percentage: <input type="number" [(ngModel)]="max" /> <br />
-<ng-container *ngFor="let text of textList; let i = index; trackBy: trackByFn">
-  <label for="">
-    Enter Quotes
-    <input type="text" [(ngModel)]="textList[i]" /><br />
-  </label>
-</ng-container>
-
-<button
-  class="px-4 py-2 bg-teal-500 rounded-md text-white"
-  (click)="textList.push(' ')"
+<div
+  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
 >
-  Add text
-</button>
+  <h1 class="text-xl font-bold text-gray-500">Frienship and Love Calculator</h1>
 
-<button
-  (click)="selectedType === 'love' ? submit() : submitFr()"
-  *ngIf="!showUpdateButton"
-  class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
->
-  submit
-</button>
+  <div class="flex-auto px-4 lg:px-10 pt-0 mt-4">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
 
-<ng-container *ngIf="showUpdateButton">
-  <button
-    class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
-    (click)="update()"
-  >
-    update
-  </button>
-  <button class="px-4 py-2 rounded-md bg-red-600 text-white" (click)="close()">
-    close
-  </button>
-</ng-container>
-<h2>Love Calculator</h2>
-<label for="name1">
-  Enter name 1 <input type="text" id="name1" [(ngModel)]="name1"
-/></label>
-<label for="name2">
-  Enter name 2 <input type="text" id="name2" [(ngModel)]="name2"
-/></label>
-<button *ngIf="selectedType == 'love'" (click)="calculateLove()">submit</button>
-<button *ngIf="selectedType == 'friend'" (click)="calculateFriendship()">
-  submit
-</button>
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Select Love or Friendship Data to Add
+        </label>
 
-<ng-container *ngIf="result && selectedType === 'love'">
-  <h1>{{ result.lovePercentage }}%</h1>
-  <img src="{{ result.resultImage }}" />
-  <p>{{ result.name1 }}</p>
-  <p>loves</p>
-  <p>{{ result.name2 }}</p>
-</ng-container>
+        <select
+          class="select select-bordered bg-gray-50 w-full"
+          [(ngModel)]="selectedType"
+        >
+          <option disabled selected value="n">Pick one</option>
+          <option value="love">Love</option>
+          <option value="friend">Friend</option>
+        </select>
+      </div>
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+    </div>
+  </div>
 
-<ng-container *ngIf="result && selectedType === 'friend'">
-  <h1>{{ result.friendshipPercentage }}%</h1>
-  <img src="{{ result.resultImage }}" />
-  <p>{{ result.name1 }}</p>
-  <p>friends</p>
-  <p>{{ result.name2 }}</p>
-</ng-container>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Result Image
+        </label>
+        <input
+          type="file"
+          #fileInput
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addFile($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
 
-<table class="table">
-  <tr>
-    <th>_id</th>
-    <th>min</th>
-    <th>max</th>
-    <th>action</th>
-  </tr>
-  <tr *ngFor="let fr of friendCalc">
-    <td>{{ fr._id }}</td>
-    <td>{{ fr.minPercentage }}</td>
-    <td>{{ fr.maxPercentage }}</td>
-    <td>
-      <i
-        (click)="delete(fr._id)"
-        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
-      ></i>
-      <i (click)="setUpdate(fr)" class="text-teal-500 bi bi-pencil-square"></i>
-    </td>
-  </tr>
-</table>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
 
-<table>
-  <tr>
-    <th>_id</th>
-    <th>min</th>
-    <th>max</th>
-    <th>action</th>
-  </tr>
-  <tr *ngFor="let lov of loveCalc">
-    <td>{{ lov._id }}</td>
-    <td>{{ lov.minPercentage }}</td>
-    <td>{{ lov.maxPercentage }}</td>
-    <td>
-      <i
-        (click)="delete(lov._id, true)"
-        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
-      ></i>
-      <i
-        (click)="setUpdate(lov, true)"
-        class="text-teal-500 bi bi-pencil-square"
-      ></i>
-    </td>
-  </tr>
-</table>
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Minimum Percentage
+        </label>
+        <input
+          type="number"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Minimum Percentage."
+          [(ngModel)]="min"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Maximum Percentage
+        </label>
+        <input
+          type="number"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Maximum Percentage."
+          [(ngModel)]="max"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+    Title
+  </h6> -->
+
+    <div
+      *ngFor="let option of textList; let i = index; trackBy: trackByFn"
+      class="w-full px-4"
+    >
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Quotes {{ i + 1 }}.
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Quotes."
+          [(ngModel)]="textList[i]"
+        />
+      </div>
+    </div>
+    <div class="mx-5">
+      <button (click)="textList.push('')" class="btn w-full">Add Option</button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submit()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="update()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">S.NO</th>
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-center">Min</th>
+          <th class="py-3 px-5 text-center">Max</th>
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of friendCalc; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ i + 1 }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da.minPercentage }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da.maxPercentage }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="delete(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdate(da)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">S.NO</th>
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-center">Min</th>
+          <th class="py-3 px-5 text-center">Max</th>
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of loveCalc; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ i + 1 }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da.minPercentage }}
+          </td>
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da.maxPercentage }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="delete(da._id, true)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdate(da, true)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

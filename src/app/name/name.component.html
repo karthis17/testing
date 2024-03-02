@@ -1,134 +1,218 @@
-<div>
-  <h1>add letter and meaning</h1>
-  <p>Enter letter <input type="text" [(ngModel)]="letter" /></p>
-  <p>Enter meaning <input type="text" [(ngModel)]="meaning" /></p>
-  <button
-    (click)="submitNameMeaning()"
-    *ngIf="!showUpdateButton"
-    class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
-  >
-    submit
-  </button>
+<div
+  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
+>
+  <h1 class="text-xl font-bold text-gray-500">Name Meaning</h1>
 
-  <ng-container *ngIf="showUpdateButton">
-    <button
-      class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
-      (click)="updateMean()"
-    >
-      update
-    </button>
-    <button
-      class="px-4 py-2 rounded-md bg-red-600 text-white"
-      (click)="close()"
-    >
-      close
-    </button>
-  </ng-container>
-</div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
 
-<h1>Name meaning</h1>
-<table>
-  <tr>
-    <th>_id</th>
-    <th>letter</th>
-    <th>meaning</th>
-    <th>action</th>
-  </tr>
-
-  <tr *ngFor="let name of nameMeaningData">
-    <td>{{ name._id }}</td>
-    <td>{{ name.letter }}</td>
-    <td>{{ name.meaning }}</td>
-    <td>
-      <i
-        (click)="deleteMean(name._id)"
-        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
-      ></i>
-      <i
-        (click)="setUpdateMean(name)"
-        class="text-teal-500 bi bi-pencil-square"
-      ></i>
-    </td>
-  </tr>
-</table>
-
-<div>
-  <h1>add name and fact</h1>
-  <p>Enter name <input type="text" [(ngModel)]="name" /></p>
-  <p>Enter fact <input type="text" [(ngModel)]="fact" /></p>
-  <button
-    (click)="submitNameFact()"
-    *ngIf="!showUpdateButtonf"
-    class="px-4 m-3 py-2 bg-teal-500 rounded-md text-white"
-  >
-    submit
-  </button>
-
-  <ng-container *ngIf="showUpdateButtonf">
-    <button
-      class="px-4 py-2 rounded-md text-white mx-5 bg-teal-600"
-      (click)="updateFact()"
-    >
-      update
-    </button>
-    <button
-      class="px-4 py-2 rounded-md bg-red-600 text-white"
-      (click)="close()"
-    >
-      close
-    </button>
-  </ng-container>
-</div>
-
-<h1>Name fact</h1>
-<table>
-  <tr>
-    <th>_id</th>
-    <th>name</th>
-    <th>fact</th>
-    <th>action</th>
-  </tr>
-
-  <tr *ngFor="let name of nameFactData">
-    <td>{{ name._id }}</td>
-    <td>{{ name.name }}</td>
-    <td>{{ name.fact }}</td>
-    <td>
-      <i
-        (click)="deleteFact(name._id)"
-        class="text-red-500 px-7 bi cursor-pointer bi-trash-fill"
-      ></i>
-      <i
-        (click)="setUpdateFact(name)"
-        class="text-teal-500 bi bi-pencil-square"
-      ></i>
-    </td>
-  </tr>
-</table>
-
-<div>
-  <h1>name meaning</h1>
-  <p>Enter name <input type="text" [(ngModel)]="nameMean" /></p>
-  <button (click)="getMeaning()">submit</button>
-</div>
-
-<div>
-  <h1>name fact</h1>
-  <p>Enter name <input type="text" [(ngModel)]="nameFact" /></p>
-  <button (click)="getFact()">submit</button>
-</div>
-
-<div *ngIf="result">
-  <div
-    *ngFor="let letter of nameMean.split('')"
-    style="display: flex; align-items: baseline"
-  >
-    <h1>{{ letter }}</h1>
-    {{ result[letter].slice(1, result[letter].length) }}
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Letter
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Letter."
+          [(ngModel)]="letter"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
-</div>
 
-<div *ngIf="resultFact">
-  <h2>{{ nameFact }}</h2>
-  <p>{{ resultFact.fact }}</p>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Meaning
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter meaning."
+          [(ngModel)]="meaning"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submitNameMeaning()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="updateMean()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
+  </div>
+  <h1 class="text-xl font-bold text-gray-500 mt-4">Name Fact</h1>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Name
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter name."
+          [(ngModel)]="name"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Fact
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter fact."
+          [(ngModel)]="fact"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+    <button
+      *ngIf="!showUpdateButton"
+      class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
+      (click)="submitNameFact()"
+    >
+      Submit
+    </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="updateFact()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">Question</th>
+
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of nameMeaningData; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left first-letter:uppercase">
+            {{ da.question }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="deleteMean(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdateMean(da)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">Question</th>
+
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of nameFactData; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left first-letter:uppercase">
+            {{ da.question }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="deleteFact(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdateFact(da)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

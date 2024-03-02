@@ -9,23 +9,23 @@ export class PercentageTypeService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, result: any, images: any[], questionDifLang: any) {
+  addQuestion(question: any, frames: any, images: any[], questionDifLang: any) {
 
 
     const formData = new FormData();
 
     formData.append("question", question);
-    formData.append("result", JSON.stringify(result));
-
     images.forEach(image => {
-      formData.append("image", image);
-    });
+      formData.append("frame", image);
+    })
+    formData.append("frames", JSON.stringify(frames));
+
     if (questionDifLang) {
 
       formData.append("questionDifLang", JSON.stringify(questionDifLang));
     }
 
-    return this.http.post("http://localhost:3000/api/percentage-type/add-question", formData);
+    return this.http.post("http://localhost:3000/api/percentage-type/add-frame", formData);
 
   }
 
@@ -43,13 +43,24 @@ export class PercentageTypeService {
     return this.http.delete('http://localhost:3000/api/percentage-type/delete/' + id, _options);
   }
 
+  update(question: any, id: any, frames: any, files: any[], questionDifLang: any) {
+    const formData = new FormData();
+    formData.append('question', question);
 
-  update(question: any, result: any, id: any) {
+    files.forEach(file => formData.append('frame', file));
+    formData.append("frames", JSON.stringify(frames));
+    formData.append('id', id);
+
+    if (questionDifLang) {
+
+      formData.append("questionDifLang", JSON.stringify(questionDifLang));
+    }
+
 
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("http://localhost:3000/api/percentage-type/update", { question, result, id }, _options)
+    return this.http.put("http://localhost:3000/api/percentage-type/update", formData)
 
   }
 

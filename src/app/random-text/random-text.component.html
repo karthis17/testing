@@ -25,6 +25,34 @@
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
+  <div class="flex mt-10 gap-7">
+    <div class="">
+      <div class="label">
+        <span class="label-text">Select Image Size</span>
+      </div>
+      <select
+        class="select select-bordered bg-gray-50"
+        name=""
+        id=""
+        title="select image size"
+        [(ngModel)]="size"
+        (change)="setSize()"
+      >
+        <option
+          *ngFor="let option of canvasSizeOptions; let i = index"
+          [value]="i"
+        >
+          {{ option.width }} x {{ option.height }}
+        </option>
+      </select>
+    </div>
+
+    <div class="border-2 max-w-min rounded-md border-slate-950">
+      <canvas #canvasElement></canvas>
+    </div>
+  </div>
+  <hr class="mt-6 border-b-1 border-blueGray-300" />
+
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
@@ -36,7 +64,7 @@
         <input
           type="file"
           class="file-input file-input-bordered file-input-md w-full"
-          (change)="addFile($event)"
+          (change)="handleFileInput($event)"
         />
       </div>
     </div>
@@ -92,8 +120,47 @@
       </button>
     </ng-container>
   </div>
-</div>
 
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-left">Question</th>
+
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of data; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-left first-letter:uppercase">
+            {{ da.question }}
+          </td>
+
+          <td
+            class="py-3 px-5 text-left flex gap-5 justify-center align-items-lg-center"
+          >
+            <i
+              (click)="delete(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
+            <i
+              (click)="setUpdate(da)"
+              class="text-teal-500 bi bi-pencil-square cursor-pointer"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--
 <button
   *ngIf="!showUpdateButton"
   (click)="submit()"
@@ -165,4 +232,4 @@
 <div class="m-5" *ngIf="play">
   <p>{{ play.question }}</p>
   <p *ngFor="let text of play.texts; let i = index">{{ i + 1 }}) {{ text }}</p>
-</div>
+</div> -->
