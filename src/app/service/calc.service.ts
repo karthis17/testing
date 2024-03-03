@@ -19,7 +19,7 @@ export class CalcService {
     formData.append('maxPercentage', max);
     console.log(formData.get('image'));
 
-    return this.http.post("/api/love-friendship-calc/add-love-quotes", formData);
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-love-quotes", formData);
 
   }
 
@@ -34,39 +34,39 @@ export class CalcService {
 
     formData.append('maxPercentage', max);
 
-    return this.http.post("/api/love-friendship-calc/add-friend-quotes", formData);
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-friend-quotes", formData);
 
   }
 
   calLove(name1: any, name2: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("/api/love-friendship-calc/love-calculate", { name1, name2 }, _options)
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/love-calculate", { name1, name2 }, _options)
   }
 
   calcFriendship(name1: string, name2: string) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("/api/love-friendship-calc/friend-calculate", { name1, name2 }, _options)
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/friend-calculate", { name1, name2 }, _options)
   }
 
   deleteFriendCalc(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/love-friendship-calc/friendCalc/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/love-friendship-calc/friendCalc/delete/' + id, _options);
   }
 
   deleteLoveCalc(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/love-friendship-calc/loveCalc/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/love-friendship-calc/loveCalc/delete/' + id, _options);
   }
 
   getLoveCalc() {
-    return this.http.get('/api/love-friendship-calc/loveCalc/get-all')
+    return this.http.get('https://brochill.onrender.com/api/love-friendship-calc/loveCalc/get-all')
   }
   getFriendCalc() {
-    return this.http.get('/api/love-friendship-calc/friendCalc/get-all')
+    return this.http.get('https://brochill.onrender.com/api/love-friendship-calc/friendCalc/get-all')
   }
 
   updateFriendCalc(text: string[], min: any, max: any, file: any, filePath: any, id: any) {
@@ -80,7 +80,7 @@ export class CalcService {
     formData.append('maxPercentage', max);
     formData.append('filePath', filePath);
 
-    return this.http.put("/api/love-friendship-calc/friendCalc/update", formData);
+    return this.http.put("https://brochill.onrender.com/api/love-friendship-calc/friendCalc/update", formData);
 
   }
 
@@ -95,7 +95,7 @@ export class CalcService {
     formData.append('maxPercentage', max);
     formData.append('filePath', filePath);
 
-    return this.http.put("/api/love-friendship-calc/loveCalc/update", formData);
+    return this.http.put("https://brochill.onrender.com/api/love-friendship-calc/loveCalc/update", formData);
 
   }
 

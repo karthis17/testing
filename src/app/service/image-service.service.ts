@@ -15,7 +15,7 @@ export class ImageServiceService {
 
 
 
-    return this.http.get('/api/users/me', _options)
+    return this.http.get('https://brochill.onrender.com/api/users/me', _options)
   }
   uploadImage(file: any, description: string, category: any, title: any, type: any, descriptionDifLang: any, titleDifLang: any) {
     const token: string | null = localStorage.getItem('token');
@@ -30,39 +30,39 @@ export class ImageServiceService {
     formData.append('titleDifLang', JSON.stringify(titleDifLang));
     formData.append('descriptionDifLang', JSON.stringify(descriptionDifLang));
 
-    return this.http.post('/api/img/upload', formData, _options);
+    return this.http.post('https://brochill.onrender.com/api/img/upload', formData, _options);
   }
 
   getCategory(lang: any) {
-    return this.http.get('/api/img/categories', { params: { lang: lang } });
+    return this.http.get('https://brochill.onrender.com/api/img/categories', { params: { lang: lang } });
 
   }
   addCategory(category: any, title: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/img/add-category', { category, title }, _options);
+    return this.http.post('https://brochill.onrender.com/api/img/add-category', { category, title }, _options);
 
   }
 
   getPost(category: any) {
 
-    return this.http.get('/api/img/post-category/' + category, { params: { lang: 'tamil' } });
+    return this.http.get('https://brochill.onrender.com/api/img/post-category/' + category, { params: { lang: 'tamil' } });
   }
 
   like(postId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('/api/img/likes', { postId }, _options)
+    return this.http.post('https://brochill.onrender.com/api/img/likes', { postId }, _options)
   }
 
   share(postId: any) {
-    return this.http.post('/api/img/share', { postId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/img/share', { postId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(postId: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/img/add-comment', { postId, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/img/add-comment', { postId, comment }, _options)
   }
 
 
@@ -88,7 +88,7 @@ export class ImageServiceService {
     });
 
 
-    this.http.post('/api/quizzes/upload', formData).subscribe((data: any) => {
+    this.http.post('https://brochill.onrender.com/api/quizzes/upload', formData).subscribe((data: any) => {
       console.log(data);
       data.state1.forEach((state: any, index: number) => {
         state1[index]['option'] = state;
@@ -105,7 +105,7 @@ export class ImageServiceService {
       });
 
 
-      this.http.post("/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }).subscribe(data1 => {
+      this.http.post("https://brochill.onrender.com/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }).subscribe(data1 => {
         console.log(data1);
       })
 
@@ -113,13 +113,13 @@ export class ImageServiceService {
   }
 
   getQuizzes() {
-    return this.http.get('/api/quizzes/get-all-quizzes');
+    return this.http.get('https://brochill.onrender.com/api/quizzes/get-all-quizzes');
   }
 
   result(quizze_id: any, score: number) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/quizzes/get-result', { score, quizze_id }, _options)
+    return this.http.post('https://brochill.onrender.com/api/quizzes/get-result', { score, quizze_id }, _options)
   }
 
 }

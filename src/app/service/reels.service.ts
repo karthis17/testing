@@ -26,38 +26,38 @@ export class ReelsService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("/api/reels/upload-reel", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/reels/upload-reel", formData, _options)
 
   }
 
   getReel(id: any) {
-    return this.http.get("/api/reels/get-reel/" + id);
+    return this.http.get("https://brochill.onrender.com/api/reels/get-reel/" + id);
   }
 
   getAll() {
-    return this.http.get("/api/reels/get-all");
+    return this.http.get("https://brochill.onrender.com/api/reels/get-all");
   }
 
   like(reelId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('/api/reels/like', { reelId }, _options)
+    return this.http.post('https://brochill.onrender.com/api/reels/like', { reelId }, _options)
   }
 
   share(reelId: any) {
-    return this.http.post('/api/reels/share', { reelId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/reels/share', { reelId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(reelId: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/reels/add-comment', { reelId, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/reels/add-comment', { reelId, comment }, _options)
   }
 
   deleteReel(reelId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.delete('/api/reels/delete/' + reelId, _options);
+    return this.http.delete('https://brochill.onrender.com/api/reels/delete/' + reelId, _options);
   }
 
   updateReel(file: any = null, description: any, category: any, hashtags: any[], title: any, fileUrl: string, filePath: string, id: any) {
@@ -80,12 +80,12 @@ export class ReelsService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("/api/reels/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/reels/update", formData, _options)
 
   }
 
   getCategoryWise(categoryId: any) {
-    return this.http.get("/api/reels/category/" + categoryId);
+    return this.http.get("https://brochill.onrender.com/api/reels/category/" + categoryId);
   }
 
 }

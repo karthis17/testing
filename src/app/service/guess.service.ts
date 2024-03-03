@@ -22,18 +22,18 @@ export class GuessService {
     formData.append("optionsType", optionsType);
     formData.append("questionDifLang", JSON.stringify(questionDifLang));
 
-    return this.http.post("/api/guess-game/upload", formData)
+    return this.http.post("https://brochill.onrender.com/api/guess-game/upload", formData)
 
   }
 
   getAll() {
-    return this.http.get("/api/guess-game/get-all", { params: { lang: "tamil" } });
+    return this.http.get("https://brochill.onrender.com/api/guess-game/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/guess-game/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/guess-game/delete/' + id, _options);
   }
 
 }

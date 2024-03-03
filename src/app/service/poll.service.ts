@@ -21,7 +21,7 @@ export class PollService {
     formData.append('question', question);
     formData.append('questionDifLang', JSON.stringify(questionDifLang));
 
-    return this.http.post("/api/poll/add-text-poll", formData)
+    return this.http.post("https://brochill.onrender.com/api/poll/add-text-poll", formData)
   }
   addImgPoll(options: any, question: any) {
 
@@ -31,42 +31,42 @@ export class PollService {
       formData.append('options', option);
     });
     formData.append('question', question);
-    return this.http.post("/api/poll/add-img-poll", formData)
+    return this.http.post("https://brochill.onrender.com/api/poll/add-img-poll", formData)
   }
 
   getAllpoll() {
-    return this.http.get("/api/poll/getAll", { params: { lang: "tamil" } });
+    return this.http.get("https://brochill.onrender.com/api/poll/getAll", { params: { lang: "tamil" } });
   }
 
   votee(id: any, option: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("/api/poll/vote", { pollId: id, option }, _options)
+    return this.http.post("https://brochill.onrender.com/api/poll/vote", { pollId: id, option }, _options)
   }
   getPollById(id: any) {
-    return this.http.get("/api/poll/get-poll/" + id);
+    return this.http.get("https://brochill.onrender.com/api/poll/get-poll/" + id);
   }
 
   like(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("/api/poll/likes", { pollId: id }, _options)
+    return this.http.post("https://brochill.onrender.com/api/poll/likes", { pollId: id }, _options)
   }
 
   share(pollId: any) {
-    return this.http.post('/api/poll/share', { pollId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/poll/share', { pollId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(pollId: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/poll/add-comment', { pollId, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/poll/add-comment', { pollId, comment }, _options)
   }
 
   deletePoll(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/poll/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/poll/delete/' + id, _options);
   }
 
 }

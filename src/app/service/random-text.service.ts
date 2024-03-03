@@ -22,22 +22,22 @@ export class RandomTextService {
       formData.append('texts', text);
     })
 
-    return this.http.post("/api/random-text/add-question", formData);
+    return this.http.post("https://brochill.onrender.com/api/random-text/add-question", formData);
 
   }
 
   getAll() {
-    return this.http.get("/api/random-text/get-all");
+    return this.http.get("https://brochill.onrender.com/api/random-text/get-all");
   }
 
   getQuestion(id: any) {
-    return this.http.get("/api/random-text/question/" + id);
+    return this.http.get("https://brochill.onrender.com/api/random-text/question/" + id);
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/random-text/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/random-text/delete/' + id, _options);
   }
 
 
@@ -60,7 +60,7 @@ export class RandomTextService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("/api/random-text/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/random-text/update", formData, _options)
 
   }
 
@@ -70,16 +70,16 @@ export class RandomTextService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'Application/json' }) };
 
-    return this.http.post("/api/random-text/likes", { id }, _options);
+    return this.http.post("https://brochill.onrender.com/api/random-text/likes", { id }, _options);
   }
 
   share(id: any) {
-    return this.http.post('/api/random-text/share', { id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/random-text/share', { id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(id: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/random-text/add-comment', { id, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/random-text/add-comment', { id, comment }, _options)
   }
 }

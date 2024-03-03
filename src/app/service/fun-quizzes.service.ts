@@ -11,18 +11,18 @@ export class FunQuizzesService {
 
   addQuestion(question: any, options: any[], questionDifLang: any) {
 
-    return this.http.post("/api/fun-quizzes/add-question", { question, options, questionDifLang }, this._options);
+    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", { question, options, questionDifLang }, this._options);
 
   }
 
   getAll() {
-    return this.http.get("/api/fun-quizzes/get-all", { params: { lang: "tamil" } });
+    return this.http.get("https://brochill.onrender.com/api/fun-quizzes/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('/api/fun-quizzes/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/fun-quizzes/delete/' + id, _options);
   }
 
 
@@ -31,7 +31,7 @@ export class FunQuizzesService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 
-    return this.http.put("/api/fun-quizzes/update", { id, question, options }, _options)
+    return this.http.put("https://brochill.onrender.com/api/fun-quizzes/update", { id, question, options }, _options)
 
   }
 

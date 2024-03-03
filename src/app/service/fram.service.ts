@@ -22,7 +22,7 @@ export class FramService {
     formData.append('frame', file);
     formData.append('titleDifLang', JSON.stringify(titleDifLang));
 
-    return this.http.post("/api/frame/upload-frame", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/frame/upload-frame", formData, _options);
 
   }
   uploadImage(files: File[], id: any, texts: any[]) {
@@ -44,12 +44,12 @@ export class FramService {
     })
     formData.append('frame_id', id);
 
-    return this.http.post("/api/frame/upload-image", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/frame/upload-image", formData, _options);
 
   }
 
   getFrames() {
-    return this.http.get("/api/frame/get-frames", { params: { lang: 'hindi' } });
+    return this.http.get("https://brochill.onrender.com/api/frame/get-frames", { params: { lang: 'hindi' } });
   }
 
   like(id: any) {
@@ -57,21 +57,21 @@ export class FramService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'Application/json' }) };
 
-    return this.http.post("/api/frame/likes", { frame_id: id }, _options);
+    return this.http.post("https://brochill.onrender.com/api/frame/likes", { frame_id: id }, _options);
   }
 
   share(frame_id: any) {
-    return this.http.post('/api/frame/share', { frame_id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/frame/share', { frame_id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(frame_id: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/frame/add-comment', { frame_id, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/frame/add-comment', { frame_id, comment }, _options)
   }
 
   delete(id: any) {
-    return this.http.delete('/api/frame/delete/' + id);
+    return this.http.delete('https://brochill.onrender.com/api/frame/delete/' + id);
   }
 
   updateFrame(fileName: string, file: File, frame_size: any, coordinates: any, textBox: any[], frameUrl: any, framePath: any, id: any) {
@@ -90,7 +90,7 @@ export class FramService {
     formData.append('imagePath', framePath);
     formData.append('id', id);
 
-    return this.http.put("/api/frame/update", formData, _options);
+    return this.http.put("https://brochill.onrender.com/api/frame/update", formData, _options);
 
   }
 

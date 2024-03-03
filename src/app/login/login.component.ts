@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
   show: boolean = false;
 
@@ -21,7 +22,6 @@ export class LoginComponent {
     password: '',
     email: ''
   }
-
 
   register() {
     if (this.log.username.length > 0 && this.log.password.length > 0 && this.log.email.length > 0) {

@@ -18,7 +18,7 @@ import { PercentageTypeComponent } from './percentage-type/percentage-type.compo
 import { RandomTextComponent } from './random-text/random-text.component';
 
 export const routes: Routes = [
-    { path: '', component: PostComponent },
+    { path: '', redirectTo: "/reels", pathMatch: 'full' },
     { path: 'reels', component: ReelsComponent },
     { path: 'feeds', component: FeedComponent },
     { path: 'quizzes', component: QuizzeComponent },

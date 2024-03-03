@@ -21,38 +21,38 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("/api/feeds/upload-feed", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/feeds/upload-feed", formData, _options)
 
   }
 
   getReel(id: any) {
-    return this.http.get("/api/feeds/get-feed/" + id);
+    return this.http.get("https://brochill.onrender.com/api/feeds/get-feed/" + id);
   }
 
   getAll() {
-    return this.http.get("/api/feeds/get-all", { params: { lang: "hindi" } });
+    return this.http.get("https://brochill.onrender.com/api/feeds/get-all", { params: { lang: "hindi" } });
   }
 
   like(feedId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('/api/feeds/like', { feedId }, _options)
+    return this.http.post('https://brochill.onrender.com/api/feeds/like', { feedId }, _options)
   }
 
   share(feedId: any) {
-    return this.http.post('/api/feeds/share', { feedId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('https://brochill.onrender.com/api/feeds/share', { feedId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(feedId: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('/api/feeds/add-comment', { feedId, comment }, _options)
+    return this.http.post('https://brochill.onrender.com/api/feeds/add-comment', { feedId, comment }, _options)
   }
 
   deleteFeed(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.delete('/api/feeds/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/feeds/delete/' + id, _options);
   }
 
   updateFeed(file: any = null, description: any, category: any, title: any, imageUrl: string, imagePath: string, id: any) {
@@ -72,12 +72,12 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("/api/feeds/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/feeds/update", formData, _options)
 
   }
 
   getCategoryWise(categoryId: any) {
-    return this.http.get("/api/feeds/category/" + categoryId);
+    return this.http.get("https://brochill.onrender.com/api/feeds/category/" + categoryId);
   }
 
 
