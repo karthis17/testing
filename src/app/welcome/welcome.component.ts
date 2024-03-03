@@ -11,14 +11,15 @@ import { AuthService } from '../auth.service';
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css'
 })
+
 export class WelcomeComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-     if(this.authService.isAuthenticated()) {
+    if (this.authService.isAuthenticated()) {
       this.router.navigate(["/reels"]);
-     } 
+    }
   }
 
 }
