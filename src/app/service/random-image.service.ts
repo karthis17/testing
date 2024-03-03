@@ -18,22 +18,22 @@ export class RandomImageService {
     formData.append('frame', frame)
     formData.append('frameName', frameName)
 
-    return this.http.post("http://localhost:3000/api/random-image/upload-frame", formData);
+    return this.http.post("/api/random-image/upload-frame", formData);
 
   }
 
   play() {
-    return this.http.get("http://localhost:3000/api/random-image/get-frame");
+    return this.http.get("/api/random-image/get-frame");
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/random-image/get-all");
+    return this.http.get("/api/random-image/get-all");
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('http://localhost:3000/api/random-image/delete/' + id, _options);
+    return this.http.delete('/api/random-image/delete/' + id, _options);
   }
 
 
@@ -50,7 +50,7 @@ export class RandomImageService {
     formData.append('framePath', framePath);
     formData.append('id', id);
 
-    return this.http.put("http://localhost:3000/api/random-image/update", formData, _options)
+    return this.http.put("/api/random-image/update", formData, _options)
 
   }
 
@@ -59,17 +59,17 @@ export class RandomImageService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'Application/json' }) };
 
-    return this.http.post("http://localhost:3000/api/random-image/likes", { id }, _options);
+    return this.http.post("/api/random-image/likes", { id }, _options);
   }
 
   share(id: any) {
-    return this.http.post('http://localhost:3000/api/random-image/share', { id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+    return this.http.post('/api/random-image/share', { id }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
   }
 
   commet(id: any, comment: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('http://localhost:3000/api/random-image/add-comment', { id, comment }, _options)
+    return this.http.post('/api/random-image/add-comment', { id, comment }, _options)
   }
 
 }

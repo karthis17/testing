@@ -17,24 +17,24 @@ export class PickKickService {
     formData.append('point1', point1)
     formData.append('point2', point2)
 
-    return this.http.post("http://localhost:3000/api/pick-and-kick/add-question", formData);
+    return this.http.post("/api/pick-and-kick/add-question", formData);
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/pick-and-kick/get-all");
+    return this.http.get("/api/pick-and-kick/get-all");
   }
   getById(id: any) {
-    return this.http.get("http://localhost:3000/api/pick-and-kick/get-by-id/" + id);
+    return this.http.get("/api/pick-and-kick/get-by-id/" + id);
   }
   play(id: any, option: any) {
-    return this.http.post("http://localhost:3000/api/pick-and-kick/play", { questionId: id, option });
+    return this.http.post("/api/pick-and-kick/play", { questionId: id, option });
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('http://localhost:3000/api/pick-and-kick/delete/' + id, _options);
+    return this.http.delete('/api/pick-and-kick/delete/' + id, _options);
   }
 
   update(id: any, option1: any, option2: any, point1: any, point2: any, questions: any, filePath: any) {
@@ -49,7 +49,7 @@ export class PickKickService {
     formData.append('filePath', filePath)
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.put("http://localhost:3000/api/pick-and-kick/update", formData, _options);
+    return this.http.put("/api/pick-and-kick/update", formData, _options);
 
   }
 

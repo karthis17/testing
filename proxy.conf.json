@@ -1,0 +1,12 @@
+{
+    "/api": {
+      "target": "https://brochill.onrender.com/api",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }
+  
