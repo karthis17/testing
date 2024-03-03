@@ -16,23 +16,25 @@ import { LoginComponent } from './login/login.component';
 import { RandomImageComponent } from './random-image/random-image.component';
 import { PercentageTypeComponent } from './percentage-type/percentage-type.component';
 import { RandomTextComponent } from './random-text/random-text.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: "/reels", pathMatch: 'full' },
-    { path: 'reels', component: ReelsComponent },
-    { path: 'feeds', component: FeedComponent },
-    { path: 'quizzes', component: QuizzeComponent },
-    { path: 'pull', component: PollComponent },
-    { path: 'fun-quizzes', component: FunQuizzesComponent },
-    { path: 'frames', component: FramesComponent },
-    { path: 'flames', component: FlamesComponent },
-    { path: 'friend-love-calc', component: CalcComponent },
-    { path: 'name-mean-fact', component: NameComponent },
-    { path: 'pick-kick', component: PickNdKickComponent },
-    { path: 'guess', component: GuessComponent },
-    { path: 'riddles', component: RiddlesComponent },
+    { path: '', component: WelcomeComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'randome-image', component: RandomImageComponent },
-    { path: 'randome-text', component: RandomTextComponent },
-    { path: 'percentage-type', component: PercentageTypeComponent },
+    { path: 'reels', component: ReelsComponent, canActivate:[AuthGuard] },
+    { path: 'feeds', component: FeedComponent, canActivate:[AuthGuard] },
+    { path: 'quizzes', component: QuizzeComponent, canActivate:[AuthGuard] },
+    { path: 'pull', component: PollComponent, canActivate:[AuthGuard] },
+    { path: 'fun-quizzes', component: FunQuizzesComponent, canActivate:[AuthGuard] },
+    { path: 'frames', component: FramesComponent, canActivate:[AuthGuard] },
+    { path: 'flames', component: FlamesComponent, canActivate:[AuthGuard] },
+    { path: 'friend-love-calc', component: CalcComponent, canActivate:[AuthGuard] },
+    { path: 'name-mean-fact', component: NameComponent, canActivate:[AuthGuard] },
+    { path: 'pick-kick', component: PickNdKickComponent, canActivate:[AuthGuard] },
+    { path: 'guess', component: GuessComponent, canActivate:[AuthGuard] },
+    { path: 'riddles', component: RiddlesComponent, canActivate:[AuthGuard] },
+    { path: 'randome-image', component: RandomImageComponent, canActivate:[AuthGuard] },
+    { path: 'randome-text', component: RandomTextComponent, canActivate:[AuthGuard] },
+    { path: 'percentage-type', component: PercentageTypeComponent, canActivate:[AuthGuard] },
 ];

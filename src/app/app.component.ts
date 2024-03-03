@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,14 +13,12 @@ import { LoginComponent } from './login/login.component';
 
 export class AppComponent {
   title = 'testing';
-
   open = true;
-
   contents = [
     { text: "Post", link: "/" },
     { text: "Reels", link: "/reels" },
     { text: "Feeds", link: "/feeds" },
-    { text: "Pull", link: "/pull" },
+    { text: "Poll", link: "/pull" },
     { text: "Quizzes", link: "/quizzes" },
     { text: "Fun Quizzes", link: "/fun-quizzes" },
     { text: "Frames", link: "/frames" },
@@ -33,8 +30,8 @@ export class AppComponent {
     { text: "Guess", link: "/guess" },
     { text: "Pick Kick", link: "/pick-kick" },
     { text: "Riddles", link: "/riddles" },
-    { text: "Randome image", link: "/randome-image" },
-    { text: "Randome Text", link: "/randome-text" },
+    { text: "Random image", link: "/randome-image" },
+    { text: "Random Text", link: "/randome-text" },
     { text: "Percentage Type", link: "/percentage-type" },
   ]
 
