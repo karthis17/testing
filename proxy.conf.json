@@ -1,11 +1,11 @@
 {
     "/api": {
       "target": "https://brochill.onrender.com/api",
-      "secure": true,
+      "secure": false,
       "changeOrigin": true,
       "logLevel": "debug",
       "pathRewrite": {
-        "^/api": "https://testing-jdulleu1p-karthis17.vercel.app"
+        "^/api": ""
       }
     }
   }
