@@ -18,7 +18,6 @@ export class ReelsComponent {
 
   title!: string;
   discription!: string;
-  hashtags!: string;
   category!: string;
   categoryOptions: any;
   data: any;
@@ -54,11 +53,12 @@ export class ReelsComponent {
 
   getAll() {
     this.comment = [];
-    this.reelsService.getAll().subscribe(data => {
+
+    this.reelsService.getAll().subscribe((data) => {
       console.log(data);
       this.data = data;
 
-    });
+    }, (err) => { console.log(err) });
 
   }
 
@@ -89,8 +89,7 @@ export class ReelsComponent {
   }
 
   submit() {
-    console.log(this.file, this.discription, this.category, this.hashtags.split('#'), this.title)
-    this.reelsService.addReel(this.file, this.Discription.filter(tit => { if (tit.text) return tit; else return false }), this.category, this.hashtags.split('#').slice(1), this.Title.filter(dis => { if (dis.text) return dis; else return false }), this.title, this.discription).subscribe(data => { console.log(data); this.getAll() })
+    this.reelsService.addReel(this.file, this.Discription.filter(tit => { if (tit.text) return tit; else return false }), this.category, this.Title.filter(dis => { if (dis.text) return dis; else return false }), this.title, this.discription).subscribe(data => { console.log(data); this.getAll() })
   }
 
   like(id: any) {
@@ -117,7 +116,6 @@ export class ReelsComponent {
     console.log(data)
     this.title = data.title;
     this.discription = data.description;
-    this.hashtags = `#${data.hashtags.join(' #')}`;
     this.category = data.category;
     this.fileUrl = data.fileUrl;
     this.filePath = data.filePath;
@@ -128,7 +126,7 @@ export class ReelsComponent {
   }
 
   update() {
-    this.reelsService.updateReel(this.file, this.discription, this.category, this.hashtags.split('#').slice(1), this.title, this.fileUrl, this.filePath, this.id).subscribe(data => {
+    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.filePath, this.id).subscribe(data => {
       console.log(data); this.getAll();
     })
   }

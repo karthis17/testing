@@ -8,7 +8,7 @@ export class ReelsService {
 
   constructor(private http: HttpClient) { }
 
-  addReel(file: File, description: any, category: any, hashtags: any[], title: any, defaultTitle: any, defaultDescription: any) {
+  addReel(file: File, description: any, category: any, title: any, defaultTitle: any, defaultDescription: any) {
     const formData = new FormData();
 
     console.log(title, description)
@@ -19,9 +19,6 @@ export class ReelsService {
     formData.append('title', defaultTitle);
     formData.append('description', defaultDescription);
 
-    hashtags.forEach(h => {
-      formData.append('hashtags', h);
-    });
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -60,7 +57,7 @@ export class ReelsService {
     return this.http.delete('https://brochill.onrender.com/api/reels/delete/' + reelId, _options);
   }
 
-  updateReel(file: any = null, description: any, category: any, hashtags: any[], title: any, fileUrl: string, filePath: string, id: any) {
+  updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, filePath: string, id: any) {
     const formData = new FormData();
 
 
@@ -73,9 +70,6 @@ export class ReelsService {
     formData.append('filePath', filePath);
     formData.append('id', id);
 
-    hashtags.forEach(h => {
-      formData.append('hashtags', h);
-    });
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
