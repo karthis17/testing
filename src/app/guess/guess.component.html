@@ -110,6 +110,39 @@
         />
       </div>
     </div>
+    <div
+      *ngFor="let titl of questionDifLang; let i = index"
+      class="w-full px-4"
+    >
+      <div class="relative w-full mb-3">
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter title in {{ titl.lang }}"
+          [(ngModel)]="questionDifLang[i].text"
+        />
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select language for title</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="questioni"
+            (change)="addQuestionLanguage(questioni)"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
@@ -131,7 +164,7 @@
             (change)="addOptions($event, i)"
           />
           <button
-            (click)="setAnswer(i)"
+            (click)="answer = i"
             class="bg-slate-800 min-w-52 text-white py-2 px-4 rounded-md"
           >
             Set as Answer
@@ -160,32 +193,83 @@
 
     <div class="w-full px-4">
       <div
-        *ngFor="let option of options; let i = index; trackBy: trackByFn"
+        *ngFor="let option of optionss; let i = index; trackBy: trackByFn"
         class="relative w-full mb-3"
       >
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        <div
+          class="my-2"
+          *ngFor="let op of option.data; let j = index; trackBy: trackByFn"
         >
-          Option {{ i + 1 }}.
-        </label>
-        <div class="flex">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Option {{ j + 1 }}.
+          </label>
           <input
             type="text"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter Question."
-            [(ngModel)]="options[i]"
+            placeholder="Enter option {{ j + 1 }} in {{ option.lang }}."
+            [(ngModel)]="optionss[i].data[j].text"
           />
-          <button
-            (click)="setAnswer(i)"
-            class="bg-slate-800 min-w-52 text-white py-2 px-4 rounded-md"
-          >
-            Set as Answer
-          </button>
+        </div>
+      </div>
+      <div class="w-full px-4">
+        <div class="relative w-full mb-3">
+          <label class="form-control w-full max-w-xs">
+            <div class="label">
+              <span class="label-text">Select language for title</span>
+            </div>
+            <select
+              class="select select-bordered bg-gray-50"
+              [(ngModel)]="optioni"
+              (change)="addOptionsLanguage(optioni)"
+            >
+              <option disabled selected value="n">Pick one</option>
+              <option
+                *ngFor="let lang of Oplangg; let i = index"
+                [value]="lang"
+              >
+                {{ lang }}
+              </option>
+            </select>
+          </label>
         </div>
       </div>
     </div>
     <div class="mx-5">
-      <button (click)="options.push('')" class="btn w-full">Add Option</button>
+      <button (click)="addOptionss()" class="btn w-full">Add Option</button>
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+    </div>
+
+    <div class="flex-auto pt-0">
+      <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+          Title
+        </h6> -->
+
+      <div class="w-full px-4">
+        <div class="relative w-full mb-3">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Answer
+          </label>
+
+          <select
+            class="select select-bordered bg-gray-50 w-full"
+            [(ngModel)]="answer"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option
+              *ngFor="let option of optionss[0].data; let i = index"
+              [value]="option._id"
+            >
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
       <button
         class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"
         (click)="submit()"
@@ -193,7 +277,6 @@
         Submit
       </button>
     </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
   <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">

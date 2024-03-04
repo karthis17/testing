@@ -16,6 +16,10 @@ export class GuessComponent {
 
   question!: any;
 
+
+  questioni: any;
+  optioni: any;
+
   questionType: string = "text";
 
   optionType: string = "text";
@@ -33,18 +37,60 @@ export class GuessComponent {
   result: any;
 
   langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  questionDif: { text: string, lang: string }[] = [
-    { text: '', lang: this.langg[0] },
-    { text: '', lang: this.langg[1] },
-    { text: '', lang: this.langg[2] },
-    { text: '', lang: this.langg[3] },
-    { text: '', lang: this.langg[4] },
-    { text: '', lang: this.langg[5] },
-    { text: '', lang: this.langg[6] },
-    { text: '', lang: this.langg[7] },
-    { text: '', lang: this.langg[8] },
-    { text: '', lang: this.langg[9] },
+  Oplangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDifLang: { text: string, lang: string }[] = [
+
   ];
+
+  addQuestionLanguage(lang: any) {
+    this.questionDifLang.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.langg.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langg.splice(indexToRemove, 1);
+    }
+    console.log(this.questionDifLang)
+    this.optioni = 'n'
+  }
+
+  id = 1;
+
+  optionss = [{
+    lang: 'english', data: [{ _id: 0, text: '' }]
+  },
+  ]
+
+  addOptionss() {
+    this.optionss = this.optionss.map(option => {
+      option.data.push({ _id: this.id, text: " " });
+      console.log(option)
+      return option;
+    });
+    this.id++;
+  }
+
+  addOptionsLanguage(lang: any) {
+    let data: any = []
+    this.optionss[0].data.map(option => {
+      data.push({ _id: option._id, text: ' ' });
+    })
+
+    this.optionss.push({
+      lang: lang, data: data
+    })
+
+    console.log(lang, this.optionss)
+    let indexToRemove = this.Oplangg.indexOf(lang);
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.Oplangg.splice(indexToRemove, 1);
+    }
+    console.log(this.questionDifLang)
+    this.questioni = 'n'
+  }
+
 
 
   ngOnInit(): void {
@@ -74,17 +120,17 @@ export class GuessComponent {
     return index;
   }
 
-  setAnswer(index: any) {
-    this.answer = this.options[index].name
-    if (!this.answer) this.answer = this.options[index]
-  }
+  // setAnswer(index: any) {
+  //   this.answer = this.options[index].name
+  //   if (!this.answer) this.answer = this.options[index]
+  // }
 
   play(data: any) {
     this.ques = data;
   }
 
   submit() {
-    this.guesss.addQuestion(this.question, this.answer, this.options, this.questionType, this.optionType, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(response => { console.log(response), this.getAll() })
+    this.guesss.addQuestion(this.question, this.answer, this.options, this.questionType, this.optionType, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false })).subscribe(response => { console.log(response), this.getAll() })
   }
 
   delete(id: any) {

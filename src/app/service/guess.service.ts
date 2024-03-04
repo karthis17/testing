@@ -8,7 +8,7 @@ export class GuessService {
 
   constructor(private http: HttpClient) { }
 
-  addQuestion(question: any, answer: any, options: any[], questionType: any, optionsType: any, questionDifLang: any) {
+  addQuestion(question: any, answer: any, options: any[], questionType: any, optionsType: any, optionDifLang: any, questionDifLang: any) {
 
     const formData = new FormData();
 
@@ -21,6 +21,7 @@ export class GuessService {
     formData.append("questionType", questionType);
     formData.append("optionsType", optionsType);
     formData.append("questionDifLang", JSON.stringify(questionDifLang));
+    formData.append("optionDifLang", JSON.stringify(optionDifLang));
 
     return this.http.post("https://brochill.onrender.com/api/guess-game/upload", formData)
 

@@ -32,6 +32,41 @@ export class PickNdKickComponent {
   uploadedImage!: string;
 
   all: any[] = [];
+  option2i: any
+  option1i: any;
+
+  langgOp2 = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langgOp1 = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  op1: { text: string, lang: string }[] = [
+
+  ];
+
+  op2: { text: string, lang: string }[] = [
+
+  ];
+
+
+  addLanngoption1(lang: any) {
+    this.op1.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.langgOp1.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langgOp1.splice(indexToRemove, 1);
+    }
+  }
+
+  addLanngoption2(lang: any) {
+    this.op2.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.langgOp2.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langgOp2.splice(indexToRemove, 1);
+    }
+  }
 
   ngOnInit(): void {
     this.getAl()
@@ -48,7 +83,7 @@ export class PickNdKickComponent {
   }
 
   submit() {
-    this.servic.addQuestion(this.question, this.option1, this.option2, this.point1, this.point2).subscribe(data => { console.log(data); this.getAl() });
+    this.servic.addQuestion(this.question, this.option1, this.option2, this.point1, this.point2, this.op1.filter(tit => { if (tit.text) return tit; else return false }), this.op2.filter(tit => { if (tit.text) return tit; else return false })).subscribe(data => { console.log(data); this.getAl() });
   }
 
   showOtions(data: any) {

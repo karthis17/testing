@@ -9,9 +9,9 @@ export class FunQuizzesService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, options: any[], questionDifLang: any) {
+  addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any) {
 
-    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", { question, options, questionDifLang }, this._options);
+    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", { question, optionDifLang, questionDifLang, answer }, this._options);
 
   }
 

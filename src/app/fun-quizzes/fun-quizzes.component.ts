@@ -24,19 +24,64 @@ export class FunQuizzesComponent {
   id: any;
   showUpdateButton: boolean = false;
 
+  questioni: any;
+  noOfOptions: any = [''];
+
+  opID = 1;
+
+  optionss = [{
+    lang: 'english', data: [{ _id: 0, text: '' }]
+  },
+  ]
+
+  addOptionsLanguage(lang: any) {
+    let data: any = []
+    this.optionss[0].data.map(option => {
+      data.push({ _id: option._id, text: ' ' });
+    })
+
+    this.optionss.push({
+      lang: lang, data: data
+    })
+
+    console.log(lang, this.optionss)
+    let indexToRemove = this.langg.indexOf(lang);
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langg.splice(indexToRemove, 1);
+    }
+
+  }
+  optioni: any
+
+  addOptions() {
+    this.optionss = this.optionss.map(option => {
+      option.data.push({ _id: this.opID, text: " " });
+      console.log(option)
+      return option;
+    });
+    this.opID++;
+  }
+
   langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  questionDif: { text: string, lang: string }[] = [
-    { text: '', lang: this.langg[0] },
-    { text: '', lang: this.langg[1] },
-    { text: '', lang: this.langg[2] },
-    { text: '', lang: this.langg[3] },
-    { text: '', lang: this.langg[4] },
-    { text: '', lang: this.langg[5] },
-    { text: '', lang: this.langg[6] },
-    { text: '', lang: this.langg[7] },
-    { text: '', lang: this.langg[8] },
-    { text: '', lang: this.langg[9] },
+  Qulangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDifLang: { text: string, lang: string }[] = [
+
   ];
+
+  addQuestionLanguage(lang: any) {
+    this.questionDifLang.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.Qulangg.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.Qulangg.splice(indexToRemove, 1);
+    }
+    console.log(this.questionDifLang)
+    this.optioni = 'n'
+  }
+
 
 
   ngOnInit() {
@@ -52,29 +97,9 @@ export class FunQuizzesComponent {
     })
   }
 
-  setAnswer(): void {
-    if (this.last !== undefined || this.last === 0) {
-      this.options[this.last].answer = false;
-      this.options[this.answer].answer = true;
-      this.last = this.answer;
-
-      // console.log(this.last)
-    } else {
-      this.last = this.answer;
-      this.options[this.answer].answer = true;
-      // console.log(this.last)
-    }
-    console.log(this.answer)
-
-    console.log(this.options)
-
-    // this.options[this.answer].answer = true;
-
-  }
-
   submit() {
-    console.log(this.options);
-    this.fun.addQuestion(this.question, this.options, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll(); this.close() })
+    console.log(this.optionss, this.question, this.answer);
+    this.fun.addQuestion(this.question, this.optionss, this.answer, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
 

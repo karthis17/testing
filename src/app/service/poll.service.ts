@@ -15,9 +15,7 @@ export class PollService {
   addPoll(question: any, options: any, questionDifLang: any) {
     const formData = new FormData();
 
-    options.forEach((option: any) => {
-      formData.append('options', option);
-    });
+    formData.append('optionDifLang', JSON.stringify(options));
     formData.append('question', question);
     formData.append('questionDifLang', JSON.stringify(questionDifLang));
 
