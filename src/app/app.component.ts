@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     { text: "Guess", link: "/guess" },
     { text: "Pick Kick", link: "/pick-kick" },
     { text: "Riddles", link: "/riddles" },
-    { text: "Random image", link: "/randome-image" },
+    { text: "Random Image", link: "/randome-image" },
     { text: "Random Text", link: "/randome-text" },
     { text: "Percentage Type", link: "/percentage-type" },
   ]

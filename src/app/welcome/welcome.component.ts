@@ -21,5 +21,4 @@ export class WelcomeComponent implements OnInit {
       this.router.navigate(["/reels"]);
     }
   }
-
 }

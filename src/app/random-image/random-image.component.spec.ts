@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RandomImageComponent } from './random-image.component';
 
+
 describe('RandomImageComponent', () => {
   let component: RandomImageComponent;
   let fixture: ComponentFixture<RandomImageComponent>;

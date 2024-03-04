@@ -1,69 +1,35 @@
-<div
-  class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
->
+<div class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full">
   <h1 class="text-xl font-bold text-gray-500">Add Poll</h1>
 
   <div class="flex px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Select Question Type
         </label>
         <div class="flex gap-5 justify-start align-middle">
           <label for="">
-            <input
-              type="radio"
-              name="question"
-              (click)="questionType = 'text'"
-              value="text"
-              title="Text"
-            />
-            Text</label
-          >
+            <input type="radio" name="question" (click)="questionType = 'text'" value="text" title="Text" />
+            Text</label>
           <label for="">
-            <input
-              type="radio"
-              name="question"
-              value="image"
-              (click)="questionType = 'image'"
-              title="Image"
-            />
-            Image</label
-          >
+            <input type="radio" name="question" value="image" (click)="questionType = 'image'" title="Image" />
+            Image</label>
         </div>
       </div>
     </div>
 
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Select Option Type
         </label>
         <div class="flex gap-5 justify-start align-middle">
           <label for="">
-            <input
-              type="radio"
-              name="option"
-              (click)="checkSelectedOption('text')"
-              value="text"
-              title="Text"
-            />
-            Text</label
-          >
+            <input type="radio" name="option" (click)="checkSelectedOption('text')" value="text" title="Text" />
+            Text</label>
           <label for="">
-            <input
-              type="radio"
-              name="option"
-              value="image"
-              (click)="checkSelectedOption('image')"
-              title="Image"
-            />
-            Image</label
-          >
+            <input type="radio" name="option" value="image" (click)="checkSelectedOption('image')" title="Image" />
+            Image</label>
         </div>
       </div>
     </div>
@@ -73,16 +39,10 @@
   <div *ngIf="questionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Upload Question
         </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="addQnFile($event)"
-        />
+        <input type="file" class="file-input file-input-bordered file-input-md w-full" (change)="addQnFile($event)" />
       </div>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
@@ -95,38 +55,24 @@
 
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Question
         </label>
-        <input
-          type="text"
+        <input type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="question"
-        />
+          placeholder="Enter Question." [(ngModel)]="question" />
       </div>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
   <div *ngIf="selectedOption === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
-    <div
-      *ngFor="let option of imgOptions; let i = index; trackBy: trackByFn"
-      class="w-full px-4"
-    >
+    <div *ngFor="let option of imgOptions; let i = index; trackBy: trackByFn" class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Upload Option {{ i + 1 }}
         </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="addFile($event, i)"
-        />
+        <input type="file" class="file-input file-input-bordered file-input-md w-full" (change)="addFile($event, i)" />
       </div>
     </div>
 
@@ -134,10 +80,7 @@
       <button (click)="imgOptions.push('')" class="btn w-full">
         Add Option
       </button>
-      <button
-        class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"
-        (click)="submitImg()"
-      >
+      <button class="w-full bg-slate-800 text-white py-2 my-3 rounded-md" (click)="submitImg()">
         Submit
       </button>
     </div>
@@ -151,37 +94,27 @@
   </h6> -->
 
     <div class="w-full px-4">
-      <div
-        *ngFor="let option of textOptions; let i = index; trackBy: trackByFn"
-        class="relative w-full mb-3"
-      >
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
+      <div *ngFor="let option of textOptions; let i = index; trackBy: trackByFn" class="relative w-full mb-3">
+        <label class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2">
           Option {{ i + 1 }}.
         </label>
-        <input
-          type="text"
+        <input type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="textOptions[i]"
-        />
+          placeholder="Enter Question." [(ngModel)]="textOptions[i]" />
       </div>
     </div>
     <div class="mx-5">
       <button (click)="textOptions.push('')" class="btn w-full">
         Add Option
       </button>
-      <button
-        class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"
-        (click)="submit()"
-      >
+      <button class="w-full bg-slate-800 text-white py-2 my-3 rounded-md" (click)="submit()">
         Submit
       </button>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
+  
   <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
     <table class="min-w-max w-full table-auto">
       <thead>
@@ -192,10 +125,8 @@
         </tr>
       </thead>
       <tbody class="text-gray-600 text-sm">
-        <tr
-          *ngFor="let da of polls; let i = index"
-          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
-        >
+        <tr *ngFor="let da of polls; let i = index"
+          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase">
           <td class="py-3 px-6 text-left whitespace-nowrap">
             {{ da._id }}
           </td>

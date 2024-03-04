@@ -10,6 +10,7 @@ import { PollService } from '../service/poll.service';
   templateUrl: './poll.component.html',
   styleUrl: './poll.component.css'
 })
+
 export class PollComponent {
 
   selectedOption: string | boolean = false;
@@ -44,7 +45,6 @@ export class PollComponent {
     { text: '', lang: this.langg[9] },
   ];
 
-
   ngOnInit() {
     this.getData()
   }
@@ -56,10 +56,10 @@ export class PollComponent {
     });
   }
 
-
   trackByFn(index: any, item: any) {
     return index;
   }
+  
   checkSelectedOption(option: string) {
     this.selectedOption = option;
     if (option === 'text') {
