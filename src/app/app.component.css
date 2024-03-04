@@ -1,0 +1,14 @@
+button {
+    margin-top: 20px;
+    margin-right: 10px;
+    font-size: 2rem;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right, #000000, #2a2a2a);
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    cursor: pointer;
+    border: none;
+    float: right;
+  }
