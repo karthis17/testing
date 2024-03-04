@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   
   private isAuthenticatedValue: boolean = false;
@@ -14,5 +15,11 @@ export class AuthService {
     const token = localStorage.getItem('token');
     this.isAuthenticatedValue = !!token;
     return this.isAuthenticatedValue;
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+    this.isAuthenticatedValue = false;
+    this.router.navigate(['/']);
   }
 }

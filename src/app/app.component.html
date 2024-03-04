@@ -188,6 +188,7 @@
       </div>
     </nav>
     <main class="flex-1 h-screen overflow-y-scroll overflow-x-hidden flex-col">
+      <button *ngIf="isAuthenticated" (click)="onLogout()">Log out</button>
       <router-outlet></router-outlet>
     </main>
   </div>

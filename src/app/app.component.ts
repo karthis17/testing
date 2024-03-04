@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { LoginComponent } from './login/login.component';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'testing';
   open = true;
   contents = [
@@ -35,5 +36,18 @@ export class AppComponent {
     { text: "Percentage Type", link: "/percentage-type" },
   ]
 
+  isAuthenticated: boolean = false;
+
+constructor(private authService: AuthService) {
+
+}
+
+ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
+}
+  onLogout() {
+    this.authService.logOut();
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
 
 }
