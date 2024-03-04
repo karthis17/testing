@@ -15,10 +15,9 @@ export class AppComponent {
   title = 'testing';
   open = true;
   contents = [
-    { text: "Post", link: "/" },
     { text: "Reels", link: "/reels" },
     { text: "Feeds", link: "/feeds" },
-    { text: "Poll", link: "/pull" },
+    { text: "Poll", link: "/poll" },
     { text: "Quizzes", link: "/quizzes" },
     { text: "Fun Quizzes", link: "/fun-quizzes" },
     { text: "Frames", link: "/frames" },
