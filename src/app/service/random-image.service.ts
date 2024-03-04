@@ -18,7 +18,10 @@ export class RandomImageService {
     formData.append('frame', frame)
     formData.append('frameName', frameName)
 
-    return this.http.post("https://brochill.onrender.com/api/random-image/upload-frame", formData);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.post("https://brochill.onrender.com/api/random-image/upload-frame", formData, _options);
 
   }
 

@@ -19,7 +19,10 @@ export class PickKickService {
     formData.append('option1DifLang', JSON.stringify(option1DifLang))
     formData.append('option2DifLang', JSON.stringify(option2DifLang))
 
-    return this.http.post("https://brochill.onrender.com/api/pick-and-kick/add-question", formData);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.post("https://brochill.onrender.com/api/pick-and-kick/add-question", formData, _options);
 
   }
 

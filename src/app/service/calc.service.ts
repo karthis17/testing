@@ -18,8 +18,9 @@ export class CalcService {
 
     formData.append('maxPercentage', max);
     console.log(formData.get('image'));
-
-    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-love-quotes", formData);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-love-quotes", formData, _options);
 
   }
 
@@ -34,7 +35,10 @@ export class CalcService {
 
     formData.append('maxPercentage', max);
 
-    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-friend-quotes", formData);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-friend-quotes", formData, _options);
 
   }
 

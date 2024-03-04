@@ -4,27 +4,28 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FunQuizzesService {
+export class GeneralQuestionService {
+
 
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
   addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any) {
-
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", { question, optionDifLang, questionDifLang, answer }, _options);
+
+    return this.http.post("http://localhost:3000/api/general-question/add-question", { question, optionDifLang, questionDifLang, answer }, this._options);
 
   }
 
   getAll() {
-    return this.http.get("https://brochill.onrender.com/api/fun-quizzes/get-all", { params: { lang: "tamil" } });
+    return this.http.get("http://localhost:3000/api/general-question/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/fun-quizzes/delete/' + id, _options);
+    return this.http.delete('http://localhost:3000/api/general-question/delete/' + id, _options);
   }
 
 
@@ -33,8 +34,7 @@ export class FunQuizzesService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 
-    return this.http.put("https://brochill.onrender.com/api/fun-quizzes/update", { id, question, options }, _options)
+    return this.http.put("http://localhost:3000/api/general-question/update", { id, question, options }, _options)
 
   }
-
 }

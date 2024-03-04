@@ -18,8 +18,10 @@ export class PollService {
     formData.append('optionDifLang', JSON.stringify(options));
     formData.append('question', question);
     formData.append('questionDifLang', JSON.stringify(questionDifLang));
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/poll/add-text-poll", formData)
+    return this.http.post("https://brochill.onrender.com/api/poll/add-text-poll", formData, _options)
   }
   addImgPoll(options: any, question: any) {
 
@@ -29,7 +31,9 @@ export class PollService {
       formData.append('options', option);
     });
     formData.append('question', question);
-    return this.http.post("https://brochill.onrender.com/api/poll/add-img-poll", formData)
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("https://brochill.onrender.com/api/poll/add-img-poll", formData, _options)
   }
 
   getAllpoll() {

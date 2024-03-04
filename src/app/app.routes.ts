@@ -18,6 +18,7 @@ import { PercentageTypeComponent } from './percentage-type/percentage-type.compo
 import { RandomTextComponent } from './random-text/random-text.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthGuard } from './auth.guard';
+import { GeneralQuestionComponent } from './general-question/general-question.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'feeds', component: FeedComponent, canActivate: [AuthGuard] },
     { path: 'quizzes', component: QuizzeComponent, canActivate: [AuthGuard] },
     { path: 'poll', component: PollComponent, canActivate: [AuthGuard] },
+    { path: 'general-question', component: GeneralQuestionComponent, canActivate: [AuthGuard] },
     { path: 'fun-quizzes', component: FunQuizzesComponent, canActivate: [AuthGuard] },
     { path: 'frames', component: FramesComponent, canActivate: [AuthGuard] },
     { path: 'flames', component: FlamesComponent, canActivate: [AuthGuard] },

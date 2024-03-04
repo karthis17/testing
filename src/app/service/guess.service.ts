@@ -22,8 +22,10 @@ export class GuessService {
     formData.append("optionsType", optionsType);
     formData.append("questionDifLang", JSON.stringify(questionDifLang));
     formData.append("optionDifLang", JSON.stringify(optionDifLang));
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/guess-game/upload", formData)
+    return this.http.post("https://brochill.onrender.com/api/guess-game/upload", formData, _options)
 
   }
 
