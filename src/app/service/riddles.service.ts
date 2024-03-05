@@ -12,7 +12,9 @@ export class RiddlesService {
 
 
   addRiddle(question: any, answer: any, questionDifLang: any, answerDifLang: any) {
-    return this.http.post("https://brochill.onrender.com/api/riddles/add-riddle", { question, answer, questionDifLang, answerDifLang }, this._options);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+    return this.http.post("https://brochill.onrender.com/api/riddles/add-riddle", { question, answer, questionDifLang, answerDifLang }, _options);
   }
 
   getAll() {

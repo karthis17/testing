@@ -1,8 +1,7 @@
 <div
   class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
 >
-  <h1 class="text-xl font-bold text-gray-500">Add Riddles</h1>
-
+  <h1 class="text-xl font-bold text-gray-500">General Knowledge Question</h1>
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       Title
@@ -22,47 +21,17 @@
           [(ngModel)]="question"
         />
       </div>
-      <div *ngFor="let titl of questionDif; let i = index" class="w-full">
-        <div class="relative w-full mb-3">
-          <input
-            type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter question in {{ titl.lang }}"
-            [(ngModel)]="questionDif[i].text"
-          />
-        </div>
-      </div>
     </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Title
-    </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Answer
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Answer."
-          [(ngModel)]="answer"
-        />
-      </div>
-    </div>
-    <div *ngFor="let titl of answerDif; let i = index" class="w-full px-4">
+    <div
+      *ngFor="let titl of questionDifLang; let i = index"
+      class="w-full px-4"
+    >
       <div class="relative w-full mb-3">
         <input
           type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter answer in {{ titl.lang }}"
-          [(ngModel)]="answerDif[i].text"
+          placeholder="Enter title in {{ titl.lang }}"
+          [(ngModel)]="questionDifLang[i].text"
         />
       </div>
     </div>
@@ -75,17 +44,100 @@
           </div>
           <select
             class="select select-bordered bg-gray-50"
-            [(ngModel)]="lani"
-            (change)="addLangg(lani)"
+            [(ngModel)]="questioni"
+            (change)="addQuestionLanguage(questioni)"
           >
             <option disabled selected value="n">Pick one</option>
-            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+            <option *ngFor="let lang of Qulangg; let i = index" [value]="lang">
               {{ lang }}
             </option>
           </select>
         </label>
       </div>
     </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+    Title
+  </h6> -->
+    <div class="w-full px-4">
+      <div
+        *ngFor="let option of optionss; let i = index; trackBy: trackByFn"
+        class="relative w-full mb-3"
+      >
+        <div
+          class="my-2"
+          *ngFor="let op of option.data; let j = index; trackBy: trackByFn"
+        >
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Option {{ j + 1 }}.
+          </label>
+          <input
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter option {{ j + 1 }} in {{ option.lang }}."
+            [(ngModel)]="optionss[i].data[j].text"
+          />
+        </div>
+      </div>
+      <div class="w-full px-4">
+        <div class="relative w-full mb-3">
+          <label class="form-control w-full max-w-xs">
+            <div class="label">
+              <span class="label-text">Select language for title</span>
+            </div>
+            <select
+              class="select select-bordered bg-gray-50"
+              [(ngModel)]="optioni"
+              (change)="addOptionsLanguage(optioni)"
+            >
+              <option disabled selected value="n">Pick one</option>
+              <option *ngFor="let lang of langg; let i = index" [value]="lang">
+                {{ lang }}
+              </option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="mx-5">
+      <button (click)="addOptions()" class="btn w-full">Add Option</button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-0">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Answer
+        </label>
+
+        <select
+          class="select select-bordered bg-gray-50 w-full"
+          [(ngModel)]="answer"
+        >
+          <option disabled selected value="n">Pick one</option>
+          <option
+            *ngFor="let option of optionss[0].data; let i = index"
+            [value]="option._id"
+          >
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+    </div>
+
     <hr class="mt-6 border-b-1 border-blueGray-300" />
     <button
       *ngIf="!showUpdateButton"
@@ -120,7 +172,7 @@
       </thead>
       <tbody class="text-gray-600 text-sm">
         <tr
-          *ngFor="let da of riddles; let i = index"
+          *ngFor="let da of data; let i = index"
           class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
         >
           <td class="py-3 px-6 text-left whitespace-nowrap">

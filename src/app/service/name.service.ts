@@ -13,8 +13,10 @@ export class NameService {
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
   addMeaning(letter: string, meaning: string) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
     console.log(letter, meaning)
-    return this.http.post("https://brochill.onrender.com/api/nameing/add-name-meaning", { letter: letter, meaning: meaning }, this._options);
+    return this.http.post("https://brochill.onrender.com/api/nameing/add-name-meaning", { letter: letter, meaning: meaning }, _options);
   }
 
   addFact(name: string, fact: string) {

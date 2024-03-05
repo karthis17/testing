@@ -33,17 +33,18 @@ export class AppComponent implements OnInit {
     { text: "Random Image", link: "/randome-image" },
     { text: "Random Text", link: "/randome-text" },
     { text: "Percentage Type", link: "/percentage-type" },
+    { text: "General Question", link: "/general-question" },
   ]
 
   isAuthenticated: boolean = false;
 
-constructor(private authService: AuthService) {
+  constructor(private authService: AuthService) {
 
-}
+  }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
-}
+  }
   onLogout() {
     this.authService.logOut();
     this.isAuthenticated = this.authService.isAuthenticated();

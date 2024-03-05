@@ -14,7 +14,10 @@ export class FlamesService {
     formData.append('word', flames);
     formData.append('image', files);
 
-    return this.http.post("https://brochill.onrender.com/api/flames/add-image", formData)
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.post("https://brochill.onrender.com/api/flames/add-image", formData, _options)
 
   }
 

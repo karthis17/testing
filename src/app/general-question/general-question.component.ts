@@ -1,18 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FunQuizzesService } from '../service/fun-quizzes.service';
+import { CommonModule } from '@angular/common';
+import { GeneralQuestionService } from '../service/general-question.service';
 
 @Component({
-  selector: 'app-fun-quizzes',
+  selector: 'app-general-question',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './fun-quizzes.component.html',
-  styleUrl: './fun-quizzes.component.css'
+  imports: [FormsModule, CommonModule],
+  templateUrl: './general-question.component.html',
+  styleUrl: './general-question.component.css'
 })
-export class FunQuizzesComponent {
+export class GeneralQuestionComponent {
 
-  constructor(private fun: FunQuizzesService) { }
+  constructor(private fun: GeneralQuestionService) { }
 
   question!: any;
   answer!: any;
@@ -141,5 +141,6 @@ export class FunQuizzesComponent {
   update() {
     this.fun.update(this.id, this.question, this.options).subscribe((data: any) => { console.log(data); this.getAll() });
   }
+
 
 }

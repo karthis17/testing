@@ -63,6 +63,30 @@
           placeholder="Enter Question." [(ngModel)]="question" />
       </div>
     </div>
+    <div *ngFor="let titl of questionDifLang; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <input type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter title in {{ titl.lang }}" [(ngModel)]="questionDifLang[i].text" />
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select language for title</span>
+          </div>
+          <select class="select select-bordered bg-gray-50" [(ngModel)]="questioni"
+            (change)="addQuestionLanguage(questioni)">
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
@@ -114,7 +138,7 @@
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
-  
+
   <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
     <table class="min-w-max w-full table-auto">
       <thead>

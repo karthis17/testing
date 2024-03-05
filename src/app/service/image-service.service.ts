@@ -86,9 +86,10 @@ export class ImageServiceService {
     result.forEach((resFile) => {
       formData.append(`answer`, resFile.resultImg);
     });
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-
-    this.http.post('https://brochill.onrender.com/api/quizzes/upload', formData).subscribe((data: any) => {
+    this.http.post('https://brochill.onrender.com/api/quizzes/upload', formData, _options).subscribe((data: any) => {
       console.log(data);
       data.state1.forEach((state: any, index: number) => {
         state1[index]['option'] = state;
@@ -105,7 +106,7 @@ export class ImageServiceService {
       });
 
 
-      this.http.post("https://brochill.onrender.com/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }).subscribe(data1 => {
+      this.http.post("https://brochill.onrender.com/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }, _options).subscribe(data1 => {
         console.log(data1);
       })
 

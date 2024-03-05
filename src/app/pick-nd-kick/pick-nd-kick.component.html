@@ -41,6 +41,38 @@
         />
       </div>
     </div>
+
+    <div *ngFor="let titl of op1; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter option1 in {{ titl.lang }}"
+          [(ngModel)]="op1[i].text"
+        />
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select language for title</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="option1i"
+            (change)="addLanngoption1(option1i)"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langgOp1; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
   <div class="flex-auto px-4 lg:px-10 pt-5">
@@ -83,6 +115,36 @@
           placeholder="Enter option 2."
           [(ngModel)]="option2"
         />
+      </div>
+    </div>
+    <div *ngFor="let titl of op2; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter option2 in {{ titl.lang }}"
+          [(ngModel)]="op2[i].text"
+        />
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select language for title</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="option2i"
+            (change)="addLanngoption2(option2i)"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langgOp2; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
       </div>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />

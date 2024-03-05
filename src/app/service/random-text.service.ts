@@ -21,8 +21,10 @@ export class RandomTextService {
     texts.forEach(text => {
       formData.append('texts', text);
     })
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/random-text/add-question", formData);
+    return this.http.post("https://brochill.onrender.com/api/random-text/add-question", formData, _options);
 
   }
 
