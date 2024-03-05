@@ -9,7 +9,7 @@ export class RandomTextService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, texts: any[], file: any, frame_size: any, coordinates: any) {
+  addQuestion(question: any, texts: any[], file: any, frame_size: any, coordinates: any, thumbnail: any, reff: any) {
 
     const formData = new FormData();
 
@@ -17,6 +17,8 @@ export class RandomTextService {
     formData.append('frame', file);
     formData.append('frame_size', JSON.stringify(frame_size));
     formData.append('coordinates', JSON.stringify(coordinates));
+    formData.append("thumbnail", thumbnail);
+    formData.append("referenceImage", reff);
 
     texts.forEach(text => {
       formData.append('texts', text);

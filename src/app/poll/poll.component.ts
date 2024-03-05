@@ -29,6 +29,12 @@ export class PollComponent {
   },
   ]
 
+  thumb: any;
+
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
+
   addOptionsLanguage(lang: any) {
     let data: any = []
     this.optionss[0].data.map(option => {
@@ -129,11 +135,11 @@ export class PollComponent {
 
     console.log(this.questionDifLang);
     console.log(this.optionss);
-    this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
+    this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
   }
   submitImg() {
     console.log(this.imgOptions)
-    this.poll.addImgPoll(this.imgOptions, this.question).subscribe(data => { console.log(data); }, err => { console.log(err); });
+    this.poll.addImgPoll(this.imgOptions, this.question, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); });
   }
 
   show(poll: any) {

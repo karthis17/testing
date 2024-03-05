@@ -18,6 +18,67 @@ export class QuizzeComponent {
 
   quizzes!: any[];
 
+  questionType: string = "text";
+
+  optionType: string = "text";
+
+  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  Oplangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  questionDifLang: { text: string, lang: string }[] = [
+
+  ];
+
+  addQuestionLanguage(lang: any) {
+    this.questionDifLang.push({ text: '', lang: lang });
+    // Find the index of the value to remove
+    let indexToRemove = this.langg.indexOf(lang);
+
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.langg.splice(indexToRemove, 1);
+    }
+    console.log(this.questionDifLang)
+    this.optioni = 'n'
+  }
+  questioni: any;
+  optioni: any;
+  id = 1;
+
+  optionss = [{
+    lang: 'english', data: [{ _id: 0, text: '' }]
+  },
+  ]
+
+  addOptionss() {
+    this.optionss = this.optionss.map(option => {
+      option.data.push({ _id: this.id, text: " " });
+      console.log(option)
+      return option;
+    });
+    this.id++;
+  }
+
+  addOptionsLanguage(lang: any) {
+    let data: any = []
+    this.optionss[0].data.map(option => {
+      data.push({ _id: option._id, text: ' ' });
+    })
+
+    this.optionss.push({
+      lang: lang, data: data
+    })
+
+    console.log(lang, this.optionss)
+    let indexToRemove = this.Oplangg.indexOf(lang);
+    if (indexToRemove !== -1) {
+      // Use splice to remove the value at the index
+      this.Oplangg.splice(indexToRemove, 1);
+    }
+    console.log(this.questionDifLang)
+    this.questioni = 'n'
+  }
+
+
   quizze = {
     question: '',
     state1: [],
@@ -27,6 +88,7 @@ export class QuizzeComponent {
   } as { question: string, state1: Array<any>, state2: Array<any>, state3: Array<any>, result: Array<any> }
 
   constructor(private im: ImageServiceService) { }
+
 
 
   ngOnInit() {
@@ -78,7 +140,14 @@ export class QuizzeComponent {
   }
 
   submit() {
-    this.im.upload(this.quizze.question, this.quizze.state1, this.quizze.state2, this.quizze.state3, this.quizze.result);
+    console.log(this.quizze)
+    // this.im.upload(this.quizze.question, this.quizze.state1, this.quizze.state2, this.quizze.state3, this.quizze.result);
+  }
+
+  submitText() {
+    this.im.addTextQuizzes(this.quizze.question, this.quizze.state1, this.quizze.state2, this.quizze.state3, this.quizze.result).subscribe(data => {
+      console.log(data);
+    })
   }
 
   showRes() {

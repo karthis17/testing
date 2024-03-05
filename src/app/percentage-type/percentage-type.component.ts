@@ -33,7 +33,11 @@ export class PercentageTypeComponent {
   showUpdateButton: boolean = false;
   idToUpdate: any;
 
+  thumb: any;
 
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
 
   uploadedFrameUrl: any;
   uploadedFramePath: any;
@@ -189,7 +193,7 @@ export class PercentageTypeComponent {
   submit() {
 
 
-    this.perType.addQuestion(this.question, this.frames, this.file, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+    this.perType.addQuestion(this.question, this.frames, this.file, this.thumb, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
   }
 
 

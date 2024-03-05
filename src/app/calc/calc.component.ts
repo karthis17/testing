@@ -35,6 +35,13 @@ export class CalcComponent {
     return index;
   }
 
+
+  thumb: any;
+
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
+
   ngOnInit() {
     this.getAll()
   }
@@ -68,7 +75,7 @@ export class CalcComponent {
 
 
 
-    this.ca.addLove(this.textList, this.min, this.max, this.file).subscribe(data => { console.log(data); this.close() })
+    this.ca.addLove(this.textList, this.min, this.max, this.file, this.thumb).subscribe(data => { console.log(data); this.close() })
   }
   submitFr() {
     console.log(this.textList, "fr")
@@ -76,7 +83,7 @@ export class CalcComponent {
     console.log(this.min)
     console.log(this.max)
 
-    this.ca.addFriend(this.textList, this.min, this.max, this.file).subscribe(data => { console.log(data), this.getAll() })
+    this.ca.addFriend(this.textList, this.min, this.max, this.file, this.thumb).subscribe(data => { console.log(data), this.getAll() })
   }
 
 

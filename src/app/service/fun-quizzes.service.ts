@@ -9,11 +9,20 @@ export class FunQuizzesService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any) {
+  addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any, thumbnail: any) {
+
+    const formData = new FormData();
+
+    formData.append("question", question);
+    formData.append("questionDifLang", JSON.stringify(questionDifLang));
+    formData.append("optionDifLang", JSON.stringify(optionDifLang));
+    formData.append("thumbnail", thumbnail);
+    formData.append("answer", answer);
+
 
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", { question, optionDifLang, questionDifLang, answer }, _options);
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", formData, _options);
 
   }
 

@@ -17,13 +17,41 @@
         <input
           type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
+          placeholder="Enter name."
           [(ngModel)]="frameName"
         />
       </div>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
+
+  <div class="flex mt-10 gap-7">
+    <div class="">
+      <div class="label">
+        <span class="label-text">Select Image Size</span>
+      </div>
+      <select
+        class="select select-bordered bg-gray-50"
+        name=""
+        id=""
+        title="select image size"
+        [(ngModel)]="size"
+        (change)="setSize()"
+      >
+        <option
+          *ngFor="let option of canvasSizeOptions; let i = index"
+          [value]="i"
+        >
+          {{ option.width }} x {{ option.height }}
+        </option>
+      </select>
+    </div>
+
+    <div class="border-2 max-w-min rounded-md border-slate-950">
+      <canvas #canvasElement></canvas>
+    </div>
+  </div>
+  <hr class="mt-6 border-b-1 border-blueGray-300" />
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
@@ -36,7 +64,24 @@
         <input
           type="file"
           class="file-input file-input-bordered file-input-md w-full"
-          (change)="addFile($event)"
+          (change)="handleFileInput($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Tumbnail
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addTumb($event)"
         />
       </div>
     </div>
@@ -47,6 +92,21 @@
     <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
     Title
   </h6> -->
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Reference Image
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="addreff($event)"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
     <button
       *ngIf="!showUpdateButton"
       class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"

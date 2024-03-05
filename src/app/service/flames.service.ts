@@ -8,11 +8,12 @@ export class FlamesService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFlames(flames: string, files: any) {
+  uploadFlames(flames: string, files: any, thumbnail: any) {
     const formData = new FormData();
 
     formData.append('word', flames);
     formData.append('image', files);
+    formData.append("thumbnail", thumbnail);
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };

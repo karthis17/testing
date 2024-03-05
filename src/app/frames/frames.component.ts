@@ -30,6 +30,18 @@ export class FramesComponent {
 
   framei: any;
 
+  thumb: any;
+
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
+
+
+  reff: any;
+  addreff(e: any) {
+    this.reff = e.target.files[0];
+  }
+
   width: number = 720;
   height: number = 720;
 
@@ -248,7 +260,7 @@ export class FramesComponent {
       textS.push({ x: text.left, y: text.top, width, height, text: this.texts_container[i++] });
     }
 
-    this.frame.uploadFrame(this.frameName, this.farmeFile, { width: this.canvasWidth, height: this.canvasHeight }, size, textS, this.Title.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => {
+    this.frame.uploadFrame(this.frameName, this.farmeFile, { width: this.canvasWidth, height: this.canvasHeight }, size, textS, this.Title.filter(dis => { if (dis.text) return dis; else return false }), this.thumb, this.reff).subscribe(frame => {
       this.squares = [];
       textS = [];
       this.texts_container = [];

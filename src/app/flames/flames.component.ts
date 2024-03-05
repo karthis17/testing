@@ -17,7 +17,7 @@ export class FlamesComponent {
 
   submit() {
 
-    this.flame.uploadFlames(this.selectedFlames, this.flamesImg).subscribe(flames => {
+    this.flame.uploadFlames(this.selectedFlames, this.flamesImg, this.thumb).subscribe(flames => {
       console.log(flames);
       this.getAll()
     });
@@ -40,6 +40,12 @@ export class FlamesComponent {
   showButton: boolean = false;
   filePath: any;
   id: any;
+
+  thumb: any;
+
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
 
   addFile(e: any) {
     this.flamesImg = e.target.files[0];

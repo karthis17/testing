@@ -27,6 +27,13 @@ export class FunQuizzesComponent {
   questioni: any;
   noOfOptions: any = [''];
 
+
+  file: any;
+
+  addFile(e: any) {
+    this.file = e.target.files[0];
+  }
+
   opID = 1;
 
   optionss = [{
@@ -99,7 +106,7 @@ export class FunQuizzesComponent {
 
   submit() {
     console.log(this.optionss, this.question, this.answer);
-    this.fun.addQuestion(this.question, this.optionss, this.answer, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll(); this.close() })
+    this.fun.addQuestion(this.question, this.optionss, this.answer, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.file).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
 

@@ -10,18 +10,23 @@ export class RandomImageService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addFrame(frame: any, frameName: any) {
+  addFrame(frame: any, frameName: any, frame_size: any, coordinates: any, thumbnail: any, reff: any) {
 
 
     const formData = new FormData();
 
     formData.append('frame', frame)
     formData.append('frameName', frameName)
+    formData.append('coordinates', JSON.stringify(coordinates))
+    formData.append('frame_size', JSON.stringify(frame_size));
+    formData.append("thumbnail", thumbnail);
+    formData.append("referenceImage", reff);
+
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/random-image/upload-frame", formData, _options);
+    return this.http.post("http://localhost:3000/api/random-image/upload-frame", formData, _options);
 
   }
 

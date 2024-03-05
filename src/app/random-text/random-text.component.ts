@@ -30,6 +30,11 @@ export class RandomTextComponent {
 
   file: any;
 
+  thumb: any;
+
+  addTumb(e: any) {
+    this.thumb = e.target.files[0];
+  }
   canvasWidth!: number;
   canvasHeight!: number;
 
@@ -41,6 +46,12 @@ export class RandomTextComponent {
 
   width: number = 720;
   height: number = 720;
+
+  reff: any;
+  addreff(e: any) {
+    this.reff = e.target.files[0];
+  }
+
 
   canvasSizeOptions: { width: number, height: number }[] = [
     { width: 720, height: 720 }, // Facebook Profile Picture (recommended)
@@ -156,7 +167,7 @@ export class RandomTextComponent {
       const height = (square.height ?? 0) * (square.scaleY ?? 1);
       size.push({ x: square.left, y: square.top, width, height });
     }
-    this.perType.addQuestion(this.question, this.texts, this.file, { width: this.width, height: this.height }, size).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+    this.perType.addQuestion(this.question, this.texts, this.file, { width: this.width, height: this.height }, size, this.thumb, this.reff).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
   }
 
   trackByFn(index: any, item: any) {

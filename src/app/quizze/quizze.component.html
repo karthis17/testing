@@ -3,7 +3,76 @@
 >
   <h1 class="text-xl font-bold text-gray-500">Fun Quizzes</h1>
 
-  <div class="flex-auto px-4 lg:px-10 pt-5">
+  <div class="flex px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Select Question Type
+        </label>
+        <div class="flex gap-5 justify-start align-middle">
+          <label for="">
+            <input
+              type="radio"
+              name="question"
+              (click)="questionType = 'text'"
+              value="text"
+              title="Text"
+              checked
+            />
+            Text</label
+          >
+          <label for="">
+            <input
+              type="radio"
+              name="question"
+              value="image"
+              (click)="questionType = 'image'"
+              title="Image"
+            />
+            Image</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Select Option Type
+        </label>
+        <div class="flex gap-5 justify-start align-middle">
+          <label for="">
+            <input
+              type="radio"
+              name="option"
+              (click)="optionType = 'text'"
+              value="text"
+              title="Text"
+              checked
+            />
+            Text</label
+          >
+          <label for="">
+            <input
+              type="radio"
+              name="option"
+              value="image"
+              (click)="optionType = 'image'"
+              title="Image"
+            />
+            Image</label
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-4 mx-10 border-b-1 border-blueGray-300" />
+
+  <div *ngIf="questionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label
@@ -20,8 +89,26 @@
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
+  <div *ngIf="questionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Question
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.question"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
 
-  <div class="flex-auto px-4 lg:px-10 pt-0">
+  <div *ngIf="!selected_option" class="flex-auto px-4 lg:px-10 pt-0">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label
@@ -44,7 +131,7 @@
     </div>
   </div>
 
-  <div class="flex-auto px-4 lg:px-10 pt-5">
+  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       statement 1
     </h6>
@@ -71,7 +158,37 @@
 
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
+
+  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      statement 1
+    </h6>
+    <div *ngFor="let q of quizze.state1; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Option
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.state1[i].option"
+        />
+        <input
+          type="number"
+          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Points"
+          [(ngModel)]="quizze.state1[i].point"
+        />
+      </div>
+    </div>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       statement 2
     </h6>
@@ -98,7 +215,37 @@
 
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
+
+  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      statement 2
+    </h6>
+    <div *ngFor="let q of quizze.state2; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Option
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.state2[i].option"
+        />
+        <input
+          type="number"
+          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Points"
+          [(ngModel)]="quizze.state2[i].point"
+        />
+      </div>
+    </div>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       statement 3
     </h6>
@@ -125,6 +272,36 @@
 
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
+
+  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      statement 3
+    </h6>
+    <div *ngFor="let q of quizze.state3; let i = index" class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Option
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.state3[i].option"
+        />
+        <input
+          type="number"
+          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Points"
+          [(ngModel)]="quizze.state3[i].point"
+        />
+      </div>
+    </div>
+
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       Result
@@ -162,7 +339,7 @@
     <hr class="mt-6 border-b-1 border-blueGray-300" />
 
     <button
-      (click)="submit()"
+      (click)="optionType === 'text' ? submitText() : submit()"
       class="px-4 py-2 m-3 w-full bg-slate-800 rounded-md text-white"
     >
       Submit

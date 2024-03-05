@@ -8,7 +8,7 @@ export class CalcService {
 
   constructor(private http: HttpClient) { }
 
-  addLove(text: string[], min: any, max: any, file: File | string) {
+  addLove(text: string[], min: any, max: any, file: File | string, thumbnail: any) {
     const formData = new FormData();
     formData.append('image', file);
     text.forEach(text => {
@@ -17,14 +17,16 @@ export class CalcService {
     formData.append('minPercentage', min);
 
     formData.append('maxPercentage', max);
+    formData.append("thumbnail", thumbnail);
+
     console.log(formData.get('image'));
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-love-quotes", formData, _options);
+    return this.http.post("http://localhost:3000/api/love-friendship-calc/add-love-quotes", formData, _options);
 
   }
 
-  addFriend(text: string[], min: any, max: any, file: File | string) {
+  addFriend(text: string[], min: any, max: any, file: File | string, thumbnail: any) {
 
     const formData = new FormData();
     formData.append('image', file);
@@ -34,11 +36,13 @@ export class CalcService {
     formData.append('minPercentage', min);
 
     formData.append('maxPercentage', max);
+    formData.append("thumbnail", thumbnail);
+
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/love-friendship-calc/add-friend-quotes", formData, _options);
+    return this.http.post("http://localhost:3000/api/love-friendship-calc/add-friend-quotes", formData, _options);
 
   }
 

@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -113,6 +114,26 @@ export class ImageServiceService {
     });
   }
 
+  addTextQuizzes(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
+
+    const formData = new FormData();
+
+    formData.append("question", file);
+    formData.append("statement_1", JSON.stringify(state1));
+    formData.append("statement_2", JSON.stringify(state2));
+    formData.append("statement_3", JSON.stringify(state3));
+    result.map((res) => {
+
+      formData.append("answer", res.resultImg);
+    });
+
+    formData.append("result", JSON.stringify(result));
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.post("http://localhost:3000/api/quizzes/add-text-quizzes", formData, _options)
+
+  }
   getQuizzes() {
     return this.http.get('https://brochill.onrender.com/api/quizzes/get-all-quizzes');
   }

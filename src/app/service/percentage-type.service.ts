@@ -9,7 +9,7 @@ export class PercentageTypeService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, frames: any, images: any[], questionDifLang: any) {
+  addQuestion(question: any, frames: any, images: any[], questionDifLang: any, thumbnail: any) {
 
 
     const formData = new FormData();
@@ -19,6 +19,8 @@ export class PercentageTypeService {
       formData.append("frame", image);
     })
     formData.append("frames", JSON.stringify(frames));
+    formData.append("thumbnail", thumbnail);
+
 
     if (questionDifLang) {
 
@@ -26,7 +28,7 @@ export class PercentageTypeService {
     }
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("https://brochill.onrender.com/api/percentage-type/add-frame", formData, _options);
+    return this.http.post("http://localhost:3000/api/percentage-type/add-frame", formData, _options);
 
   }
 
