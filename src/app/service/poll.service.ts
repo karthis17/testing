@@ -12,18 +12,30 @@ export class PollService {
       'Content-Type': 'application/json'
     })
   }
-  addPoll(question: any, options: any, questionDifLang: any, thumbnail: any) {
+  addPoll(imageOption: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any) {
     const formData = new FormData();
 
-    formData.append('optionDifLang', JSON.stringify(options));
     formData.append('question', question);
-    formData.append('questionDifLang', JSON.stringify(questionDifLang));
     formData.append("thumbnail", thumbnail);
+    formData.append("description", description);
+    formData.append("language", language);
+    formData.append("questionType", questionType);
+    formData.append("optionType", optionType);
+
+    if (options) {
+      formData.append('options', JSON.stringify(options));
+    }
+
+    if (imageOption) {
+      imageOption.map((m: any) => {
+        formData.append('option', m);
+      })
+    }
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/poll/add-text-poll", formData, _options)
+    return this.http.post("http://localhost:3000/api/poll/add-poll", formData, _options)
   }
   addImgPoll(options: any, question: any, questionDifLang: any, thumbnail: any) {
 

@@ -6,171 +6,174 @@
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select post language</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="quizze.language"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
         <label
           class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
         >
-          Upload Image
+          Description
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.description"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Reference Image
         </label>
         <input
           type="file"
-          #fileInput
           class="file-input file-input-bordered file-input-md w-full"
-          (change)="addFile($event)"
+          (change)="addReff($event)"
         />
       </div>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Title
-    </h6> -->
 
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Option
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter option 1."
-          [(ngModel)]="option1"
-        />
-      </div>
-    </div>
-
-    <div *ngFor="let titl of op1; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter option1 in {{ titl.lang }}"
-          [(ngModel)]="op1[i].text"
-        />
-      </div>
-    </div>
-
+  <div
+    *ngFor="let question of quizze.questions; let i = index"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
+    <h1 class="text-center text-lg">Question {{ i + 1 }}</h1>
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label class="form-control w-full max-w-xs">
           <div class="label">
-            <span class="label-text">Select language for title</span>
+            <span class="label-text">Question Type</span>
           </div>
           <select
             class="select select-bordered bg-gray-50"
-            [(ngModel)]="option1i"
-            (change)="addLanngoption1(option1i)"
+            [(ngModel)]="quizze.questions[i].questionType"
           >
             <option disabled selected value="n">Pick one</option>
-            <option *ngFor="let lang of langgOp1; let i = index" [value]="lang">
-              {{ lang }}
-            </option>
+            <option value="text">text</option>
+            <option value="image">image</option>
           </select>
         </label>
       </div>
-    </div>
 
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Title
-    </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Points
-        </label>
-        <input
-          type="number"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter point 1."
-          [(ngModel)]="point1"
-        />
-      </div>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Title
-    </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Option
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter option 2."
-          [(ngModel)]="option2"
-        />
-      </div>
-    </div>
-    <div *ngFor="let titl of op2; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter option2 in {{ titl.lang }}"
-          [(ngModel)]="op2[i].text"
-        />
-      </div>
-    </div>
-
-    <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label class="form-control w-full max-w-xs">
           <div class="label">
-            <span class="label-text">Select language for title</span>
+            <span class="label-text">Option Type</span>
           </div>
           <select
             class="select select-bordered bg-gray-50"
-            [(ngModel)]="option2i"
-            (change)="addLanngoption2(option2i)"
+            [(ngModel)]="quizze.questions[i].optionType"
           >
             <option disabled selected value="n">Pick one</option>
-            <option *ngFor="let lang of langgOp2; let i = index" [value]="lang">
-              {{ lang }}
-            </option>
+            <option value="text">text</option>
+            <option value="image">image</option>
           </select>
         </label>
+
+        <div class="relative w-full mb-3">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Question
+          </label>
+          <input
+            *ngIf="quizze.questions[i].questionType === 'text'"
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="quizze.questions[i].question"
+          />
+          <input
+            *ngIf="quizze.questions[i].questionType === 'image'"
+            type="file"
+            class="file-input file-input-bordered file-input-md w-full"
+            (change)="addQFile($event, i)"
+          />
+        </div>
+
+        <div
+          *ngFor="let option of question.options; let j = index"
+          class="relative w-full mb-3 my-5"
+        >
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Option {{ j + 1 }}
+          </label>
+          <input
+            *ngIf="quizze.questions[i].optionType === 'text'"
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="quizze.questions[i].options[j].option"
+          />
+          <input
+            *ngIf="quizze.questions[i].optionType === 'image'"
+            type="file"
+            class="file-input file-input-bordered file-input-md w-full"
+            (change)="addOFile($event, i, j)"
+          />
+
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Points
+          </label>
+          <input
+            type="number"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter poins."
+            [(ngModel)]="quizze.questions[i].options[j].points"
+          />
+          <hr class="mt-6 border-b-1 border-blueGray-300" />
+        </div>
+        <div class="w-full px-4">
+          <button (click)="addoption(i)" class="btn w-full">Add Option</button>
+        </div>
       </div>
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+    </div>
+  </div>
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <button (click)="addQuestion()" class="btn w-full">Add Question</button>
     </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Title
-    </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Points
-        </label>
-        <input
-          type="number"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter point 2."
-          [(ngModel)]="point2"
-        />
-      </div>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-
+  <div>
     <button
       *ngIf="!showUpdateButton"
       class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"
@@ -179,10 +182,7 @@
       Submit
     </button>
     <ng-container *ngIf="showUpdateButton">
-      <button
-        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
-        (click)="update()"
-      >
+      <button class="w-full bg-slate-800 text-white py-3 my-1 rounded-md">
         Update
       </button>
       <button
@@ -221,10 +221,7 @@
               (click)="delete(da._id)"
               class="text-red-500 bi cursor-pointer bi-trash-fill"
             ></i>
-            <i
-              (click)="setUpdate(da)"
-              class="text-teal-500 bi bi-pencil-square cursor-pointer"
-            ></i>
+            <i class="text-teal-500 bi bi-pencil-square cursor-pointer"></i>
           </td>
         </tr>
       </tbody>

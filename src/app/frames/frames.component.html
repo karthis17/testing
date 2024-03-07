@@ -1,7 +1,29 @@
 <div class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4">
   <h2 class="text-xl font-bold text-gray-500">Add Frame</h2>
 
-  <div class="flex mt-10 gap-7">
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select post language</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="language"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <!-- <div class="flex mt-10 gap-7">
     <div class="">
       <div class="label">
         <span class="label-text">Select Image Size</span>
@@ -26,7 +48,7 @@
     <div class="border-2 max-w-min rounded-md border-slate-950">
       <canvas #canvasElement></canvas>
     </div>
-  </div>
+  </div> -->
   <hr class="mt-6 border-b-1 border-blueGray-300" />
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
@@ -40,7 +62,7 @@
         <input
           type="file"
           class="file-input file-input-bordered file-input-md w-full"
-          (change)="handleFileInput($event)"
+          (change)="addFile($event)"
         />
       </div>
     </div>
@@ -67,108 +89,32 @@
         />
       </div>
     </div>
-    <div *ngFor="let titl of Title; let i = index" class="w-full px-4">
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        Title
+      </h6> -->
+
+    <div class="w-full px-4">
       <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Description
+        </label>
         <input
           type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter frame name in {{ titl.lang }}"
-          [(ngModel)]="Title[i].text"
+          placeholder="Enter Question."
+          [(ngModel)]="description"
         />
       </div>
     </div>
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label class="form-control w-full max-w-xs">
-          <div class="label">
-            <span class="label-text">Select language for title</span>
-          </div>
-          <select
-            class="select select-bordered bg-gray-50"
-            [(ngModel)]="framei"
-            (change)="addlangg(framei)"
-          >
-            <option disabled selected value="n">Pick one</option>
-            <option *ngFor="let lang of langg; let i = index" [value]="lang">
-              {{ lang }}
-            </option>
-          </select>
-        </label>
-      </div>
-    </div>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-        Title
-      </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          User
-        </label>
-        <div
-          *ngFor="let sq of squares; let i = index"
-          class="flex justify-between align-bottom"
-        >
-          <p
-            class="border-0 w-full px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded"
-          >
-            User {{ i }}
-          </p>
-          <i
-            (click)="removeSquare(i)"
-            class="text-red-500 my-2 px-3 bi cursor-pointer bi-trash-fill text-center"
-          ></i>
-        </div>
-      </div>
-      <button class="btn w-full" (click)="addSquare()">Add User</button>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div class="flex-auto px-4 lg:px-10 pt-5">
-    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-        Title
-      </h6> -->
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Text Box
-        </label>
-        <div
-          *ngFor="let sq of texts_container; let i = index; trackBy: trackByFn"
-          class="flex justify-between align-bottom"
-        >
-          <input
-            type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter description."
-            [(ngModel)]="texts_container[i]"
-          />
-          <i
-            (click)="removeTextBox(i)"
-            class="text-red-500 my-2 px-3 bi cursor-pointer bi-trash-fill text-center"
-          ></i>
-        </div>
-      </div>
-      <button
-        class="btn w-full"
-        (click)="addTextBox(); texts_container.push('')"
-      >
-        Add Text
-      </button>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
@@ -212,16 +158,10 @@
       Submit
     </button>
     <ng-container *ngIf="showUpdateButton">
-      <button
-        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
-        (click)="update()"
-      >
+      <button class="w-full bg-slate-800 text-white py-3 my-1 rounded-md">
         Update
       </button>
-      <button
-        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
-        (click)="close()"
-      >
+      <button class="w-full bg-red-600 text-white py-3 my-1 rounded-md">
         Close
       </button>
     </ng-container>
@@ -256,10 +196,7 @@
               (click)="delete(da._id)"
               class="text-red-500 bi cursor-pointer bi-trash-fill"
             ></i>
-            <i
-              (click)="showUpdate(da)"
-              class="text-teal-500 bi bi-pencil-square cursor-pointer"
-            ></i>
+            <i class="text-teal-500 bi bi-pencil-square cursor-pointer"></i>
           </td>
         </tr>
       </tbody>

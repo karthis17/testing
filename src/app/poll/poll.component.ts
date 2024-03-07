@@ -24,10 +24,13 @@ export class PollComponent {
 
   id = 1;
 
-  optionss = [{
-    lang: 'english', data: [{ _id: 0, text: '' }]
-  },
-  ]
+  language: any = "english";
+  description: any;
+
+  options: any = [{
+    option: '',
+    vote: 0
+  }];
 
   thumb: any;
 
@@ -35,33 +38,12 @@ export class PollComponent {
     this.thumb = e.target.files[0];
   }
 
-  addOptionsLanguage(lang: any) {
-    let data: any = []
-    this.optionss[0].data.map(option => {
-      data.push({ _id: option._id, text: ' ' });
-    })
-
-    this.optionss.push({
-      lang: lang, data: data
-    })
-
-    console.log(lang, this.optionss)
-    let indexToRemove = this.Oplangg.indexOf(lang);
-    if (indexToRemove !== -1) {
-      // Use splice to remove the value at the index
-      this.Oplangg.splice(indexToRemove, 1);
-    }
-    console.log(this.questionDifLang)
-    this.questioni = 'n'
-  }
 
   addOptions() {
-    this.optionss = this.optionss.map(option => {
-      option.data.push({ _id: this.id, text: " " });
-      console.log(option)
-      return option;
+    this.options.push({
+      option: '',
+      vote: 0
     });
-    this.id++;
   }
 
   data: any;
@@ -77,24 +59,10 @@ export class PollComponent {
   questioni: any;
   optioni: any;
 
-  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  Oplangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  questionDifLang: { text: string, lang: string }[] = [
+  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
 
-  ];
 
-  addQuestionLanguage(lang: any) {
-    this.questionDifLang.push({ text: '', lang: lang });
-    // Find the index of the value to remove
-    let indexToRemove = this.langg.indexOf(lang);
 
-    if (indexToRemove !== -1) {
-      // Use splice to remove the value at the index
-      this.langg.splice(indexToRemove, 1);
-    }
-    console.log(this.questionDifLang)
-    this.optioni = 'n'
-  }
 
 
   ngOnInit() {
@@ -131,15 +99,15 @@ export class PollComponent {
     this.question = e.target.files[0]
   }
 
-  submit() {
+  // submit() {
 
-    console.log(this.questionDifLang);
-    console.log(this.optionss);
-    this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
-  }
-  submitImg() {
-    console.log(this.imgOptions)
-    this.poll.addImgPoll(this.imgOptions, this.question, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); });
+  //   console.log(this.questionDifLang);
+  //   console.log(this.optionss);
+  //   this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
+  // }
+  submit() {
+    console.log(this.imgOptions, this.options, this.question)
+    this.poll.addPoll(this.imgOptions, this.question, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption).subscribe(data => { console.log(data); }, err => { console.log(err); });
   }
 
   show(poll: any) {

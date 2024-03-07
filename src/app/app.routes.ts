@@ -19,6 +19,8 @@ import { RandomTextComponent } from './random-text/random-text.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthGuard } from './auth.guard';
 import { GeneralQuestionComponent } from './general-question/general-question.component';
+import { FuntestComponent } from './funtest/funtest.component';
+import { NameingComponent } from './nameing/nameing.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -36,7 +38,6 @@ export const routes: Routes = [
     { path: 'pick-kick', component: PickNdKickComponent, canActivate: [AuthGuard] },
     { path: 'guess', component: GuessComponent, canActivate: [AuthGuard] },
     { path: 'riddles', component: RiddlesComponent, canActivate: [AuthGuard] },
-    { path: 'randome-image', component: RandomImageComponent, canActivate: [AuthGuard] },
-    { path: 'randome-text', component: RandomTextComponent, canActivate: [AuthGuard] },
-    { path: 'percentage-type', component: PercentageTypeComponent, canActivate: [AuthGuard] },
+    { path: 'funtest', component: FuntestComponent, canActivate: [AuthGuard] },
+    { path: 'naming-type', component: NameingComponent, canActivate: [AuthGuard] },
 ];

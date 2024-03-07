@@ -8,7 +8,7 @@ export class FramService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFrame(fileName: string, file: File, frame_size: any, coordinates: any, textBox: any[], titleDifLang: any, thumbnail: any, reff: any) {
+  uploadFrame(fileName: string, file: File, thumbnail: any, reff: any, language: any, description: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -16,14 +16,11 @@ export class FramService {
     const formData = new FormData;
 
     formData.append('frameName', fileName);
-    formData.append('texts', JSON.stringify(textBox));
-    formData.append('frame_size', JSON.stringify(frame_size));
-    formData.append('coordinates', JSON.stringify(coordinates));
     formData.append('frame', file);
-    formData.append('titleDifLang', JSON.stringify(titleDifLang));
     formData.append("thumbnail", thumbnail);
     formData.append("referenceImage", reff);
-
+    formData.append('languages', language);
+    formData.append('description', description);
 
     return this.http.post("https://brochill.onrender.com/api/frame/upload-frame", formData, _options);
 

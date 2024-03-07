@@ -1,372 +1,397 @@
 <div
   class="container mx-auto bg-white p-10 rounded-md shadow-sm my-4 min-h-full"
 >
-  <h1 class="text-xl font-bold text-gray-500">Fun Quizzes</h1>
+  <h1 class="text-xl font-bold text-gray-500">Quizzes</h1>
 
-  <div class="flex px-4 lg:px-10 pt-5">
+  <div class="flex-auto px-4 lg:px-10 pt-5">
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Select Question Type
-        </label>
-        <div class="flex gap-5 justify-start align-middle">
-          <label for="">
-            <input
-              type="radio"
-              name="question"
-              (click)="questionType = 'text'"
-              value="text"
-              title="Text"
-              checked
-            />
-            Text</label
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Select post language</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="quizze.language"
           >
-          <label for="">
-            <input
-              type="radio"
-              name="question"
-              value="image"
-              (click)="questionType = 'image'"
-              title="Image"
-            />
-            Image</label
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Select Option Type
+            <option disabled selected value="n">Pick one</option>
+            <option *ngFor="let lang of langg; let i = index" [value]="lang">
+              {{ lang }}
+            </option>
+          </select>
         </label>
-        <div class="flex gap-5 justify-start align-middle">
-          <label for="">
-            <input
-              type="radio"
-              name="option"
-              (click)="optionType = 'text'"
-              value="text"
-              title="Text"
-              checked
-            />
-            Text</label
-          >
-          <label for="">
-            <input
-              type="radio"
-              name="option"
-              value="image"
-              (click)="optionType = 'image'"
-              title="Image"
-            />
-            Image</label
-          >
-        </div>
       </div>
     </div>
-  </div>
-  <hr class="mt-4 mx-10 border-b-1 border-blueGray-300" />
-
-  <div *ngIf="questionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Upload Question
-        </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="selected_file($event)"
-        />
-      </div>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-  <div *ngIf="questionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Question
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="quizze.question"
-        />
-      </div>
-    </div>
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="!selected_option" class="flex-auto px-4 lg:px-10 pt-0">
-    <div class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          How Many Options
-        </label>
-
-        <select
-          class="select select-bordered bg-gray-50 w-full"
-          [(ngModel)]="selected_option"
-          (change)="setHowManyOptions()"
-        >
-          <option disabled selected value="n">Pick one</option>
-          <option [value]="2">2</option>
-          <option [value]="3">3</option>
-          <option [value]="4">4</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 1
-    </h6>
-    <div *ngFor="let q of quizze.state1; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Upload Option
-        </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="selected_file($event, 1, i)"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="q.point"
-        />
-      </div>
-    </div>
-
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 1
-    </h6>
-    <div *ngFor="let q of quizze.state1; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Option
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="quizze.state1[i].option"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="quizze.state1[i].point"
-        />
-      </div>
-    </div>
-
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 2
-    </h6>
-    <div *ngFor="let q of quizze.state2; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Upload Option
-        </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="selected_file($event, 2, i)"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="q.point"
-        />
-      </div>
-    </div>
-
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 2
-    </h6>
-    <div *ngFor="let q of quizze.state2; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Option
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="quizze.state2[i].option"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="quizze.state2[i].point"
-        />
-      </div>
-    </div>
-
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="optionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 3
-    </h6>
-    <div *ngFor="let q of quizze.state3; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Upload Option
-        </label>
-        <input
-          type="file"
-          class="file-input file-input-bordered file-input-md w-full"
-          (change)="selected_file($event, 3, i)"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="q.point"
-        />
-      </div>
-    </div>
-
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
-  </div>
-
-  <div *ngIf="optionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      statement 3
-    </h6>
-    <div *ngFor="let q of quizze.state3; let i = index" class="w-full px-4">
-      <div class="relative w-full mb-3">
-        <label
-          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-        >
-          Option
-        </label>
-        <input
-          type="text"
-          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Question."
-          [(ngModel)]="quizze.state3[i].option"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Points"
-          [(ngModel)]="quizze.state3[i].point"
-        />
-      </div>
-    </div>
-
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
-    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-      Result
-    </h6>
-    <div *ngFor="let res of quizze.result; let i = index" class="w-full px-4">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label
           class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
         >
-          Upload Result
+          Description
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Question."
+          [(ngModel)]="quizze.description"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Category
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Category."
+          [(ngModel)]="quizze.category"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+      Title
+    </h6> -->
+
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Sub Category
+        </label>
+        <input
+          type="text"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter Sub Category."
+          [(ngModel)]="quizze.subCategory"
+        />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Upload Reference Image
         </label>
         <input
           type="file"
           class="file-input file-input-bordered file-input-md w-full"
-          (change)="addFileRes($event, i)"
+          (change)="addFile($event)"
         />
+      </div>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div
+    *ngFor="let question of quizze.questions; let i = index"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
+    <h1 class="text-center text-lg">Question {{ i + 1 }}</h1>
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Question Type</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="quizze.questions[i].questionType"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option value="text">text</option>
+            <option value="image">image</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="relative w-full mb-3">
+        <label class="form-control w-full max-w-xs">
+          <div class="label">
+            <span class="label-text">Option Type</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            [(ngModel)]="quizze.questions[i].optionType"
+          >
+            <option disabled selected value="n">Pick one</option>
+            <option value="text">text</option>
+            <option value="image">image</option>
+          </select>
+        </label>
+
+        <div class="relative w-full mb-3">
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Question
+          </label>
+          <input
+            *ngIf="quizze.questions[i].questionType === 'text'"
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="quizze.questions[i].question"
+          />
+          <input
+            *ngIf="quizze.questions[i].questionType === 'image'"
+            type="file"
+            class="file-input file-input-bordered file-input-md w-full"
+            (change)="addQFile($event, i)"
+          />
+        </div>
+
+        <div
+          *ngFor="let option of question.options; let j = index"
+          class="relative w-full mb-3 my-5"
+        >
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Option {{ j + 1 }}
+          </label>
+          <input
+            *ngIf="quizze.questions[i].optionType === 'text'"
+            type="text"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="quizze.questions[i].options[j].option"
+          />
+          <input
+            *ngIf="quizze.questions[i].optionType === 'image'"
+            type="file"
+            class="file-input file-input-bordered file-input-md w-full"
+            (change)="addOFile($event, i, j)"
+          />
+
+          <label
+            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          >
+            Points
+          </label>
+          <input
+            type="number"
+            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter poins."
+            [(ngModel)]="quizze.questions[i].options[j].points"
+          />
+          <hr class="mt-6 border-b-1 border-blueGray-300" />
+        </div>
+        <div class="w-full px-4">
+          <button (click)="addoption(i)" class="btn w-full">Add Option</button>
+        </div>
+      </div>
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+    </div>
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <button (click)="addQuestion()" class="btn w-full">Add Question</button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="w-full">
+    <div class="relative w-full mb-3">
+      <div class="flex gap-7">
+        <div class="">
+          <div class="label">
+            <span class="label-text">Select Image Size</span>
+          </div>
+          <select
+            class="select select-bordered bg-gray-50"
+            name=""
+            id=""
+            title="select image size"
+            [(ngModel)]="size"
+            (change)="setSize()"
+          >
+            <option
+              *ngFor="let option of canvasSizeOptions; let i = index"
+              [value]="i"
+            >
+              {{ option.width }} x {{ option.height }}
+            </option>
+          </select>
+        </div>
+
+        <div class="border-2 max-w-min rounded-md border-slate-950">
+          <canvas #canvasElement></canvas>
+        </div>
+      </div>
+      <hr class="mt-6 border-b-1 border-blueGray-300" />
+      <div class="flex-auto px-4 lg:px-10 pt-5">
+        <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            Title
+          </h6> -->
+
+        <div class="w-full px-4">
+          <div class="relative w-full mb-3">
+            <label
+              class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+            >
+              User
+            </label>
+            <div
+              *ngFor="let sq of squares; let i = index"
+              class="flex justify-between align-bottom"
+            >
+              <p
+                class="border-0 w-full px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded"
+              >
+                User {{ i }}
+              </p>
+              <i
+                (click)="removeSquare(i)"
+                class="text-red-500 my-2 px-3 bi cursor-pointer bi-trash-fill text-center"
+              ></i>
+            </div>
+          </div>
+          <button class="btn w-full" (click)="addSquare()">Add User</button>
+        </div>
+        <hr class="mt-6 border-b-1 border-blueGray-300" />
+      </div>
+
+      <div class="flex-auto px-4 lg:px-10 pt-5">
+        <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            Title
+          </h6> -->
+
+        <div class="w-full px-4">
+          <div class="relative w-full mb-3">
+            <label
+              class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+            >
+              Text Box
+            </label>
+            <div
+              *ngFor="
+                let sq of texts_container;
+                let o = index;
+                trackBy: trackByFn
+              "
+              class="flex justify-between align-bottom"
+            >
+              <input
+                type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="Enter text."
+                [(ngModel)]="texts_container[o]"
+              />
+              <i
+                (click)="removeTextBox(o)"
+                class="text-red-500 my-2 px-3 bi cursor-pointer bi-trash-fill text-center"
+              ></i>
+            </div>
+          </div>
+          <button
+            class="btn w-full"
+            (click)="addTextBox(); texts_container.push('')"
+          >
+            Add Text
+          </button>
+        </div>
+        <hr class="mt-6 border-b-1 border-blueGray-300" />
+      </div>
+      <button class="btn w-full" (click)="saveframe()">Save</button>
+    </div>
+  </div>
+
+  <div
+    *ngFor="let res of quizze.result; let k = index"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Result Image
+        </label>
+        <input
+          type="file"
+          class="file-input file-input-bordered file-input-md w-full"
+          (change)="handleFileInput($event, k)"
+        />
+      </div>
+    </div>
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Min Score
+        </label>
         <input
           type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Min Score"
-          [(ngModel)]="quizze.result[i].minScore"
-          min="1"
-          max="{{ quizze.result[i].maxScore - 1 }}"
-        />
-        <input
-          type="number"
-          class="border-0 px-3 py-3 mt-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          placeholder="Enter Max Score"
-          [(ngModel)]="quizze.result[i].maxScore"
-          min="{{ quizze.result[i].minScore + 1 }}"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter min score."
+          [(ngModel)]="quizze.result[k].minScore"
         />
       </div>
     </div>
 
-    <hr class="mt-6 border-b-1 border-blueGray-300" />
+    <div class="w-full px-4">
+      <div class="relative w-full mb-3">
+        <label
+          class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+        >
+          Max Score
+        </label>
+        <input
+          type="number"
+          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+          placeholder="Enter max score."
+          [(ngModel)]="quizze.result[k].maxScore"
+        />
+      </div>
+    </div>
+  </div>
 
+  <div class="flex-auto px-4 lg:px-10 pt-5">
+    <div class="w-full px-4">
+      <button (click)="addResults()" class="btn w-full">Add Result</button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="flex-auto px-4 lg:px-10 pt-5">
     <button
-      (click)="optionType === 'text' ? submitText() : submit()"
+      (click)="submit()"
       class="px-4 py-2 m-3 w-full bg-slate-800 rounded-md text-white"
     >
       Submit
     </button>
-  </div>
-  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
-    <table class="min-w-max w-full table-auto">
-      <thead>
-        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-          <th class="py-3 px-5 text-left">S.no</th>
-          <th class="py-3 px-5 text-left">_id</th>
-        </tr>
-      </thead>
-      <tbody class="text-gray-600 text-sm">
-        <tr
-          *ngFor="let da of quizzes; let i = index"
-          class="border-b border-gray-200 hover:bg-gray-100 first-letter:uppercase"
-        >
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            {{ i + 1 }}
-          </td>
-
-          <td class="py-3 px-6 text-left whitespace-nowrap">
-            {{ da._id }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 </div>

@@ -193,7 +193,7 @@ export class PercentageTypeComponent {
   submit() {
 
 
-    this.perType.addQuestion(this.question, this.frames, this.file, this.thumb, this.questionDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
+    this.perType.addQuestion(this.question, this.frames, this.file, this.questionDif.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(frame => { console.log(frame); this.getAll(); this.close() });
   }
 
 

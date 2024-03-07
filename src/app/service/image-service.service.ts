@@ -67,51 +67,44 @@ export class ImageServiceService {
   }
 
 
-  upload(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
-    console.log(file, state1, state2, state3);
+  upload(quizze: any) {
+
+
     const formData = new FormData();
 
-    formData.append('question', file);
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
 
-    state1.forEach((stateFile) => {
-      formData.append('state1', stateFile.option);
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
     });
 
-    state2.forEach((stateFile) => {
-      formData.append(`state2`, stateFile.option);
-    });
 
-    state3.forEach((stateFile) => {
-      formData.append(`state3`, stateFile.option);
-    });
-    result.forEach((resFile) => {
-      formData.append(`answer`, resFile.resultImg);
-    });
+    quizze.result.map((question: any) => {
+      formData.append("answer", question.resultImg);
+    })
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    formData.append("results", JSON.stringify(quizze.result));
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("http://localhost:3000/api/quizzes/add-quizze", formData, _options)
 
-    this.http.post('https://brochill.onrender.com/api/quizzes/upload', formData, _options).subscribe((data: any) => {
-      console.log(data);
-      data.state1.forEach((state: any, index: number) => {
-        state1[index]['option'] = state;
-      });
-      data.state2.forEach((state: any, index: number) => {
-        state2[index]['option'] = state;
-      });
-      data.state3.forEach((state: any, index: number) => {
-        state3[index]['option'] = state;
-      });
-
-      data.answer.forEach((state: any, index: number) => {
-        result[index]['resultImg'] = state;
-      });
-
-
-      this.http.post("https://brochill.onrender.com/api/quizzes/add-quizze", { state1, state2, state3, question: data.question[0], result }, _options).subscribe(data1 => {
-        console.log(data1);
-      })
-
-    });
   }
 
   addTextQuizzes(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
