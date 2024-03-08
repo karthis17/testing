@@ -9,20 +9,42 @@ export class FunQuizzesService {
   constructor(private http: HttpClient) { }
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any, thumbnail: any) {
+  addQuestion(quizze: any) {
 
     const formData = new FormData();
 
-    formData.append("question", question);
-    formData.append("questionDifLang", JSON.stringify(questionDifLang));
-    formData.append("optionDifLang", JSON.stringify(optionDifLang));
-    formData.append("thumbnail", thumbnail);
-    formData.append("answer", answer);
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
 
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
+    });
+
+
+    quizze.result.map((question: any) => {
+      formData.append("answer", question.resultImg);
+    })
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    formData.append("results", JSON.stringify(quizze.result));
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("https://brochill.onrender.com/api/fun-quizzes/add-question", formData, _options);
+    return this.http.post("http://localhost:3000/api/fun-quizzes/add-quizze", formData, _options)
 
   }
 

@@ -27,6 +27,8 @@ export class QuizzeComponent {
 
   imageQuestion: any[] = [];
 
+  image: any = 0;
+
 
   addFile(e: any) {
     this.quizze.referenceImage = e.target.files[0];
@@ -77,7 +79,7 @@ export class QuizzeComponent {
   private canvas: fabric.Canvas | undefined;
   squares: fabric.Rect[] = [];
   textBox: fabric.Rect[] = [];
-  scoreBox: fabric.Rect[] = [];
+  scoreBox!: fabric.Rect | undefined;
 
   currentFrame!: number;
   handleFileInput(event: any, i: any) {
@@ -113,20 +115,7 @@ export class QuizzeComponent {
     this.canvas = new fabric.Canvas(this.canvasContainer.nativeElement);
     this.setSize();
     this.canvas.on('object:modified', this.logSquareProperties.bind(this));
-    const square = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 200,
-      height: 50,
-      fill: 'rgba(255, 255, 255, 0.5)',
-      stroke: 'blue',
-      strokeWidth: 2,
-      selectable: true,
-      hasControls: true,
-      lockRotation: true,
-    });
-    this.canvas?.add(square);
-    this.scoreBox.push(square);
+
   }
 
 
@@ -148,6 +137,7 @@ export class QuizzeComponent {
     });
     this.canvas?.add(square);
     this.squares.push(square);
+
 
   }
 
@@ -186,6 +176,27 @@ export class QuizzeComponent {
     this.textBox.push(text);
   }
 
+  addTextpos() {
+    const text = new fabric.Rect({
+      left: 100,
+      top: 100,
+      width: 100,
+      height: 50,
+      fill: 'rgba(0, 0, 0, 0.5)',
+      stroke: 'green',
+      strokeWidth: 2,
+      selectable: true,
+      hasControls: true,
+      lockRotation: true,
+    });
+
+    if (this.scoreBox) {
+      this.canvas?.remove(this.scoreBox)
+    }
+    this.canvas?.add(text);
+    this.scoreBox = text;
+  }
+
   removeTextBox(index: number) {
     if (index < 0 || index >= this.textBox.length) {
       console.error('Invalid index:', index);
@@ -219,43 +230,54 @@ export class QuizzeComponent {
   saveframe() {
 
     let coordinates: any[] = [];
-    let textCoordinates: any[] = [];
+    // let textCoordinates: any[] = [];
 
     this.squares.map((square) => {
 
       const width = (square.width ?? 0) * (square.scaleX ?? 1);
       const height = (square.height ?? 0) * (square.scaleY ?? 1);
       coordinates.push({ x: square.left, y: square.top, width, height });
+      this.image++
 
       this.canvas?.remove(square);
     });
 
-    this.textBox.map((text, i) => {
-      const width = (text.width ?? 0) * (text.scaleX ?? 1);
-      const height = (text.height ?? 0) * (text.scaleY ?? 1);
-      let noOfName = this.texts_container[i].split(' ').filter(x => x.trim().includes('<fname'))
-      textCoordinates.push({ x: text.left, y: text.top, width, height, text: this.texts_container[i], noOfName });
+    // this.textBox.map((text, i) => {
+    //   const width = (text.width ?? 0) * (text.scaleX ?? 1);
+    //   const height = (text.height ?? 0) * (text.scaleY ?? 1);
+    //   let noOfName = this.texts_container[i].split(' ').filter(x => x.trim().includes('<fname'))
+    //   textCoordinates.push({ x: text.left, y: text.top, width, height, text: this.texts_container[i], noOfName });
 
-      this.canvas?.remove(text);
-    })
+    //   this.canvas?.remove(text);
+    // })
 
     this.squares = [];
     this.textBox = [];
 
+    let scorePosition;
 
-    this.scoreBox.map((square) => {
+    if (this.scoreBox) {
 
-      const width = (square.width ?? 0) * (square.scaleX ?? 1);
-      const height = (square.height ?? 0) * (square.scaleY ?? 1);
-      this.quizze.result[this.currentFrame].scoreCoordinates = { x: square.left, y: square.top, width, height };
-    });
+      const width = (this.scoreBox.width ?? 0) * (this.scoreBox.scaleX ?? 1);
+      const height = (this.scoreBox.height ?? 0) * (this.scoreBox.scaleY ?? 1);
+      scorePosition = { x: this.scoreBox.left, y: this.scoreBox.top, width: width, height: height };
+    }
+
+
+    // this.scoreBox.map((square) => {
+
+    //   const width = (square.width ?? 0) * (square.scaleX ?? 1);
+    //   const height = (square.height ?? 0) * (square.scaleY ?? 1);
+    //   this.quizze.result[this.currentFrame].scoreCoordinates = { x: square.left, y: square.top, width, height };
+    // });
 
 
 
 
 
     this.quizze.result[this.currentFrame].coordinates = coordinates;
-    this.quizze.result[this.currentFrame].textCoordinates = textCoordinates;
+    this.quizze.result[this.currentFrame].scorePosition = scorePosition;
+    this.quizze.result[this.currentFrame].noOfImage = this.image
 
     this.quizze.result[this.currentFrame].frame_size = { width: this.width, height: this.height };
     console.log(this.quizze)
@@ -263,20 +285,9 @@ export class QuizzeComponent {
     this.texts_container = [];
     this.canvas?.clear();
 
-    const square = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 200,
-      height: 50,
-      fill: 'rgba(255, 255, 255, 0.5)',
-      stroke: 'blue',
-      strokeWidth: 2,
-      selectable: true,
-      hasControls: true,
-      lockRotation: true,
-    });
-    this.canvas?.add(square);
-    this.scoreBox.push(square);
+    this.image = 0;
+
+
   }
 
 
@@ -297,7 +308,8 @@ export class QuizzeComponent {
     referenceImage: '',
     result: [{
       coordinates: [] as any[],
-      textCoordinates: [] as any[],
+      noOfImage: this.image,
+      scorePosition: {} as any,
       frame_size: { width: 0, height: 0 },
       scoreCoordinates: { x: 0, y: 0, width: 0, height: 0 } as { x: any, y: any, width: number, height: number },
       maxScore: 1,
@@ -331,9 +343,10 @@ export class QuizzeComponent {
       minScore: 0,
       maxScore: 0,
       resultImg: '',
+      noOfImage: this.image,
       coordinates: [] as any,
       frame_size: { width: 0, height: 0 },
-      textCoordinates: [] as any[],
+      scorePosition: {} as any,
       scoreCoordinates: { x: 0, y: 0, width: 0, height: 0 } as { x: any, y: any, width: number, height: number },
 
     })

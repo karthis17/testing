@@ -42,7 +42,6 @@ export class PickNdKickComponent {
       optionType: 'text',
       options: [{
         option: '',
-        points: 0
       }]
     }],
     language: 'english',
@@ -59,7 +58,6 @@ export class PickNdKickComponent {
       optionType: 'text',
       options: [{
         option: '',
-        points: 0
       }]
     })
   }
@@ -67,7 +65,6 @@ export class PickNdKickComponent {
   addoption(i: any) {
     this.quizze.questions[i].options.push({
       option: '',
-      points: 0
     })
   }
 
