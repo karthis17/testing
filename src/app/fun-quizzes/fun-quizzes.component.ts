@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FunQuizzesService } from '../service/fun-quizzes.service';
-import { ImageServiceService } from '../service/image-service.service';
 import { fabric } from 'fabric'
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-fun-quizzes',
@@ -24,7 +24,7 @@ export class FunQuizzesComponent {
 
   optionType: string = "text";
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = []
 
   imageQuestion: any[] = [];
 
@@ -352,7 +352,7 @@ export class FunQuizzesComponent {
   }
 
 
-  constructor(private im: FunQuizzesService, private cdr: ChangeDetectorRef) { }
+  constructor(private im: FunQuizzesService, private cdr: ChangeDetectorRef, private languagee: LanguageService) { }
 
 
 
@@ -361,6 +361,7 @@ export class FunQuizzesComponent {
     // this.im.getQuizzes().subscribe((data: any) => {
     //   this.quizzes = data;
     // });
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
 

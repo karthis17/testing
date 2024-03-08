@@ -34,7 +34,7 @@ export class FuntestService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/random-text/add-question", formData, _options)
+    return this.http.post("http://localhost:3000/api/funtest/add-question", formData, _options)
 
   }
 

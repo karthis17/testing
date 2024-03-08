@@ -99,6 +99,8 @@ export class ImageServiceService {
     formData.append("results", JSON.stringify(quizze.result));
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
+    formData.append("category", quizze.category);
+    formData.append("subCategory", quizze.subCategory);
     formData.append("referencesImage", quizze.referenceImage);
 
     const token: string | null = localStorage.getItem('token');

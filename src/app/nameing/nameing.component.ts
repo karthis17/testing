@@ -5,6 +5,7 @@ import { PercentageTypeService } from '../service/percentage-type.service';
 import { FuntestService } from '../service/funtest.service';
 import { fabric } from 'fabric'
 import { NamingService } from '../service/naming.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-nameing',
@@ -14,7 +15,7 @@ import { NamingService } from '../service/naming.service';
   styleUrl: './nameing.component.css'
 })
 export class NameingComponent {
-  constructor(private cdr: ChangeDetectorRef, private nameing: NamingService) { }
+  constructor(private cdr: ChangeDetectorRef, private nameing: NamingService, private languagee: LanguageService) { }
 
 
   data: any;
@@ -371,12 +372,14 @@ export class NameingComponent {
   }
 
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = []
 
 
 
   ngOnInit() {
     // this.getAll();
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
   }
 
   // getAll() {

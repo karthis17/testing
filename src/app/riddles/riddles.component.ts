@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RiddlesService } from '../service/riddles.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-riddles',
@@ -12,82 +13,95 @@ import { RiddlesService } from '../service/riddles.service';
 })
 export class RiddlesComponent {
 
-  constructor(private riddlesService: RiddlesService) { }
+  constructor(private riddlesService: RiddlesService, private lanua: LanguageService) { }
 
-  question!: string;
-  answer!: string;
-  user_answer!: string;
+  langg: any[] = []
 
-  comment: any;
-
-  riddles: any;
-
-  result: any;
-  lani: any
-  data: any;
-  id: any;
-
-  showUpdateButton: boolean = false;
-
-  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  questionDif: { text: string, lang: string }[] = [
-
-  ];
-
-  answerDif: { text: string, lang: string }[] = [
-
-  ];
-
-  addLangg(lang: any) {
-    this.questionDif.push({ text: "", lang });
-    this.answerDif.push({ text: "", lang });
-    let indexToRemove = this.langg.indexOf(lang);
-    if (indexToRemove !== -1) {
-      // Use splice to remove the value at the index
-      this.langg.splice(indexToRemove, 1);
-    }
+  addFile(e: any) {
+    this.quizze.referenceImage = e.target.files[0];
   }
 
+  quizze = {
+    questions: [{
+      question: '',
+      questionType: 'text',
+      optionType: 'text',
+      options: [] as any[],
+      hasOption: false,
+    }],
+    language: 'english',
+    category: '',
+    subCategory: '',
+    description: '',
+    referenceImage: '',
+  }
+
+
+  addImgQuestion(e: any, i: any) {
+    this.quizze.questions[i].question = e.target.files[0];
+  }
+
+  addImgOp(e: any, i: any, j: any) {
+    this.quizze.questions[i].options[j].option = e.target.files[0];
+  }
+
+
+  addQuestion() {
+    this.quizze.questions.push({
+      question: '',
+      questionType: 'text',
+      optionType: 'text',
+      hasOption: false,
+
+      options: []
+    })
+  }
+
+  addoption(i: any) {
+    this.quizze.questions[i].options.push({
+      option: '',
+      points: 0
+    })
+  }
   ngOnInit(): void {
     this.getAll()
   }
 
   getAll() {
-    this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
+    // this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
+    this.lanua.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
+
 
   }
   submit() {
-    console.log(this.question, this.answer);
-    this.riddlesService.addRiddle(this.question, this.answer, this.questionDif.filter(dis => { if (dis.text) return dis; else return false }), this.answerDif.filter(dis => { if (dis.text) return dis; else return false })).subscribe(r => console.log(r));
+
+    this.riddlesService.addRiddle(this.quizze).subscribe((data: any) => { console.log(data) })
+
   }
 
-  checkAnswer(id: any) {
-    this.riddlesService.anser(this.user_answer, id).subscribe((r: any) => this.result = r.answer);
-  }
 
-  addComment(id: any) {
-    this.riddlesService.comment(id, this.comment).subscribe((r: any) => { console.log(r); });
-  }
 
-  delete(id: any) {
-    this.riddlesService.deleteRiddle(id).subscribe(data => {
-      console.log(data); this.getAll();
-    })
-  }
 
-  setUpdate(data: any) {
+  // delete(id: any) {
+  //   this.riddlesService.deleteRiddle(id).subscribe(data => {
+  //     console.log(data); this.getAll();
+  //   })
+  // }
 
-    this.question = data.question;
-    this.answer = data.answer;
-    this.id = data._id;
-    this.showUpdateButton = true;
-  }
+  // setUpdate(data: any) {
 
-  update() {
-    this.riddlesService.updateRiddle(this.id, this.question, this.answer).subscribe(data => {
-      console.log(data); this.getAll();
-    })
-  }
+  //   this.question = data.question;
+  //   this.answer = data.answer;
+  //   this.id = data._id;
+  //   this.showUpdateButton = true;
+  // }
+
+  // update() {
+  //   this.riddlesService.updateRiddle(this.id, this.question, this.answer).subscribe(data => {
+  //     console.log(data); this.getAll();
+  //   })
+  // }
 
   close() {
     location.reload();

@@ -8,24 +8,46 @@ export class GuessService {
 
   constructor(private http: HttpClient) { }
 
-  addQuestion(question: any, answer: any, options: any[], questionType: any, optionsType: any, optionDifLang: any, questionDifLang: any) {
+  addQuestion(quizze: any, resultImage: any) {
 
     const formData = new FormData();
 
-    options.forEach(option => {
-      formData.append("options", option);
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
+
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
     });
 
-    formData.append("correctOption", answer);
-    formData.append("question", question);
-    formData.append("questionType", questionType);
-    formData.append("optionsType", optionsType);
-    formData.append("questionDifLang", JSON.stringify(questionDifLang));
-    formData.append("optionDifLang", JSON.stringify(optionDifLang));
+
+    quizze.result.map((question: any) => {
+      formData.append("answer", question.resultImg);
+    })
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    if (quizze.result.length > 0) {
+      formData.append("results", JSON.stringify(quizze.result));
+    }
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+
+    formData.append("resultImage", resultImage)
+
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-
-    return this.http.post("https://brochill.onrender.com/api/guess-game/upload", formData, _options)
+    return this.http.post("http://localhost:3000/api/guess-game/add-question", formData, _options)
 
   }
 

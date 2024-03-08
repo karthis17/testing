@@ -21,6 +21,8 @@ import { AuthGuard } from './auth.guard';
 import { GeneralQuestionComponent } from './general-question/general-question.component';
 import { FuntestComponent } from './funtest/funtest.component';
 import { NameingComponent } from './nameing/nameing.component';
+import { LanguageComponent } from './language/language.component';
+import { ContestQuizzesComponent } from './contest-quizzes/contest-quizzes.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -40,4 +42,6 @@ export const routes: Routes = [
     { path: 'riddles', component: RiddlesComponent, canActivate: [AuthGuard] },
     { path: 'funtest', component: FuntestComponent, canActivate: [AuthGuard] },
     { path: 'naming-type', component: NameingComponent, canActivate: [AuthGuard] },
+    { path: 'language', component: LanguageComponent, canActivate: [AuthGuard] },
+    { path: 'contest-quizzes', component: ContestQuizzesComponent, canActivate: [AuthGuard] },
 ];

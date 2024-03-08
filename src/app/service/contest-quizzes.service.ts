@@ -4,12 +4,11 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FunQuizzesService {
+export class ContestQuizzesService {
 
   constructor(private http: HttpClient) { }
-  _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(quizze: any) {
+  addQuestion(quizze: any, resultImage: any) {
 
     const formData = new FormData();
 
@@ -37,37 +36,24 @@ export class FunQuizzesService {
 
 
     formData.append("questions", JSON.stringify(quizze.questions));
-    formData.append("results", JSON.stringify(quizze.result));
+    if (quizze.result.length > 0) {
+      formData.append("results", JSON.stringify(quizze.result));
+    }
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
     formData.append("category", quizze.category);
     formData.append("subCategory", quizze.subCategory);
 
+    formData.append("resultImage", resultImage)
+
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/fan-quizzes/add-quizze", formData, _options)
+    return this.http.post("http://localhost:3000/api/contest-quizzes/add-quizze", formData, _options)
 
   }
 
-  getAll() {
-    return this.http.get("https://brochill.onrender.com/api/fan-quizzes/get-all", { params: { lang: "tamil" } });
-  }
-
-  delete(id: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/fan-quizzes/delete/' + id, _options);
-  }
 
 
-  update(id: any, question: any, options: any[]) {
-
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-
-    return this.http.put("https://brochill.onrender.com/api/fun-quizzes/update", { id, question, options }, _options)
-
-  }
 
 }

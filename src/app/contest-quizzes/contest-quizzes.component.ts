@@ -1,18 +1,20 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ImageServiceService } from '../service/image-service.service';
-import { fabric } from 'fabric';
+import { fabric } from 'fabric'
 import { LanguageService } from '../service/language.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ContestQuizzesService } from '../service/contest-quizzes.service';
 
 @Component({
-  selector: 'app-quizze',
+  selector: 'app-contest-quizzes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './quizze.component.html',
-  styleUrl: './quizze.component.css'
+  imports: [FormsModule, CommonModule],
+  templateUrl: './contest-quizzes.component.html',
+  styleUrl: './contest-quizzes.component.css'
 })
-export class QuizzeComponent {
+export class ContestQuizzesComponent {
+  constructor(private cdr: ChangeDetectorRef, private languagee: LanguageService, private contest: ContestQuizzesService) { }
+
   selected_option!: number;
   file: any;
   score: number = 0;
@@ -24,12 +26,13 @@ export class QuizzeComponent {
 
   optionType: string = "text";
 
-  langg: any[] = [];
+  langg: any[] = []
 
   imageQuestion: any[] = [];
 
   image: any = 0;
 
+  resultImage = false;
 
   addFile(e: any) {
     this.quizze.referenceImage = e.target.files[0];
@@ -63,7 +66,7 @@ export class QuizzeComponent {
     { width: 1080, height: 608 }, // Instagram Post (landscape)
     { width: 400, height: 400 }, // LinkedIn Profile Picture
     { width: 1584, height: 396 }, // LinkedIn Cover Photo
-    { width: 1200, height: 300 }, // Website Banner/Header
+    { width: 1200, height: 300 },
     { width: 1280, height: 720 },
     { width: 800, height: 600 }
   ];
@@ -307,16 +310,7 @@ export class QuizzeComponent {
     subCategory: '',
     description: '',
     referenceImage: '',
-    result: [{
-      coordinates: [] as any[],
-      noOfImage: this.image,
-      scorePosition: {} as any,
-      frame_size: { width: 0, height: 0 },
-      scoreCoordinates: { x: 0, y: 0, width: 0, height: 0 } as { x: any, y: any, width: number, height: number },
-      maxScore: 1,
-      minScore: 0,
-      resultImg: '',
-    }]
+    result: [] as any[],
   }
 
 
@@ -348,85 +342,46 @@ export class QuizzeComponent {
       coordinates: [] as any,
       frame_size: { width: 0, height: 0 },
       scorePosition: {} as any,
-      scoreCoordinates: { x: 0, y: 0, width: 0, height: 0 } as { x: any, y: any, width: number, height: number },
 
     })
   }
 
 
-  constructor(private im: ImageServiceService, private language: LanguageService, private cdr: ChangeDetectorRef) { }
+  startResImage() {
+    this.quizze["result"] = [{
+      coordinates: [] as any[],
+      noOfImage: this.image,
+      scorePosition: {} as any,
+      frame_size: { width: 0, height: 0 },
+      maxScore: 1,
+      minScore: 0,
+      resultImg: '',
+    }]
 
+    setTimeout(() => {
+      this.canvas = new fabric.Canvas(this.canvasContainer.nativeElement);
+      this.setSize();
+      this.canvas.on('object:modified', this.logSquareProperties.bind(this));
+
+
+    }, 100);
+  }
 
 
   ngOnInit() {
 
-    this.im.getQuizzes().subscribe((data: any) => {
-      this.quizzes = data;
-    });
-    this.language.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
-
+    // this.im.getQuizzes().subscribe((data: any) => {
+    //   this.quizzes = data;
+    // });
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
 
 
-  // selected_file(event: any, state: any = null, index: any = 0): void {
-  //   if (state === 1) {
-  //     let p = event.target.files[0];
-  //     this.quizze.state1[index]['option'] = p;
-  //   }
-  //   else if (state === 2) {
-  //     this.quizze.state2[index]['option'] = event.target.files[0];
-  //   } else if (state === 3) {
-  //     this.quizze.state3[index]['option'] = event.target.files[0];
-  //   } else {
-  //     this.quizze.question = event.target.files[0];
-  //   }
-  // }
-
-  // addFileRes(e: any, index: number) {
-  //   this.quizze.result[index].resultImg = e.target.files[0];
-  // }
-
-  // setHowManyOptions() {
-  //   const selected_value = this.selected_option;
-  //   console.log(selected_value);
-  //   for (let i = 0; i < selected_value; i++) {
-  //     this.quizze.state1[i] = { option: '', point: 1 };
-  //     this.quizze.state2[i] = { option: '', point: 1 };
-  //     this.quizze.state3[i] = { option: '', point: 1 };
-  //     this.quizze.result[i] = {
-  //       resultImg: '',
-  //       maxScore: 2,
-  //       minScore: 1
-  //     }
-  //     console.log(this.quizze);
-  //   }
-  // }
-
-  // showQuizzes(id: any) {
-  //   this.data = this.quizzes.find(q => q._id === id);
-  //   console.log(this.data);
-  // }
-
-  // submit() {
-  //   console.log(this.quizze)
-  //   this.im.upload(this.quizze, this.questionType, this.optionType);
-  // }
-
-  // submitText() {
-  //   this.im.addTextQuizzes(this.quizze.question, this.quizze.state1, this.quizze.state2, this.quizze.state3, this.quizze.result).subscribe(data => {
-  //     console.log(data);
-  //   })
-  // }
-
-  showRes() {
-    this.im.result(this.data._id, this.score).subscribe(res => {
-      console.log(res);
-    })
-  }
 
   submit() {
-    this.im.upload(this.quizze).subscribe(res => { console.log(res); });
+    console.log(this.quizze)
+    this.contest.addQuestion(this.quizze, this.resultImage).subscribe(res => { console.log(res); });
 
   }
 

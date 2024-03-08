@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PickKickService } from '../service/pick-kick.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-pick-nd-kick',
@@ -12,7 +13,7 @@ import { PickKickService } from '../service/pick-kick.service';
 })
 export class PickNdKickComponent {
 
-  constructor(private servic: PickKickService) { }
+  constructor(private servic: PickKickService, private languagee: LanguageService) { }
 
   question: any;
 
@@ -32,7 +33,7 @@ export class PickNdKickComponent {
   option2i: any
   option1i: any;
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = []
 
 
   quizze = {
@@ -84,6 +85,8 @@ export class PickNdKickComponent {
 
   ngOnInit(): void {
     this.getAl()
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
   }
 
   getAl() {

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PollService } from '../service/poll.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-poll',
@@ -54,12 +55,12 @@ export class PollComponent {
 
   comment: any[] = []
 
-  constructor(private poll: PollService) { }
+  constructor(private poll: PollService, private languagee: LanguageService) { }
 
   questioni: any;
   optioni: any;
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = [];
 
 
 
@@ -67,6 +68,8 @@ export class PollComponent {
 
   ngOnInit() {
     this.getData()
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
   }
 
   getData() {

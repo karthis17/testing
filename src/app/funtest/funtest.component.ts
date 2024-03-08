@@ -4,6 +4,7 @@ import { fabric } from 'fabric';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FuntestService } from '../service/funtest.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-funtest',
@@ -14,7 +15,7 @@ import { FuntestService } from '../service/funtest.service';
 })
 export class FuntestComponent {
 
-  constructor(private cdr: ChangeDetectorRef, private perType: PercentageTypeService, private funtest: FuntestService) { }
+  constructor(private cdr: ChangeDetectorRef, private perType: PercentageTypeService, private funtest: FuntestService, private languagee: LanguageService) { }
 
 
   data: any;
@@ -295,12 +296,13 @@ export class FuntestComponent {
   }
 
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = []
 
 
 
   ngOnInit() {
     this.getAll();
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
   }
 
   getAll() {

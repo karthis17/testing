@@ -16,23 +16,20 @@ export class AppComponent implements OnInit {
   title = 'testing';
   open = true;
   contents = [
+    { text: "Language", link: "/language" },
     { text: "Reels", link: "/reels" },
     { text: "Feeds", link: "/feeds" },
     { text: "Poll", link: "/poll" },
     { text: "Quizzes", link: "/quizzes" },
     { text: "Fun Quizzes", link: "/fun-quizzes" },
+    { text: "Contest Quizzes", link: "/contest-quizzes" },
     { text: "Frames", link: "/frames" },
-    { text: "Flames", link: "/flames" },
-    {
-      text: "Friend love calc", link: "/friend-love-calc"
-    },
-    { text: "Name mean fact", link: "/name-mean-fact" },
     { text: "Guess", link: "/guess" },
     { text: "Pick Kick", link: "/pick-kick" },
     { text: "Riddles", link: "/riddles" },
     { text: "Fun Test", link: "/funtest" },
     { text: "Nameing Type", link: "/naming-type" },
-    { text: "General Question", link: "/general-question" },
+    { text: "GK Question", link: "/general-question" },
   ]
 
   isAuthenticated: boolean = false;

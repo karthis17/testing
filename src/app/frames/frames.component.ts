@@ -3,6 +3,7 @@ import { FramService } from '../service/fram.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { fabric } from 'fabric';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-frames',
@@ -51,16 +52,18 @@ export class FramesComponent {
   uploadedFrameUrl: any;
   uploadedFramePath: any;
 
-  langg = ["english", "tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
+  langg: any[] = [];
 
   language: any = "english";
   description: any;
 
-  constructor(private frame: FramService) { }
+  constructor(private frame: FramService, private languagee: LanguageService) { }
 
 
   ngOnInit(): void {
     this.getData();
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
 
   }
 

@@ -11,10 +11,39 @@ export class RiddlesService {
   _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
 
-  addRiddle(question: any, answer: any, questionDifLang: any, answerDifLang: any) {
+  addRiddle(quizze: any) {
+    const formData = new FormData();
+
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
+
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
+    });
+
+
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+
+
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post("https://brochill.onrender.com/api/riddles/add-riddle", { question, answer, questionDifLang, answerDifLang }, _options);
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("http://localhost:3000/api/riddles/add-riddle", formData, _options)
+
   }
 
   getAll() {

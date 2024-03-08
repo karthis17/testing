@@ -13,8 +13,11 @@
             [(ngModel)]="language"
           >
             <option disabled selected value="n">Pick one</option>
-            <option *ngFor="let lang of langg; let i = index" [value]="lang">
-              {{ lang }}
+            <option
+              *ngFor="let lang of langg; let i = index"
+              [value]="lang._id"
+            >
+              {{ lang.language }}
             </option>
           </select>
         </label>

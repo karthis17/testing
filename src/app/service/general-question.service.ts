@@ -8,18 +8,53 @@ export class GeneralQuestionService {
 
 
   constructor(private http: HttpClient) { }
-  _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
 
-  addQuestion(question: any, optionDifLang: any[], answer: any, questionDifLang: any) {
+  addQuestion(quizze: any, resultImage: any) {
+
+    const formData = new FormData();
+
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
+
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
+    });
+
+
+    quizze.result.map((question: any) => {
+      formData.append("answer", question.resultImg);
+    })
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    if (quizze.result.length > 0) {
+      formData.append("results", JSON.stringify(quizze.result));
+    }
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+
+    formData.append("resultImage", resultImage)
+    formData.append("category", quizze.category);
+    formData.append("subCategory", quizze.subCategory);
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-
-    return this.http.post("http://localhost:3000/api/general-question/add-question", { question, optionDifLang, questionDifLang, answer }, this._options);
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("http://localhost:3000/api/general-question/add-question", formData, _options)
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/general-question/get-all", { params: { lang: "tamil" } });
+    return this.http.get("http://localhost:3000/api/general-question/get-all");
   }
 
   delete(id: any) {
