@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FeedService } from '../service/feed.service';
 import { ImageServiceService } from '../service/image-service.service';
+import { LanguageService } from '../service/language.service';
 
 @Component({
   selector: 'app-feed',
@@ -14,7 +15,7 @@ import { ImageServiceService } from '../service/image-service.service';
 export class FeedComponent {
 
 
-  constructor(private feeds: FeedService, private Category: ImageServiceService) { }
+  constructor(private feeds: FeedService, private Category: ImageServiceService, private languagee: LanguageService) { }
 
   title!: string;
   discription!: string;
@@ -34,17 +35,10 @@ export class FeedComponent {
   titlei: any = 'n';
   descriptioni: any = 'n';
 
+  language: any;
   ress: any;
 
-  langg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  deslangg = ["tamil", "telugu", "kannada", "hindi", "malayalam", "bengali", "bhojpuri", "marathi", "panjabi", "odisha"];
-  Title: { text: string, lang: string }[] = [
-
-  ];
-
-  Discription: { text: string, lang: string }[] = [
-
-  ];
+  langg: any[] = []
 
   addFile(e: any): void {
     this.file = e.target.files[0];
@@ -56,6 +50,8 @@ export class FeedComponent {
       this.categoryOptions = data1;
       console.log(this.categoryOptions);
     });
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+
   }
 
   getAll() {
@@ -63,35 +59,10 @@ export class FeedComponent {
 
   }
 
-  addTitleLanguage(lang: any) {
-    this.Title.push({ text: '', lang: lang });
-    // Find the index of the value to remove
-    let indexToRemove = this.langg.indexOf(lang);
-
-    if (indexToRemove !== -1) {
-      // Use splice to remove the value at the index
-      this.langg.splice(indexToRemove, 1);
-    }
-    console.log(this.Title)
-    this.titlei = 'n'
-  }
-
-  addDescLanguage(lang: any) {
-    this.Discription.push({ text: '', lang: lang });
-    // Find the index of the value to remove
-    let indexToRemove = this.deslangg.indexOf(lang);
-
-    if (indexToRemove !== -1) {
-      // Use splice to remove the value at the index
-      this.deslangg.splice(indexToRemove, 1);
-    }
-    console.log(this.Discription)
-    this.descriptioni = 'n'
-  }
 
   submit() {
     console.log(this.file, this.discription, this.category, this.title)
-    this.feeds.addFeed(this.file, this.discription, this.category, this.title, this.Discription.filter(tit => { if (tit.text) return tit; else return false }), this.Title.filter(dis => { if (dis.text) return dis; else return false })).subscribe(data => { console.log(data); this.getAll() })
+    this.feeds.addFeed(this.file, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll() })
   }
 
   like(id: any) {
@@ -121,8 +92,6 @@ export class FeedComponent {
     this.imageUrl = data.imageUrl;
     this.imagePath = data.imagePath;
     this.id = data._id;
-    this.Title = data.titleDifLang
-    this.Discription = data.descriptionDifLang;
 
   }
 

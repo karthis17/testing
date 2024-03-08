@@ -8,22 +8,21 @@ export class ReelsService {
 
   constructor(private http: HttpClient) { }
 
-  addReel(file: File, description: any, category: any, title: any, defaultTitle: any, defaultDescription: any) {
+  addReel(file: File, description: any, category: any, title: any, language: any) {
     const formData = new FormData();
 
     console.log(title, description)
     formData.append('reel', file);
-    formData.append('titleDifLang', JSON.stringify(title));
+    formData.append('title', title);
     formData.append('category', category);
-    formData.append('descriptionDifLang', JSON.stringify(description));
-    formData.append('title', defaultTitle);
-    formData.append('description', defaultDescription);
+    formData.append('description', description);
+    formData.append('language', language);
 
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/reels/upload-reel", formData, _options)
+    return this.http.post("http://localhost:3000/api/reels/upload-reel", formData, _options)
 
   }
 
