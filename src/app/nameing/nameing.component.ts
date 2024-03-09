@@ -55,7 +55,7 @@ export class NameingComponent {
     text: '',
   }]
 
-  flames_word = ["friend", "love", "affection", "marriage", "enemy", "siblings"];
+  flames_word = ["friend", "love", "affection", "marriage", "enmity", "sibling"];
 
   noOfimage: any = 0;
   thumb: any;

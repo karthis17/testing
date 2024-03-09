@@ -19,7 +19,7 @@ export class FramService {
     formData.append('frame', file);
     formData.append("thumbnail", thumbnail);
     formData.append("referenceImage", reff);
-    formData.append('languages', language);
+    formData.append('language', language);
     formData.append('description', description);
 
     return this.http.post("https://brochill.onrender.com/api/frame/upload-frame", formData, _options);

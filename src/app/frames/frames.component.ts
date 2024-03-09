@@ -54,7 +54,7 @@ export class FramesComponent {
 
   langg: any[] = [];
 
-  language: any = "english";
+  language: any;
   description: any;
 
   constructor(private frame: FramService, private languagee: LanguageService) { }
@@ -79,7 +79,7 @@ export class FramesComponent {
 
 
     this.frame.uploadFrame(this.frameName, this.farmeFile, this.thumb, this.reff, this.language, this.description).subscribe(frame => {
-      this.getData()
+      console.log(frame)
     })
   }
 
