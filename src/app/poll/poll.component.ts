@@ -117,32 +117,6 @@ export class PollComponent {
     this.data = poll
   }
 
-  vote(option: any) {
-    this.showVote = false;
-    this.poll.votee(this.data._id, option).subscribe(data => {
-      console.log(data)
-      this.poll.getPollById(this.data._id).subscribe(data1 => {
-        this.resData = data1;
-        console.log(data1)
 
-      });
-    });
-  }
-
-  lik(poll_id: any) {
-    this.poll.like(poll_id).subscribe(data => {
-      console.log(data);
-      this.getData()
-    });
-  }
-
-
-  share(id: any) {
-    this.poll.share(id).subscribe(data => { console.log(data); this.getData() });
-  }
-
-  comm(id: any, index: any) {
-    this.poll.commet(id, this.comment[index]).subscribe(data => { console.log(data); this.getData() });
-  }
 
 }

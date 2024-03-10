@@ -22,7 +22,7 @@ export class FramService {
     formData.append('language', language);
     formData.append('description', description);
 
-    return this.http.post("https://brochill.onrender.com/api/frame/upload-frame", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/frames/upload-frame", formData, _options);
 
   }
   uploadImage(files: File[], id: any, texts: any[]) {
@@ -44,12 +44,12 @@ export class FramService {
     })
     formData.append('frame_id', id);
 
-    return this.http.post("https://brochill.onrender.com/api/frame/upload-image", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/frames/upload-image", formData, _options);
 
   }
 
   getFrames() {
-    return this.http.get("https://brochill.onrender.com/api/frame/get-frames", { params: { lang: 'hindi' } });
+    return this.http.get("https://brochill.onrender.com/api/frames/get-frames", { params: { lang: 'hindi' } });
   }
 
   like(id: any) {

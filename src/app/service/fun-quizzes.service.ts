@@ -46,18 +46,18 @@ export class FunQuizzesService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/fan-quizzes/add-quizze", formData, _options)
+    return this.http.post("http://localhost:3000/api/fansquiz/add-quizze", formData, _options)
 
   }
 
   getAll() {
-    return this.http.get("https://brochill.onrender.com/api/fan-quizzes/get-all", { params: { lang: "tamil" } });
+    return this.http.get("https://brochill.onrender.com/api/fansquiz/get-all", { params: { lang: "tamil" } });
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/fan-quizzes/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/fansquiz/delete/' + id, _options);
   }
 
 

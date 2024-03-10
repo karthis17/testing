@@ -65,7 +65,6 @@ export class ContestQuizzesComponent {
     { width: 1080, height: 1350 }, // Instagram Post (portrait)
     { width: 1080, height: 608 }, // Instagram Post (landscape)
     { width: 400, height: 400 }, // LinkedIn Profile Picture
-    { width: 1584, height: 396 }, // LinkedIn Cover Photo
     { width: 1200, height: 300 },
     { width: 1280, height: 720 },
     { width: 800, height: 600 }
@@ -373,7 +372,7 @@ export class ContestQuizzesComponent {
     // this.im.getQuizzes().subscribe((data: any) => {
     //   this.quizzes = data;
     // });
-    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+    this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data }, err => { console.log(err); });
 
   }
 

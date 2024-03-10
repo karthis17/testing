@@ -105,7 +105,7 @@ export class ImageServiceService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/quizzes/add-quizze", formData, _options)
+    return this.http.post("http://localhost:3000/api/personalityquiz/add-quizze", formData, _options)
 
   }
 

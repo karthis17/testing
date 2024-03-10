@@ -19,7 +19,7 @@ export class LanguageService {
 
   getlanguage() {
 
-    return this.http.get("http://localhost:3000/api/language/");
+    return this.http.get("http://localhost:3000/api/language");
 
   }
 

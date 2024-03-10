@@ -49,18 +49,18 @@ export class GeneralQuestionService {
     formData.append("subCategory", quizze.subCategory);
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/general-question/add-question", formData, _options)
+    return this.http.post("http://localhost:3000/api/gkquiz/add-question", formData, _options)
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/general-question/get-all");
+    return this.http.get("http://localhost:3000/api/gkquiz/get-all");
   }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('http://localhost:3000/api/general-question/delete/' + id, _options);
+    return this.http.delete('http://localhost:3000/api/gkquiz/delete/' + id, _options);
   }
 
 
@@ -69,7 +69,7 @@ export class GeneralQuestionService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 
-    return this.http.put("http://localhost:3000/api/general-question/update", { id, question, options }, _options)
+    return this.http.put("http://localhost:3000/api/gkquiz/update", { id, question, options }, _options)
 
   }
 }

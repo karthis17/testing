@@ -39,7 +39,7 @@ export class NamingService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/nameing/add", formData, _options)
+    return this.http.post("http://localhost:3000/api/nametest/add", formData, _options)
 
   }
 }
