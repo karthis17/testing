@@ -15,7 +15,13 @@ export class RiddlesComponent {
 
   constructor(private riddlesService: RiddlesService, private lanua: LanguageService) { }
 
-  langg: any[] = []
+  langg: any[] = [];
+
+  riddles: any[] = [];
+
+  showUpdateButton = false;
+
+  idToUpdate: any;
 
   addFile(e: any) {
     this.quizze.referenceImage = e.target.files[0];
@@ -32,6 +38,7 @@ export class RiddlesComponent {
     language: 'english',
     category: '',
     subCategory: '',
+    isActive: false,
     description: '',
     referenceImage: '',
   }
@@ -68,7 +75,7 @@ export class RiddlesComponent {
   }
 
   getAll() {
-    // this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
+    this.riddlesService.getAll().subscribe((riddles: any) => { console.log(riddles); this.riddles = riddles });
     this.lanua.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
 
@@ -89,22 +96,29 @@ export class RiddlesComponent {
   //   })
   // }
 
-  // setUpdate(data: any) {
+  setUpdate(data: any) {
+    this.quizze = data;
+    this.idToUpdate = data._id
+    this.showUpdateButton = true;
+  }
 
-  //   this.question = data.question;
-  //   this.answer = data.answer;
-  //   this.id = data._id;
-  //   this.showUpdateButton = true;
-  // }
-
-  // update() {
-  //   this.riddlesService.updateRiddle(this.id, this.question, this.answer).subscribe(data => {
-  //     console.log(data); this.getAll();
-  //   })
-  // }
+  update() {
+    this.riddlesService.updateRiddle(this.quizze, this.idToUpdate).subscribe(data => {
+      console.log(data); this.getAll();
+    })
+  }
 
   close() {
     location.reload();
   }
+
+  publish(id: any) {
+    this.riddlesService.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.riddlesService.draft(id).subscribe(data => this.getAll());
+  }
+
 
 }

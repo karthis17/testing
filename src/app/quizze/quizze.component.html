@@ -133,6 +133,7 @@
             <option disabled selected value="n">Pick one</option>
             <option value="text">text</option>
             <option value="image">image</option>
+            <option value="both">both</option>
           </select>
         </label>
       </div>
@@ -159,14 +160,20 @@
             Question
           </label>
           <input
-            *ngIf="quizze.questions[i].questionType === 'text'"
+            *ngIf="
+              quizze.questions[i].questionType === 'text' ||
+              quizze.questions[i].questionType === 'both'
+            "
             type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            class="border-0 px-3 my-4 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             placeholder="Enter Question."
-            [(ngModel)]="quizze.questions[i].question"
+            [(ngModel)]="quizze.questions[i].textQuestion"
           />
           <input
-            *ngIf="quizze.questions[i].questionType === 'image'"
+            *ngIf="
+              quizze.questions[i].questionType === 'image' ||
+              quizze.questions[i].questionType === 'both'
+            "
             type="file"
             class="file-input file-input-bordered file-input-md w-full"
             (change)="addQFile($event, i)"
@@ -376,6 +383,15 @@
   </div>
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
+    <select
+      class="select select-bordered bg-gray-50"
+      [(ngModel)]="quizze.isActive"
+    >
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
+
     <button
       (click)="submit()"
       class="px-4 py-2 m-3 w-full bg-slate-800 rounded-md text-white"

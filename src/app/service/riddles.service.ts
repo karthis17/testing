@@ -37,6 +37,7 @@ export class RiddlesService {
     formData.append("questions", JSON.stringify(quizze.questions));
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
+    formData.append("isActive", quizze.isActive);
     formData.append("referencesImage", quizze.referenceImage);
 
 
@@ -47,7 +48,7 @@ export class RiddlesService {
   }
 
   getAll() {
-    return this.http.get("https://brochill.onrender.com/api/riddles/get-all");
+    return this.http.get("http://localhost:3000/api/riddles/all");
   }
 
   anser(userAnswer: any, riddle_id: any) {
@@ -66,11 +67,48 @@ export class RiddlesService {
     return this.http.delete('https://brochill.onrender.com/api/riddles/delete/' + id, _options);
   }
 
-  updateRiddle(riddle_id: any, question: any, answer: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
+  updateRiddle(quizze: any, id: any) {
+    const formData = new FormData();
 
-    return this.http.put('https://brochill.onrender.com/api/riddles/update', { question, answer, riddle_id }, _options)
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'image') {
+        formData.append("question", question.question)
+      }
+    })
+
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          formData.append("option", option.option);
+        })
+      }
+    });
+
+
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+
+    formData.append("id", id)
+
+
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+    return this.http.post("http://localhost:3000/api/riddles/add-riddle", formData, _options)
   }
 
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/riddles/publish/" + id);
+  }
+
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/riddles/draft/" + id);
+
+  }
 }

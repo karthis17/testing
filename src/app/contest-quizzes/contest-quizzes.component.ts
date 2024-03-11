@@ -15,16 +15,10 @@ import { ContestQuizzesService } from '../service/contest-quizzes.service';
 export class ContestQuizzesComponent {
   constructor(private cdr: ChangeDetectorRef, private languagee: LanguageService, private contest: ContestQuizzesService) { }
 
-  selected_option!: number;
+  // selected_option!: number;
   file: any;
-  score: number = 0;
-  data!: any;
 
   quizzes!: any[];
-
-  questionType: string = "text";
-
-  optionType: string = "text";
 
   langg: any[] = []
 
@@ -34,12 +28,14 @@ export class ContestQuizzesComponent {
 
   resultImage = false;
 
+  showUpdateButton: Boolean = false;
+
   addFile(e: any) {
     this.quizze.referenceImage = e.target.files[0];
   }
 
   addQFile(e: any, i: any) {
-    this.quizze.questions[i].question = e.target.files[0];
+    this.quizze.questions[i].imageQuestion = e.target.files[0];
   }
 
   addOFile(e: any, i: any, j: any) {
@@ -54,7 +50,7 @@ export class ContestQuizzesComponent {
   canvasWidth!: number;
   canvasHeight!: number;
   farmeFile!: File;
-
+  idToUpdate: any;
   width: number = 720;
   height: number = 720;
 
@@ -296,7 +292,8 @@ export class ContestQuizzesComponent {
 
   quizze = {
     questions: [{
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{
@@ -309,13 +306,15 @@ export class ContestQuizzesComponent {
     subCategory: '',
     description: '',
     referenceImage: '',
+    isActive: false,
     result: [] as any[],
   }
 
 
   addQuestion() {
     this.quizze.questions.push({
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{
@@ -368,14 +367,23 @@ export class ContestQuizzesComponent {
 
 
   ngOnInit() {
-
-    // this.im.getQuizzes().subscribe((data: any) => {
-    //   this.quizzes = data;
-    // });
+    this.getAll()
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data }, err => { console.log(err); });
 
   }
 
+  setUpdate(data: any) {
+    this.quizze = data;
+    this.resultImage = data.resultImage;
+    this.showUpdateButton = true
+    this.idToUpdate = data._id
+    console.log(data)
+  }
+
+
+  getAll() {
+    this.contest.all().subscribe((data: any) => { this.quizzes = data; console.log(data); });
+  }
 
 
   submit() {
@@ -384,4 +392,42 @@ export class ContestQuizzesComponent {
 
   }
 
+  update() {
+    this.contest.update(this.quizze, this.resultImage, this.idToUpdate).subscribe(res => { console.log(res); this.getAll(); this.close() });
+  }
+
+  close() {
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        options: [{
+          option: '',
+          points: 0
+        }]
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      result: [] as any[],
+      isActive: false
+    }
+    this.showUpdateButton = false;
+    this.resultImage = false;
+  }
+
+  publish(id: any) {
+    this.contest.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.contest.draft(id).subscribe(data => this.getAll());
+  }
+
 }
+
+

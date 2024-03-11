@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class NamingService {
 
   constructor(private http: HttpClient) { }
-  add(frames: any, description: any, language: any, thumb: any, type: any, file: any[], fact: any, meaning: any, percentageTexts: any) {
+  add(frames: any, description: any, language: any, thumb: any, type: any, file: any[], fact: any, meaning: any, percentageTexts: any, isActive: any) {
     const formData = new FormData();
     console.log(thumb)
     if (percentageTexts) {
@@ -28,6 +28,7 @@ export class NamingService {
     formData.append("description", description);
     formData.append("language", language);
     formData.append("thumbnail", thumb);
+    formData.append("isActive", isActive);
     formData.append("type", type);
 
 

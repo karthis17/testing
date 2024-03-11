@@ -13,8 +13,8 @@ export class PickKickService {
     const formData = new FormData();
 
     quizze.questions.map((question: any) => {
-      if (question.questionType === 'image') {
-        formData.append("question", question.question)
+      if (question.questionType === 'image' || question.questionType === 'both') {
+        formData.append("question", question.imageQuestion)
       }
     })
 
@@ -36,6 +36,8 @@ export class PickKickService {
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
+
+    formData.append("isActive", quizze.isActive);
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };

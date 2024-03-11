@@ -8,12 +8,13 @@ export class ReelsService {
 
   constructor(private http: HttpClient) { }
 
-  addReel(file: File, description: any, category: any, title: any, language: any) {
+  addReel(file: File, description: any, category: any, title: any, language: any, isActive: any) {
     const formData = new FormData();
 
     console.log(title, description)
     formData.append('reel', file);
     formData.append('title', title);
+    formData.append('isActive', isActive);
     formData.append('category', category);
     formData.append('description', description);
     formData.append('language', language);

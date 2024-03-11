@@ -153,6 +153,11 @@
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
   <div class="mx-10 px-3">
+    <select class="select select-bordered bg-gray-50" [(ngModel)]="isActive">
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
     <button
       *ngIf="!showUpdateButton"
       class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"

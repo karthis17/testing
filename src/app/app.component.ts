@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
     { text: "Fun Quizzes", link: "/fun-quizzes" },
     { text: "Contest Quizzes", link: "/contest-quizzes" },
     { text: "Frames", link: "/frames" },
-    { text: "Guess", link: "/guess" },
     { text: "Pick Kick", link: "/pick-kick" },
     { text: "Riddles", link: "/riddles" },
     { text: "Fun Test", link: "/funtest" },

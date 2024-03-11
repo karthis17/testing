@@ -121,6 +121,12 @@
 
     <hr class="mt-6 border-b-1 border-blueGray-300" />
 
+    <select class="select select-bordered bg-gray-50" [(ngModel)]="isActive">
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
+
     <button
       *ngIf="!showUpdateButton"
       (click)="submit()"

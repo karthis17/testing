@@ -12,15 +12,21 @@ export class PollService {
       'Content-Type': 'application/json'
     })
   }
-  addPoll(imageOption: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any) {
+  addPoll(imageOption: any, imageQuestion: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any, isActive: any) {
     const formData = new FormData();
 
-    formData.append('question', question);
+    formData.append('textQuestion', question);
+
+    if (imageQuestion) {
+
+      formData.append('imageQuestion', imageQuestion);
+    }
     formData.append("thumbnail", thumbnail);
     formData.append("description", description);
     formData.append("language", language);
     formData.append("questionType", questionType);
     formData.append("optionType", optionType);
+    formData.append("isActive", isActive);
 
     if (options) {
       formData.append('options', JSON.stringify(options));

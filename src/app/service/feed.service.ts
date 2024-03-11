@@ -8,7 +8,7 @@ export class FeedService {
 
   constructor(private http: HttpClient) { }
 
-  addFeed(file: File, description: any, category: any, title: any, language: any) {
+  addFeed(file: File, isActive: any, description: any, category: any, title: any, language: any) {
     const formData = new FormData();
 
     formData.append('feed', file);
@@ -16,6 +16,7 @@ export class FeedService {
     formData.append('category', category);
     formData.append('description', description);
     formData.append("language", language);
+    formData.append("isActive", isActive);
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };

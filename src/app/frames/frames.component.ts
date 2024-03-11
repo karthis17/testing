@@ -20,7 +20,7 @@ export class FramesComponent {
   imageFile: File[] = [];
 
   frameName!: string;
-
+  isActive: boolean = false;
   data!: any;
 
   resIma: any;
@@ -78,7 +78,7 @@ export class FramesComponent {
   submit() {
 
 
-    this.frame.uploadFrame(this.frameName, this.farmeFile, this.thumb, this.reff, this.language, this.description).subscribe(frame => {
+    this.frame.uploadFrame(this.frameName, this.farmeFile, this.thumb, this.reff, this.language, this.description, this.isActive).subscribe(frame => {
       console.log(frame)
     })
   }

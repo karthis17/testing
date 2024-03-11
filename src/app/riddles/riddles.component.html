@@ -239,12 +239,87 @@
   </div>
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
+    <select
+      class="select select-bordered bg-gray-50"
+      [(ngModel)]="quizze.isActive"
+    >
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
     <button
+      *ngIf="!showUpdateButton"
       (click)="submit()"
       class="px-4 py-2 m-3 w-full bg-slate-800 rounded-md text-white"
     >
       Submit
     </button>
+    <ng-container *ngIf="showUpdateButton">
+      <button
+        class="w-full bg-slate-800 text-white py-3 my-1 rounded-md"
+        (click)="update()"
+      >
+        Update
+      </button>
+      <button
+        class="w-full bg-red-600 text-white py-3 my-1 rounded-md"
+        (click)="close()"
+      >
+        Close
+      </button>
+    </ng-container>
     <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
+
+  <div class="bg-white shadow rounded-sm my-2.5 overflow-x-auto">
+    <table class="min-w-max w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-5 text-left">_id</th>
+          <th class="py-3 px-5 text-center">Description</th>
+          <th class="py-3 px-5 text-center">Status</th>
+          <th class="py-3 px-5 text-center">action</th>
+          <th class="py-3 px-5 text-center">action</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 text-sm">
+        <tr
+          *ngFor="let da of riddles; let i = index"
+          class="border-b border-gray-20 first-letter:uppercase"
+        >
+          <td class="py-3 px-6 text-left whitespace-nowrap max-w-32">
+            {{ da._id }}
+          </td>
+          <td class="py-3 px-6 text-center max-w-20">
+            {{ da.description }}
+          </td>
+          <td class="text-center" *ngIf="da.isActive">Published</td>
+          <td class="text-center" *ngIf="!da.isActive">Draft</td>
+          <td class="text-center flex gap-5 py-4 justify-center">
+            <i class="text-red-500 bi cursor-pointer bi-trash-fill"></i>
+            <i
+              (click)="setUpdate(da)"
+              class="text-teal-500 bi cursor-pointer bi-pencil-square"
+            ></i>
+          </td>
+          <td class="text-center" *ngIf="da.isActive">
+            <button
+              class="bg-yellow-200 text-yellow-600 py-2 px-4 rounded-xl cursor-pointer"
+              (click)="draft(da._id)"
+            >
+              Draft
+            </button>
+          </td>
+          <td class="text-center" *ngIf="!da.isActive">
+            <button
+              (click)="publish(da._id)"
+              class="bg-blue-600 text-blue-100 py-2 px-4 rounded-xl cursor-pointer"
+            >
+              Publish
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

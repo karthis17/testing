@@ -177,23 +177,34 @@
           >
             Meaning
           </label>
-          <input
-            type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter Facts."
-            [(ngModel)]="meanings[i].meaning"
-          />
+          <ng-container
+            *ngFor="
+              let mean of meanings[i].meaning;
+              let j = index;
+              trackBy: trackByFn
+            "
+          >
+            <input
+              type="text"
+              class="border-0 my-4 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              placeholder="Enter Facts."
+              [(ngModel)]="meanings[i].meaning[j]"
+            />
+          </ng-container>
         </div>
       </div>
+      <button class="btn w-full" (click)="meanings[i].meaning.push(' ')">
+        And meaning
+      </button>
       <hr class="mt-6 border-b-1 border-blueGray-300" />
     </div>
 
     <div class="mx-10">
       <button
         class="btn w-full"
-        (click)="meanings.push({ letter: '', meaning: '' })"
+        (click)="meanings.push({ letter: '', meaning: [''] }); a()"
       >
-        Add Meanings
+        Add Letter
       </button>
     </div>
     <!-- <div class="w-full bg-teal-200">
@@ -244,7 +255,14 @@
               />
             </div>
           </div>
-          <div class="w-full px-4">
+          <div
+            *ngFor="
+              let test of percentageTexts[i].text;
+              let j = index;
+              trackBy: trackByFn
+            "
+            class="w-full px-4"
+          >
             <div class="relative w-full mb-3">
               <label
                 class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
@@ -254,18 +272,28 @@
               <input
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                placeholder="Enter Question."
-                [(ngModel)]="percentageTexts[i].text"
+                placeholder="Enter text."
+                [(ngModel)]="percentageTexts[i].text[j]"
               />
             </div>
           </div>
+          <button
+            class="btn w-full"
+            (click)="percentageTexts[i].text.push(' '); a()"
+          >
+            Add text
+          </button>
         </div>
       </div>
     </ng-container>
     <button
       class="btn w-full"
       (click)="
-        percentageTexts.push({ minPercentage: 0, maxPercentage: 1, text: '' })
+        percentageTexts.push({
+          minPercentage: 0,
+          maxPercentage: 1,
+          text: [' ']
+        })
       "
     >
       Add Range
@@ -516,6 +544,11 @@
     </div>
   </div>
   <div class="flex-auto px-4 lg:px-10 pt-5">
+    <select class="select select-bordered bg-gray-50" [(ngModel)]="isActive">
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
     <button
       *ngIf="!showUpdateButton"
       class="w-full bg-slate-800 text-white py-3 my-3 rounded-md"

@@ -28,6 +28,7 @@ export class FeedComponent {
 
   file!: File;
 
+  isActive: boolean = false;
   imageUrl!: string;
   imagePath!: string;
   id: any;
@@ -62,7 +63,7 @@ export class FeedComponent {
 
   submit() {
     console.log(this.file, this.discription, this.category, this.title)
-    this.feeds.addFeed(this.file, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll() })
+    this.feeds.addFeed(this.file, this.isActive, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll() })
   }
 
   like(id: any) {

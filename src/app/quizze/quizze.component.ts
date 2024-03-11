@@ -36,7 +36,7 @@ export class QuizzeComponent {
   }
 
   addQFile(e: any, i: any) {
-    this.quizze.questions[i].question = e.target.files[0];
+    this.quizze.questions[i].imageQuestion = e.target.files[0];
   }
 
   addOFile(e: any, i: any, j: any) {
@@ -294,7 +294,8 @@ export class QuizzeComponent {
 
   quizze = {
     questions: [{
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{
@@ -306,6 +307,7 @@ export class QuizzeComponent {
     category: '',
     subCategory: '',
     description: '',
+    isActive: false,
     referenceImage: '',
     result: [{
       coordinates: [] as any[],
@@ -322,7 +324,8 @@ export class QuizzeComponent {
 
   addQuestion() {
     this.quizze.questions.push({
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{

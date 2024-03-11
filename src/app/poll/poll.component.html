@@ -97,6 +97,16 @@
             />
             Image</label
           >
+          <label for="">
+            <input
+              type="radio"
+              name="question"
+              value="image"
+              (click)="questionType = 'both'"
+              title="Image"
+            />
+            Both</label
+          >
         </div>
       </div>
     </div>
@@ -135,7 +145,10 @@
   </div>
   <hr class="mt-4 mx-10 border-b-1 border-blueGray-300" />
 
-  <div *ngIf="questionType === 'image'" class="flex-auto px-4 lg:px-10 pt-5">
+  <div
+    *ngIf="questionType === 'image' || questionType === 'both'"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
     <div class="w-full px-4">
       <div class="relative w-full mb-3">
         <label
@@ -153,7 +166,10 @@
     <hr class="mt-6 border-b-1 border-blueGray-300" />
   </div>
 
-  <div *ngIf="questionType === 'text'" class="flex-auto px-4 lg:px-10 pt-5">
+  <div
+    *ngIf="questionType === 'text' || questionType === 'both'"
+    class="flex-auto px-4 lg:px-10 pt-5"
+  >
     <!-- <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
       Title
     </h6> -->
@@ -169,7 +185,7 @@
           type="text"
           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
           placeholder="Enter Question."
-          [(ngModel)]="question"
+          [(ngModel)]="textQuestion"
         />
       </div>
     </div>
@@ -233,6 +249,12 @@
       >
         Add Option
       </button>
+
+      <select class="select select-bordered bg-gray-50" [(ngModel)]="isActive">
+        <option disabled selected value="n">Pick one</option>
+        <option value="false">Draft</option>
+        <option value="true">Publish</option>
+      </select>
       <button
         (click)="submit()"
         class="w-full bg-slate-800 text-white py-2 my-3 rounded-md"

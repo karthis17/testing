@@ -31,8 +31,12 @@ export class NameingComponent {
 
   meanings: any[] = [{
     letter: '',
-    meaning: ''
+    meaning: [" "]
   }]
+
+  addMeanig(i: any) {
+    this.meanings[i].meaning.push(" ");
+  }
 
   question = "";
 
@@ -41,7 +45,7 @@ export class NameingComponent {
   // range!: number;
   play: any;
   ress: any;
-
+  isActive: boolean = false;
   type: string = 'name meaning'
 
   language: any = "english";
@@ -52,8 +56,16 @@ export class NameingComponent {
   percentageTexts = [{
     minPercentage: 0,
     maxPercentage: 1,
-    text: '',
+    text: [" "],
   }]
+
+  addText(i: any) {
+    this.percentageTexts[i].text.push(" ");
+  }
+  a() {
+    console.log(this.percentageTexts)
+    console.log(this.meanings)
+  }
 
   flames_word = ["friend", "love", "affection", "marriage", "enmity", "sibling"];
 
@@ -391,7 +403,7 @@ export class NameingComponent {
   submit() {
 
 
-    this.nameing.add(this.frames, this.description, this.language, this.thumb, this.type, this.file, this.facts, this.meanings, this.percentageTexts).subscribe(frame => {
+    this.nameing.add(this.frames, this.description, this.language, this.thumb, this.type, this.file, this.facts, this.meanings, this.percentageTexts, this.isActive).subscribe(frame => {
       console.log(frame); this.close();
 
     });

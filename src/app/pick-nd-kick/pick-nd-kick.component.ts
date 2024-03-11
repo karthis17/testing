@@ -38,7 +38,8 @@ export class PickNdKickComponent {
 
   quizze = {
     questions: [{
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{
@@ -46,6 +47,7 @@ export class PickNdKickComponent {
       }]
     }],
     language: 'english',
+    isActive: false,
 
     description: '',
     referenceImage: '',
@@ -54,7 +56,8 @@ export class PickNdKickComponent {
 
   addQuestion() {
     this.quizze.questions.push({
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [{
@@ -70,7 +73,7 @@ export class PickNdKickComponent {
   }
 
   addQFile(e: any, i: any) {
-    this.quizze.questions[i].question = e.target.files[0];
+    this.quizze.questions[i].imageQuestion = e.target.files[0];
   }
 
   addOFile(e: any, i: any, j: any) {

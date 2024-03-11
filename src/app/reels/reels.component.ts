@@ -25,6 +25,8 @@ export class ReelsComponent {
   comment: any[] = [];
   showUpdateButton: boolean = false;
 
+  isActive: boolean = false;
+
   file!: File;
 
   fileUrl!: string;
@@ -62,7 +64,7 @@ export class ReelsComponent {
 
 
   submit() {
-    this.reelsService.addReel(this.file, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll() })
+    this.reelsService.addReel(this.file, this.discription, this.category, this.title, this.language, this.isActive).subscribe(data => { console.log(data); this.getAll() })
   }
 
 

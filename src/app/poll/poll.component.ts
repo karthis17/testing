@@ -16,7 +16,8 @@ export class PollComponent {
   selectedOption: string | boolean = false;
   questionType!: string;
 
-  question: any;
+  textQuestion: any = "";
+  imageQuestion: any = "";
   polls!: any[];
   imgOptions: any[] = [""];
   textOptions: string[] = [''];
@@ -62,7 +63,7 @@ export class PollComponent {
 
   langg: any[] = [];
 
-
+  isActive: boolean = false;
 
 
 
@@ -99,7 +100,7 @@ export class PollComponent {
   }
 
   addQnFile(e: any) {
-    this.question = e.target.files[0]
+    this.imageQuestion = e.target.files[0]
   }
 
   // submit() {
@@ -109,8 +110,8 @@ export class PollComponent {
   //   this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
   // }
   submit() {
-    console.log(this.imgOptions, this.options, this.question)
-    this.poll.addPoll(this.imgOptions, this.question, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption).subscribe(data => { console.log(data); }, err => { console.log(err); });
+    console.log(this.imgOptions, this.options, this.textQuestion)
+    this.poll.addPoll(this.imgOptions, this.imageQuestion, this.textQuestion, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption, this.isActive).subscribe(data => { console.log(data); }, err => { console.log(err); });
   }
 
   show(poll: any) {

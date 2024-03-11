@@ -45,6 +45,8 @@ export class FuntestComponent {
   }]
 
 
+  isActive: boolean = false;
+
   noOfimage: any = 0;
   thumb: any;
 
@@ -314,7 +316,7 @@ export class FuntestComponent {
   submit() {
 
 
-    this.funtest.addQuestion(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range).subscribe(frame => {
+    this.funtest.addQuestion(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive).subscribe(frame => {
       console.log(frame); this.getAll(); this.close();
 
     });

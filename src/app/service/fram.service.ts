@@ -8,7 +8,7 @@ export class FramService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFrame(fileName: string, file: File, thumbnail: any, reff: any, language: any, description: any) {
+  uploadFrame(fileName: string, file: File, thumbnail: any, reff: any, language: any, description: any, isActive: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -21,6 +21,7 @@ export class FramService {
     formData.append("referenceImage", reff);
     formData.append('language', language);
     formData.append('description', description);
+    formData.append('isActive', isActive);
 
     return this.http.post("https://brochill.onrender.com/api/frames/upload-frame", formData, _options);
 
@@ -90,7 +91,16 @@ export class FramService {
     formData.append('imagePath', framePath);
     formData.append('id', id);
 
-    return this.http.put("https://brochill.onrender.com/api/frame/update", formData, _options);
+    return this.http.put("http://localhost:3000/api/frame/update", formData, _options);
+
+  }
+
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/contestquiz/publish/" + id);
+  }
+
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/contestquiz/draft/" + id);
 
   }
 

@@ -8,11 +8,12 @@ export class FuntestService {
 
   constructor(private http: HttpClient) { }
 
-  addQuestion(question: any, texts: any, frames: any, description: any, language: any, thumb: any, type: any, file: any[], noOfimage: any, range: any) {
+  addQuestion(question: any, texts: any, frames: any, description: any, language: any, thumb: any, type: any, file: any[], noOfimage: any, range: any, isActive: any) {
     const formData = new FormData();
     console.log(thumb)
     formData.append("question", question);
     formData.append("noOfUserImage", noOfimage);
+    formData.append("isActive", isActive);
 
     formData.append("texts", JSON.stringify(texts));
 
