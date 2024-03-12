@@ -32,24 +32,9 @@ export class ReelsService {
   }
 
   getAll() {
-    return this.http.get("https://brochill.onrender.com/api/reels/get-all");
+    return this.http.get("http://localhost:3000/api/reels/all");
   }
 
-  like(reelId: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('https://brochill.onrender.com/api/reels/like', { reelId }, _options)
-  }
-
-  share(reelId: any) {
-    return this.http.post('https://brochill.onrender.com/api/reels/share', { reelId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
-  }
-
-  commet(reelId: any, comment: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('https://brochill.onrender.com/api/reels/add-comment', { reelId, comment }, _options)
-  }
 
   deleteReel(reelId: any) {
     const token: string | null = localStorage.getItem('token');
@@ -57,29 +42,36 @@ export class ReelsService {
     return this.http.delete('https://brochill.onrender.com/api/reels/delete/' + reelId, _options);
   }
 
-  updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, filePath: string, id: any) {
+  updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, language: string, id: any, isActive: any) {
     const formData = new FormData();
 
 
-    formData.append('new_reel', file);
+    formData.append('reel', file);
 
     formData.append('title', title);
     formData.append('category', category);
     formData.append('description', description);
     formData.append('fileUrl', fileUrl);
-    formData.append('filePath', filePath);
+    formData.append('language', language);
     formData.append('id', id);
+    formData.append('isActive', isActive);
 
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("https://brochill.onrender.com/api/reels/update", formData, _options)
+    return this.http.put("http://localhost:3000/api/reels/update", formData, _options)
 
   }
 
-  getCategoryWise(categoryId: any) {
-    return this.http.get("https://brochill.onrender.com/api/reels/category/" + categoryId);
+
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/reels/publish/" + id);
+  }
+
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/reels/draft/" + id);
+
   }
 
 }

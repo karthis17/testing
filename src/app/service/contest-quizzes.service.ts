@@ -65,8 +65,10 @@ export class ContestQuizzesService {
     const formData = new FormData();
 
     quizze.questions.map((question: any) => {
-      if (question.questionType === 'image') {
-        formData.append("question", question.question)
+      if (question.questionType === 'both' || question.questionType === 'image') {
+        if (typeof question.imageQuestion !== 'string') {
+          formData.append("question", question.imageQuestion)
+        }
       }
     })
 
@@ -76,7 +78,8 @@ export class ContestQuizzesService {
       if (question.optionType === 'image') {
 
         question.options.map((option: any) => {
-          formData.append("option", option.option);
+          if (typeof option.option !== 'string')
+            formData.append("option", option.option);
         })
       }
     });
@@ -84,7 +87,8 @@ export class ContestQuizzesService {
 
     if (resultImage) {
       quizze.result.map((question: any) => {
-        formData.append("answer", question.resultImg);
+        if (typeof question.resultImg !== 'string')
+          formData.append("answer", question.resultImg);
       })
     }
 

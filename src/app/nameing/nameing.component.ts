@@ -256,16 +256,16 @@ export class NameingComponent {
       this.canvas = new fabric.Canvas(this.canvasContainer.nativeElement);
       this.setSize();
       this.canvas.on('object:modified', this.logSquareProperties.bind(this));
-    }, 100)
+    }, 50)
   }
 
 
-  addTextpos() {
+  addTextpos(x = 100, y = 100, width = 100, height = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'green',
       strokeWidth: 2,
@@ -280,12 +280,12 @@ export class NameingComponent {
     this.canvas?.add(text);
     this.textPosition = text;
   }
-  addname1() {
+  addname1(x = 100, y = 100, width = 100, height = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'red',
       strokeWidth: 2,
@@ -300,12 +300,12 @@ export class NameingComponent {
     this.canvas?.add(text);
     this.name1 = text;
   }
-  addname2() {
+  addname2(x = 100, y = 100, width = 100, height = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'red',
       strokeWidth: 2,
@@ -321,12 +321,12 @@ export class NameingComponent {
     this.name2 = text;
   }
 
-  addPerPos() {
+  addPerPos(x = 100, y = 100, width = 100, height = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'blue',
       strokeWidth: 2,
@@ -344,12 +344,12 @@ export class NameingComponent {
   }
 
 
-  addWordPos() {
+  addWordPos(x = 100, y = 100, width = 100, height = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'blue',
       strokeWidth: 2,
@@ -389,7 +389,7 @@ export class NameingComponent {
 
 
   ngOnInit() {
-    // this.getAll();
+    this.getAll();
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
@@ -409,19 +409,58 @@ export class NameingComponent {
     });
   }
 
+  frameB = false;
 
 
   setUpdate(data: any) {
+    this.idToUpdate = data._id;
+    this.frameB = true
     this.question = data.question;
     this.idToUpdate = data._id;
     this.frames = data.frames;
+    this.description = data.description;
+    this.language = data.language;
+    this.meanings = data.meanings;
+    this.facts = data.facts;
+    this.type = data.category;
+    this.thumb = data.thumbnail;
+    this.isActive = data.isActive;
 
+    this.percentageTexts = data.percentageTexts;
+
+    if (!data.category.includes('name')) {
+      this.startcan()
+    }
 
     this.showUpdateButton = true;
 
 
   }
 
+
+
+  update() {
+
+
+    this.nameing.update(this.frames, this.description, this.language, this.thumb, this.type, this.file, this.facts, this.meanings, this.percentageTexts, this.isActive, this.idToUpdate).subscribe(frame => {
+      console.log(frame); this.close();
+
+    });
+  }
+
+  getAll() {
+    this.nameing.all().subscribe((data: any) => {
+      this.data = data;
+    });
+
+  }
+  publish(id: any) {
+    this.nameing.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.nameing.draft(id).subscribe(data => this.getAll());
+  }
 
   deleteFrame(i: any) {
     this.frames.splice(i, 1);

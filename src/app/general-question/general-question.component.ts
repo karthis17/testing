@@ -16,16 +16,14 @@ export class GeneralQuestionComponent {
 
   constructor(private gen: GeneralQuestionService, private cdr: ChangeDetectorRef, private languagee: LanguageService) { }
 
-  selected_option!: number;
+
   file: any;
   score: number = 0;
   data!: any;
+  idToUpdate: any;
 
   quizzes!: any[];
-
-  questionType: string = "text";
-
-  optionType: string = "text";
+  showUpdateButton: boolean = false;
 
   langg: any[] = []
 
@@ -181,12 +179,12 @@ export class GeneralQuestionComponent {
     this.textBox.push(text);
   }
 
-  addTextpos() {
+  addTextpos(y = 100, x = 150, width = 150, height = 100) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'green',
       strokeWidth: 2,
@@ -377,8 +375,114 @@ export class GeneralQuestionComponent {
     // this.im.getQuizzes().subscribe((data: any) => {
     //   this.quizzes = data;
     // });
+    this.getAll()
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
+  }
+
+  async setUpdate(data: any) {
+
+    this.quizze = data;
+    this.resultImage = data.resultImage;
+    this.showUpdateButton = true
+    this.idToUpdate = data._id
+
+    if (data.resultImage) {
+      this.startResImage()
+
+      this.quizze.result = data.results;
+    }
+
+
+  }
+
+
+  setframne(result: any, i: any) {
+
+    this.currentFrame = i
+    this.canvas?.clear();
+    this.squares = [];
+    this.scoreBox = undefined;
+
+    this.width = result.frame_size.width
+    this.height = result.frame_size.height
+
+    this.setSize();
+    if (this.canvas) {
+
+      // Pre-load the image
+      const img = new Image();
+      img.onload = () => {
+        // Create a new Fabric.js image object
+        const fabricImage = new fabric.Image(img, {
+          scaleX: this.width / img.width, // Scale image to cover the entire canvas
+          scaleY: this.height / img.height,
+          originX: 'left',
+          originY: 'top',
+        });
+
+        // Add the image to the canvas background
+        this.canvas?.setBackgroundImage(fabricImage, () => {
+          this.canvas?.renderAll();
+        });
+      };
+      img.src = result.resultImg;
+    }
+
+
+    if (result.coordinates.length > 0) {
+      this.addSquare(result.coordinates.y, result.coordinates.x, result.coordinates.widht, result.coordinates.height)
+    }
+    if (result.scorePosition) {
+      this.addTextpos(result.scorePosition.y, result.scorePosition.x, result.scorePosition.widht, result.scorePosition.height)
+    }
+
+
+  }
+
+
+  getAll() {
+    this.gen.all().subscribe((data: any) => { this.quizzes = data; console.log(data); });
+  }
+
+
+
+
+  update() {
+    this.gen.update(this.quizze, this.resultImage, this.idToUpdate).subscribe(res => { console.log(res); this.getAll(); this.close() });
+  }
+
+  close() {
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        options: [{
+          option: '',
+          points: 0
+        }]
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      result: [] as any[],
+      isActive: false
+    }
+    this.canvas?.clear();
+    this.showUpdateButton = false;
+    this.resultImage = false;
+  }
+
+  publish(id: any) {
+    this.gen.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.gen.draft(id).subscribe(data => this.getAll());
   }
 
 

@@ -12,7 +12,7 @@ export class PollService {
       'Content-Type': 'application/json'
     })
   }
-  addPoll(imageOption: any, imageQuestion: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any, isActive: any) {
+  addPoll(imageQuestion: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any, isActive: any) {
     const formData = new FormData();
 
     formData.append('textQuestion', question);
@@ -32,8 +32,8 @@ export class PollService {
       formData.append('options', JSON.stringify(options));
     }
 
-    if (imageOption) {
-      imageOption.map((m: any) => {
+    if (optionType === 'image') {
+      options.map((m: any) => {
         formData.append('option', m);
       })
     }
@@ -61,7 +61,46 @@ export class PollService {
   }
 
   getAllpoll() {
-    return this.http.get("https://brochill.onrender.com/api/polls/getAll", { params: { lang: "tamil" } });
+    return this.http.get("http://localhost:3000/api/polls/all");
+  }
+
+
+  update(imageQuestion: any, question: any, options: any, description: any, language: any, thumbnail: any, questionType: any, optionType: any, isActive: any, id: any) {
+
+    const formData = new FormData();
+
+    formData.append('textQuestion', question);
+
+    if (imageQuestion) {
+
+      formData.append('imageQuestion', imageQuestion);
+    }
+    formData.append("thumbnail", thumbnail);
+    formData.append("description", description);
+    formData.append("language", language);
+    formData.append("questionType", questionType);
+    formData.append("optionType", optionType);
+    formData.append("isActive", isActive);
+    formData.append("id", id);
+
+
+    if (options) {
+      formData.append('options', JSON.stringify(options));
+    }
+
+    if (optionType === 'image') {
+      options.map((m: any) => {
+        if (typeof m !== 'string') {
+          console.log(m);
+          formData.append('option', m.option);
+        }
+      })
+    }
+
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.put("http://localhost:3000/api/polls/update", formData, _options)
   }
 
 
@@ -69,6 +108,15 @@ export class PollService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
     return this.http.delete('https://brochill.onrender.com/api/polls/delete/' + id, _options);
+  }
+
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/polls/publish/" + id);
+  }
+
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/polls/draft/" + id);
+
   }
 
 }

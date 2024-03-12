@@ -344,7 +344,7 @@
   >
     <div *ngIf="showUpdateButton" class="w-full px-4">
       <div class="relative w-full mb-3">
-        <button class="btn w-full" (click)="setframne(quizze.result[k])">
+        <button class="btn w-full" (click)="setframne(quizze.result[k], k)">
           Update Postion
         </button>
       </div>
@@ -404,6 +404,14 @@
   </div>
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
+    <select
+      class="select select-bordered bg-gray-50"
+      [(ngModel)]="quizze.isActive"
+    >
+      <option disabled selected value="n">Pick one</option>
+      <option value="false">Draft</option>
+      <option value="true">Publish</option>
+    </select>
     <button
       *ngIf="!showUpdateButton"
       (click)="submit()"

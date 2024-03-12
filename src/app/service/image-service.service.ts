@@ -110,34 +110,71 @@ export class ImageServiceService {
 
   }
 
-  addTextQuizzes(file: any, state1: any[], state2: any[], state3: any[], result: any[]) {
 
+  update(quizze: any, id: any) {
     const formData = new FormData();
 
-    formData.append("question", file);
-    formData.append("statement_1", JSON.stringify(state1));
-    formData.append("statement_2", JSON.stringify(state2));
-    formData.append("statement_3", JSON.stringify(state3));
-    result.map((res) => {
+    quizze.questions.map((question: any) => {
+      if (question.questionType === 'both' || question.questionType === 'image') {
+        if (typeof question.imageQuestion !== 'string') {
 
-      formData.append("answer", res.resultImg);
+          formData.append("question", question.imageQuestion)
+        }
+      }
+    })
+
+
+
+    quizze.questions.map((question: any) => {
+      if (question.optionType === 'image') {
+
+        question.options.map((option: any) => {
+          if (typeof option.option !== 'string')
+
+            formData.append("option", option.option);
+        })
+      }
     });
 
-    formData.append("result", JSON.stringify(result));
+
+    quizze.result.map((question: any) => {
+      if (typeof question.result !== 'string') {
+
+        formData.append("answer", question.resultImg);
+      }
+    })
+
+
+    formData.append("questions", JSON.stringify(quizze.questions));
+    formData.append("results", JSON.stringify(quizze.result));
+    formData.append("description", quizze.description);
+    formData.append("language", quizze.language);
+    formData.append("referencesImage", quizze.referenceImage);
+    formData.append("category", quizze.category);
+    formData.append("subCategory", quizze.subCategory);
+
+    formData.append("isActive", quizze.isActive);
+
+    formData.append("id", id);
+
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-
-    return this.http.post("http://localhost:3000/api/quizzes/add-text-quizzes", formData, _options)
+    return this.http.put("http://localhost:3000/api/personalityquiz/update", formData, _options)
 
   }
-  getQuizzes() {
-    return this.http.get('https://brochill.onrender.com/api/quizzes/get-all-quizzes');
+
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/personalityquiz/publish/" + id);
   }
 
-  result(quizze_id: any, score: number) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('https://brochill.onrender.com/api/quizzes/get-result', { score, quizze_id }, _options)
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/personalityquiz/draft/" + id);
+
   }
+
+  all() {
+    return this.http.get("http://localhost:3000/api/personalityquiz/all");
+  }
+
 
 }

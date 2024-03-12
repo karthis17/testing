@@ -386,8 +386,9 @@ export class FunQuizzesComponent {
 
   }
 
-  setframne(result: any) {
+  setframne(result: any, i: any) {
 
+    this.currentFrame = i;
     this.canvas?.clear();
     this.squares = [];
     this.scoreBox = undefined;
@@ -418,7 +419,7 @@ export class FunQuizzesComponent {
     }
 
 
-    if (result.coordinates) {
+    if (result.coordinates.length > 0) {
       this.addSquare(result.coordinates.y, result.coordinates.x, result.coordinates.widht, result.coordinates.height)
     }
     if (result.scorePosition) {
@@ -429,11 +430,31 @@ export class FunQuizzesComponent {
   }
 
   update() {
-
+    this.im.update(this.quizze, this.idToUpdate).subscribe(res => { console.log(res); this.getAll(); this.close() });
   }
 
   close() {
-
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        options: [{
+          option: '',
+          points: 0
+        }]
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      result: [] as any[],
+      isActive: false
+    }
+    this.showUpdateButton = false;
+    this.canvas?.clear();
   }
 
   getAll() {

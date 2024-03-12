@@ -83,21 +83,30 @@ export class ReelsComponent {
     this.discription = data.description;
     this.category = data.category;
     this.fileUrl = data.fileUrl;
-    this.filePath = data.filePath;
     this.id = data._id;
+
+    this.language = data.language;
 
 
   }
 
   update() {
-    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.filePath, this.id).subscribe(data => {
-      console.log(data); this.getAll();
+    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.language, this.id, this.isActive).subscribe(data => {
+      console.log(data); this.getAll(); this.close()
     })
   }
 
-  getCategoryWish(category: any) {
-    this.reelsService.getCategoryWise(category).subscribe(data => {
-      this.data = data;
-    });
+  close() {
+    location.reload();
   }
+
+
+  publish(id: any) {
+    this.reelsService.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.reelsService.draft(id).subscribe(data => this.getAll());
+  }
+
 }

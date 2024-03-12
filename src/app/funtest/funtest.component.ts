@@ -309,7 +309,7 @@ export class FuntestComponent {
 
   getAll() {
 
-    this.perType.getAll().subscribe(r => { this.data = r; console.log(this.data) });
+    this.funtest.all().subscribe(r => { this.data = r; console.log(this.data) });
 
   }
 
@@ -325,10 +325,18 @@ export class FuntestComponent {
 
 
   setUpdate(data: any) {
+    console.log(data);
+    this.idToUpdate = data._id;
     this.question = data.question;
     this.idToUpdate = data._id;
     this.frames = data.frames;
-
+    this.description = data.description;
+    this.language = data.language;
+    this.type = data.category;
+    this.thumb = data.thumbnail;
+    this.isActive = data.isActive;
+    this.range = data.range;
+    this.texts = data.texts;
 
     this.showUpdateButton = true;
 
@@ -368,7 +376,7 @@ export class FuntestComponent {
 
   update() {
 
-    this.perType.update(this.question, this.idToUpdate, this.frames, this.file, this.language).subscribe(message => { console.log(message); this.getAll() })
+    this.funtest.update(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive, this.idToUpdate).subscribe(frame => { console.log(frame); this.close(); });
   }
 
   submitAns(id: any) {
@@ -388,4 +396,14 @@ export class FuntestComponent {
       console.log(data); this.getAll();
     })
   }
+
+
+  publish(id: any) {
+    this.funtest.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.funtest.draft(id).subscribe(data => this.getAll());
+  }
+
 }

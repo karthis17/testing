@@ -15,11 +15,11 @@ import { LanguageService } from '../service/language.service';
 export class FeedComponent {
 
 
-  constructor(private feeds: FeedService, private Category: ImageServiceService, private languagee: LanguageService) { }
+  constructor(private feeds: FeedService, private languagee: LanguageService) { }
 
   title!: string;
   discription!: string;
-  category!: string;
+
   data: any;
   comment: any[] = [];
   showUpdateButton: boolean = false;
@@ -33,13 +33,14 @@ export class FeedComponent {
   imagePath!: string;
   id: any;
 
-  titlei: any = 'n';
-  descriptioni: any = 'n';
 
   language: any;
   ress: any;
 
   langg: any[] = []
+
+  category: any = "";
+
 
   addFile(e: any): void {
     this.file = e.target.files[0];
@@ -47,10 +48,7 @@ export class FeedComponent {
 
   ngOnInit(): void {
     this.getAll();
-    this.Category.getCategory("english").subscribe(data1 => {
-      this.categoryOptions = data1;
-      console.log(this.categoryOptions);
-    });
+
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
@@ -63,7 +61,7 @@ export class FeedComponent {
 
   submit() {
     console.log(this.file, this.discription, this.category, this.title)
-    this.feeds.addFeed(this.file, this.isActive, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll() })
+    this.feeds.addFeed(this.file, this.isActive, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
   like(id: any) {
@@ -90,22 +88,30 @@ export class FeedComponent {
     this.title = data.title;
     this.discription = data.description;
     this.category = data.category;
-    this.imageUrl = data.imageUrl;
-    this.imagePath = data.imagePath;
+    this.imageUrl = data.fileUrl;
     this.id = data._id;
+
+    this.language = data.language;
+
 
   }
 
   update() {
-    this.feeds.updateFeed(this.file, this.discription, this.category, this.title, this.imageUrl, this.imagePath, this.id).subscribe(data => {
-      console.log(data); this.getAll();
+    this.feeds.updateFeed(this.file, this.discription, this.category, this.title, this.imageUrl, this.language, this.id, this.isActive).subscribe(data => {
+      console.log(data); this.getAll(); this.close()
     })
   }
 
-  getCategoryWish(category: any) {
-    this.feeds.getCategoryWise(category).subscribe(data => {
-      this.data = data;
-    });
+  close() {
+    location.reload();
+  }
+
+  publish(id: any) {
+    this.feeds.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.feeds.draft(id).subscribe(data => this.getAll());
   }
 
 }

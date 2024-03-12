@@ -21,7 +21,7 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("https://brochill.onrender.com/api/feeds/upload-feed", formData, _options)
+    return this.http.post("http://localhost:3000/api/feeds/upload-feed", formData, _options)
 
   }
 
@@ -30,7 +30,7 @@ export class FeedService {
   }
 
   getAll() {
-    return this.http.get("https://brochill.onrender.com/api/feeds/get-all", { params: { lang: "hindi" } });
+    return this.http.get("http://localhost:3000/api/feeds/all");
   }
 
   like(feedId: any) {
@@ -55,7 +55,7 @@ export class FeedService {
     return this.http.delete('https://brochill.onrender.com/api/feeds/delete/' + id, _options);
   }
 
-  updateFeed(file: any = null, description: any, category: any, title: any, imageUrl: string, imagePath: string, id: any) {
+  updateFeed(file: any = null, description: any, category: any, title: any, imageUrl: string, language: string, id: any, isActive: any) {
     const formData = new FormData();
 
 
@@ -65,20 +65,25 @@ export class FeedService {
     formData.append('category', category);
     formData.append('description', description);
     formData.append('imageUrl', imageUrl);
-    formData.append('imagePath', imagePath);
+    formData.append('language', language);
     formData.append('id', id);
+    formData.append('isActive', isActive);
 
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("https://brochill.onrender.com/api/feeds/update", formData, _options)
+    return this.http.put("http://localhost:3000/api/feeds/update", formData, _options)
 
   }
 
-  getCategoryWise(categoryId: any) {
-    return this.http.get("https://brochill.onrender.com/api/feeds/category/" + categoryId);
+  publish(id: any) {
+    return this.http.get("http://localhost:3000/api/feeds/publish/" + id);
   }
 
+  draft(id: any) {
+    return this.http.get("http://localhost:3000/api/feeds/draft/" + id);
+
+  }
 
 }

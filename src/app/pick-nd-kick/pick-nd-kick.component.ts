@@ -15,25 +15,15 @@ export class PickNdKickComponent {
 
   constructor(private servic: PickKickService, private languagee: LanguageService) { }
 
-  question: any;
-
-  languages: any = "english";
-
-  score!: number;
-
-  showOption: any;
 
   showUpdateButton: boolean = false;
 
-  id: any;
-  filePath!: string;
-  uploadedImage!: string;
+  idToUpdate: any;
 
-  all: any[] = [];
-  option2i: any
-  option1i: any;
 
   langg: any[] = []
+
+  data: any[] = [];
 
 
   quizze = {
@@ -48,7 +38,8 @@ export class PickNdKickComponent {
     }],
     language: 'english',
     isActive: false,
-
+    category: '',
+    subCategory: '',
     description: '',
     referenceImage: '',
   }
@@ -85,60 +76,68 @@ export class PickNdKickComponent {
 
   }
 
+  removeQuestion(i: any) {
+    this.quizze.questions.splice(i, 1);
+  }
 
   ngOnInit(): void {
-    this.getAl()
+    this.getAll()
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
 
-  getAl() {
-    this.servic.getAll().subscribe((data: any) => {
-      this.all = data;
-    });
+
+  getAll() {
+    this.servic.all().subscribe((data: any) => { this.data = data; console.log(data); });
   }
 
 
 
   submit() {
-    this.servic.addQuestion(this.quizze).subscribe(data => { console.log(data); this.getAl() });
+    this.servic.addQuestion(this.quizze).subscribe(data => { console.log(data); this.getAll(); this.close() });
   }
 
-  showOtions(data: any) {
-    this.showOption = data;
+  update() {
+    this.servic.update(this.quizze, this.idToUpdate).subscribe(res => { console.log(res); this.getAll(); this.close() });
   }
+  setUpdate(data: any) {
+    this.quizze = data;
+    this.showUpdateButton = true
+    this.idToUpdate = data._id
 
-  play(id: any, option: any) {
-    this.servic.play(id, option).subscribe((data: any) => { console.log(data); this.score = data.point });
+
+
+
   }
-
-  delete(id: any) {
-
-    this.servic.delete(id).subscribe((data: any) => { console.log(data); this.getAl() })
-  }
-
-  // setUpdate(data: any) {
-  //   console.log(data);
-  //   this.option1 = data.options[0].option;
-  //   this.option2 = data.options[1].option;
-  //   this.point1 = data.options[0].point;
-  //   this.point2 = data.options[1].point;
-  //   this.id = data._id;
-  //   this.filePath = data.filePath;
-  //   this.showUpdateButton = true;
-  //   this.uploadedImage = data.question;
-  //   this.question = data.question;
-  // }
-
   close() {
-    location.reload();
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        options: [{
+          option: '',
+        }]
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      isActive: false
+    }
+    this.showUpdateButton = false;
   }
 
-  // update() {
-  //   this.servic.update(this.id, this.option1, this.option2, this.point1, this.point2, this.question, this.filePath).subscribe(data => {
-  //     console.log(data);
-  //     this.getAl()
-  //   })
-  // }
+  publish(id: any) {
+    this.servic.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.servic.draft(id).subscribe(data => this.getAll());
+  }
+
+
 
 }

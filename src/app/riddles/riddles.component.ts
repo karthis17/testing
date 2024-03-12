@@ -29,7 +29,8 @@ export class RiddlesComponent {
 
   quizze = {
     questions: [{
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       options: [] as any[],
@@ -45,7 +46,7 @@ export class RiddlesComponent {
 
 
   addImgQuestion(e: any, i: any) {
-    this.quizze.questions[i].question = e.target.files[0];
+    this.quizze.questions[i].imageQuestion = e.target.files[0];
   }
 
   addImgOp(e: any, i: any, j: any) {
@@ -55,7 +56,8 @@ export class RiddlesComponent {
 
   addQuestion() {
     this.quizze.questions.push({
-      question: '',
+      textQuestion: '',
+      imageQuestion: '',
       questionType: 'text',
       optionType: 'text',
       hasOption: false,
@@ -83,11 +85,13 @@ export class RiddlesComponent {
   }
   submit() {
 
-    this.riddlesService.addRiddle(this.quizze).subscribe((data: any) => { console.log(data) })
+    this.riddlesService.addRiddle(this.quizze).subscribe((data: any) => { console.log(data); this.getAll(); this.close() })
 
   }
 
-
+  removeQuestion(i: any) {
+    this.quizze.questions.splice(i, 1);
+  }
 
 
   // delete(id: any) {
@@ -104,12 +108,29 @@ export class RiddlesComponent {
 
   update() {
     this.riddlesService.updateRiddle(this.quizze, this.idToUpdate).subscribe(data => {
-      console.log(data); this.getAll();
+      console.log(data); this.getAll(); this.close()
     })
   }
 
+
   close() {
-    location.reload();
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        hasOption: false,
+        options: []
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      isActive: false
+    }
+    this.showUpdateButton = false;
   }
 
   publish(id: any) {

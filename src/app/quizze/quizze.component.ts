@@ -47,7 +47,8 @@ export class QuizzeComponent {
     this.quizze.result[i].resultImg = e.target.files[0];
 
   }
-
+  showUpdateButton: Boolean = false;
+  idToUpdate: any;
   canvasWidth!: number;
   canvasHeight!: number;
   farmeFile!: File;
@@ -177,12 +178,12 @@ export class QuizzeComponent {
     this.textBox.push(text);
   }
 
-  addTextpos() {
+  addTextpos(top: number = 100, left: number = 100, width: number = 150, height: number = 50) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left,
+      top,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'green',
       strokeWidth: 2,
@@ -191,13 +192,13 @@ export class QuizzeComponent {
       lockRotation: true,
     });
 
+
     if (this.scoreBox) {
       this.canvas?.remove(this.scoreBox)
     }
     this.canvas?.add(text);
     this.scoreBox = text;
   }
-
   removeTextBox(index: number) {
     if (index < 0 || index >= this.textBox.length) {
       console.error('Invalid index:', index);
@@ -363,73 +364,112 @@ export class QuizzeComponent {
 
   ngOnInit() {
 
-    this.im.getQuizzes().subscribe((data: any) => {
+    this.getAll()
+    this.language.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
+  }
+
+  getAll() {
+    this.im.all().subscribe((data: any) => {
       this.quizzes = data;
     });
-    this.language.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
-
 
   }
 
 
-  // selected_file(event: any, state: any = null, index: any = 0): void {
-  //   if (state === 1) {
-  //     let p = event.target.files[0];
-  //     this.quizze.state1[index]['option'] = p;
-  //   }
-  //   else if (state === 2) {
-  //     this.quizze.state2[index]['option'] = event.target.files[0];
-  //   } else if (state === 3) {
-  //     this.quizze.state3[index]['option'] = event.target.files[0];
-  //   } else {
-  //     this.quizze.question = event.target.files[0];
-  //   }
-  // }
 
-  // addFileRes(e: any, index: number) {
-  //   this.quizze.result[index].resultImg = e.target.files[0];
-  // }
+  setUpdate(data: any) {
+    this.quizze = data;
+    this.showUpdateButton = true
+    this.quizze.result = data.results;
+    this.idToUpdate = data._id
+    console.log(data);
 
-  // setHowManyOptions() {
-  //   const selected_value = this.selected_option;
-  //   console.log(selected_value);
-  //   for (let i = 0; i < selected_value; i++) {
-  //     this.quizze.state1[i] = { option: '', point: 1 };
-  //     this.quizze.state2[i] = { option: '', point: 1 };
-  //     this.quizze.state3[i] = { option: '', point: 1 };
-  //     this.quizze.result[i] = {
-  //       resultImg: '',
-  //       maxScore: 2,
-  //       minScore: 1
-  //     }
-  //     console.log(this.quizze);
-  //   }
-  // }
 
-  // showQuizzes(id: any) {
-  //   this.data = this.quizzes.find(q => q._id === id);
-  //   console.log(this.data);
-  // }
 
-  // submit() {
-  //   console.log(this.quizze)
-  //   this.im.upload(this.quizze, this.questionType, this.optionType);
-  // }
-
-  // submitText() {
-  //   this.im.addTextQuizzes(this.quizze.question, this.quizze.state1, this.quizze.state2, this.quizze.state3, this.quizze.result).subscribe(data => {
-  //     console.log(data);
-  //   })
-  // }
-
-  showRes() {
-    this.im.result(this.data._id, this.score).subscribe(res => {
-      console.log(res);
-    })
   }
+
+  setframne(result: any, i: any) {
+
+    this.currentFrame = i;
+    this.canvas?.clear();
+    this.squares = [];
+    this.scoreBox = undefined;
+
+    this.width = result.frame_size.width
+    this.height = result.frame_size.height
+
+    this.setSize();
+    if (this.canvas) {
+
+      // Pre-load the image
+      const img = new Image();
+      img.onload = () => {
+        // Create a new Fabric.js image object
+        const fabricImage = new fabric.Image(img, {
+          scaleX: this.width / img.width, // Scale image to cover the entire canvas
+          scaleY: this.height / img.height,
+          originX: 'left',
+          originY: 'top',
+        });
+
+        // Add the image to the canvas background
+        this.canvas?.setBackgroundImage(fabricImage, () => {
+          this.canvas?.renderAll();
+        });
+      };
+      img.src = result.resultImg;
+    }
+
+
+    if (result.coordinates.length > 0) {
+      this.addSquare(result.coordinates.y, result.coordinates.x, result.coordinates.widht, result.coordinates.height)
+    }
+    if (result.scorePosition) {
+      this.addTextpos(result.scorePosition.y, result.scorePosition.x, result.scorePosition.widht, result.scorePosition.height)
+    }
+
+
+  }
+
+  update() {
+    this.im.update(this.quizze, this.idToUpdate).subscribe(res => { console.log(res); this.getAll(); this.close() });
+  }
+
+  close() {
+    this.quizze = {
+      questions: [{
+        textQuestion: '',
+        imageQuestion: '',
+        questionType: 'text',
+        optionType: 'text',
+        options: [{
+          option: '',
+          points: 0
+        }]
+      }],
+      language: 'english',
+      category: '',
+      subCategory: '',
+      description: '',
+      referenceImage: '',
+      result: [] as any[],
+      isActive: false
+    }
+    this.showUpdateButton = false;
+    this.canvas?.clear();
+  }
+
+  publish(id: any) {
+    this.im.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.im.draft(id).subscribe(data => this.getAll());
+  }
+
 
   submit() {
-    this.im.upload(this.quizze).subscribe(res => { console.log(res); });
+    this.im.upload(this.quizze).subscribe(res => { console.log(res); this.getAll(); this.close() });
 
   }
 

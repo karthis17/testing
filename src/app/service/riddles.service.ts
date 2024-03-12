@@ -15,8 +15,8 @@ export class RiddlesService {
     const formData = new FormData();
 
     quizze.questions.map((question: any) => {
-      if (question.questionType === 'image') {
-        formData.append("question", question.question)
+      if (question.questionType === 'image' || question.questionType === 'both') {
+        formData.append("question", question.imageQuestion)
       }
     })
 
@@ -71,8 +71,10 @@ export class RiddlesService {
     const formData = new FormData();
 
     quizze.questions.map((question: any) => {
-      if (question.questionType === 'image') {
-        formData.append("question", question.question)
+      if (question.questionType === 'both' || question.questionType === 'image') {
+        if (typeof question.imageQuestion !== 'string') {
+          formData.append("question", question.imageQuestion)
+        }
       }
     })
 
@@ -82,6 +84,9 @@ export class RiddlesService {
       if (question.optionType === 'image') {
 
         question.options.map((option: any) => {
+          if (typeof option.option !== 'string')
+
+            console.log(option.option)
           formData.append("option", option.option);
         })
       }
@@ -90,17 +95,23 @@ export class RiddlesService {
 
 
 
+
     formData.append("questions", JSON.stringify(quizze.questions));
+
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
+    formData.append("category", quizze.category);
+    formData.append("subCategory", quizze.subCategory);
 
-    formData.append("id", id)
+    formData.append("id", id);
+    formData.append("isActive", quizze.isActive)
 
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/riddles/add-riddle", formData, _options)
+    return this.http.put("http://localhost:3000/api/riddles/update", formData, _options)
+
   }
 
   publish(id: any) {

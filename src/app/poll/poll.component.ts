@@ -19,12 +19,12 @@ export class PollComponent {
   textQuestion: any = "";
   imageQuestion: any = "";
   polls!: any[];
-  imgOptions: any[] = [""];
-  textOptions: string[] = [''];
 
   noOfOptions: any = [''];
 
   id = 1;
+
+  showUpdateButton = false;
 
   language: any = "english";
   description: any;
@@ -35,6 +35,8 @@ export class PollComponent {
   }];
 
   thumb: any;
+
+  idToUpdate: any;
 
   addTumb(e: any) {
     this.thumb = e.target.files[0];
@@ -68,12 +70,12 @@ export class PollComponent {
 
 
   ngOnInit() {
-    this.getData()
+    this.getAll()
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }
 
-  getData() {
+  getAll() {
     this.poll.getAllpoll().subscribe((data: any) => {
       console.log(data);
       this.polls = data;
@@ -96,7 +98,7 @@ export class PollComponent {
   }
 
   addFile(e: any, index: any) {
-    this.imgOptions[index] = e.target.files[0]
+    this.options[index].option = e.target.files[0]
   }
 
   addQnFile(e: any) {
@@ -107,17 +109,45 @@ export class PollComponent {
 
   //   console.log(this.questionDifLang);
   //   console.log(this.optionss);
-  //   this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getData() });
+  //   this.poll.addPoll(this.question, this.optionss, this.questionDifLang.filter(dis => { if (dis.text) return dis; else return false }), this.thumb).subscribe(data => { console.log(data); }, err => { console.log(err); this.getAll() });
   // }
   submit() {
-    console.log(this.imgOptions, this.options, this.textQuestion)
-    this.poll.addPoll(this.imgOptions, this.imageQuestion, this.textQuestion, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption, this.isActive).subscribe(data => { console.log(data); }, err => { console.log(err); });
-  }
-
-  show(poll: any) {
-    this.data = poll
+    console.log(this.options, this.textQuestion)
+    this.poll.addPoll(this.imageQuestion, this.textQuestion, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption, this.isActive).subscribe(data => { console.log(data); }, err => { console.log(err); });
   }
 
 
+  update() {
+    console.log(this.options, this.textQuestion)
+    this.poll.update(this.imageQuestion, this.textQuestion, this.options, this.description, this.language, this.thumb, this.questionType, this.selectedOption, this.isActive, this.idToUpdate).subscribe(data => { console.log(data); }, err => { console.log(err); });
+
+  }
+
+  setUpdate(data: any) {
+    this.imageQuestion = data.imageQuestion;
+    this.textQuestion = data.textQuestion;
+    this.language = data.language;
+    this.description = data.description;
+    this.thumb = data.thumbnail;
+    this.isActive = data.isActive;
+    this.options = data.options;
+    this.questionType = data.questionType;
+    this.selectedOption = data.optionType;
+
+    this.idToUpdate = data._id
+    this.showUpdateButton = true
+  }
+
+  close() {
+    location.reload();
+  }
+
+  publish(id: any) {
+    this.poll.publish(id).subscribe(data => this.getAll())
+  }
+
+  draft(id: any) {
+    this.poll.draft(id).subscribe(data => this.getAll());
+  }
 
 }

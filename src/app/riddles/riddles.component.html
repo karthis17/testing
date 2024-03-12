@@ -133,6 +133,7 @@
             <option disabled selected value="n">Pick one</option>
             <option value="text">text</option>
             <option value="image">image</option>
+            <option value="both">both</option>
           </select>
         </label>
       </div>
@@ -160,74 +161,92 @@
           >
             Question
           </label>
-          <input
-            *ngIf="quizze.questions[i].questionType === 'text'"
-            type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter Question."
-            [(ngModel)]="quizze.questions[i].question"
+          <img
+            *ngIf="showUpdateButton && quizze.questions[i].imageQuestion"
+            src="{{ quizze.questions[i].imageQuestion }}"
+            class="max-h-56"
+            alt=""
+            srcset=""
           />
           <input
-            *ngIf="quizze.questions[i].questionType === 'image'"
+            *ngIf="
+              quizze.questions[i].questionType === 'text' ||
+              quizze.questions[i].questionType === 'both'
+            "
+            type="text"
+            class="border-0 px-3 my-4 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            placeholder="Enter Question."
+            [(ngModel)]="quizze.questions[i].textQuestion"
+          />
+          <input
+            *ngIf="
+              quizze.questions[i].questionType === 'image' ||
+              quizze.questions[i].questionType === 'both'
+            "
             type="file"
             class="file-input file-input-bordered file-input-md w-full"
             (change)="addImgQuestion($event, i)"
           />
-        </div>
 
-        <div
-          *ngFor="let option of question.options; let j = index"
-          class="relative w-full mb-3 my-5"
-        >
-          <label
-            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+          <div
+            *ngFor="let option of question.options; let j = index"
+            class="relative w-full mb-3 my-5"
           >
-            Option {{ j + 1 }}
-          </label>
-          <input
-            *ngIf="quizze.questions[i].optionType === 'text'"
-            type="text"
-            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-            placeholder="Enter Question."
-            [(ngModel)]="quizze.questions[i].options[j].option"
-          />
-          <input
-            *ngIf="quizze.questions[i].optionType === 'image'"
-            type="file"
-            class="file-input file-input-bordered file-input-md w-full"
-            (change)="addImgOp($event, i, j)"
-          />
-
-          <label
-            class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
-          >
-            Answer
-          </label>
-          <select
-            class="select select-bordered bg-gray-50"
-            [(ngModel)]="quizze.questions[i].options[j].points"
-          >
-            <option disabled selected value="n">Pick one</option>
-            <option
-              *ngFor="let ans of [false, true]; let i = index"
-              [value]="i"
+            <label
+              class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
             >
-              {{ ans }}
-            </option>
-          </select>
+              Option {{ j + 1 }}
+            </label>
+            <input
+              *ngIf="quizze.questions[i].optionType === 'text'"
+              type="text"
+              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-50 rounded text-md shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              placeholder="Enter Question."
+              [(ngModel)]="quizze.questions[i].options[j].option"
+            />
+            <input
+              *ngIf="quizze.questions[i].optionType === 'image'"
+              type="file"
+              class="file-input file-input-bordered file-input-md w-full"
+              (change)="addImgOp($event, i, j)"
+            />
 
-          <hr class="mt-6 border-b-1 border-blueGray-300" />
+            <label
+              class="block first-letter:uppercase text-blueGray-600 text-md font-bold mb-2"
+            >
+              Answer
+            </label>
+            <select
+              class="select select-bordered bg-gray-50"
+              [(ngModel)]="quizze.questions[i].options[j].points"
+            >
+              <option disabled selected value="n">Pick one</option>
+              <option
+                *ngFor="let ans of [false, true]; let i = index"
+                [value]="i"
+              >
+                {{ ans }}
+              </option>
+            </select>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300" />
+          </div>
+          <div class="w-full">
+            <button
+              (click)="addoption(i); quizze.questions[i].hasOption = true"
+              class="btn w-full"
+            >
+              Add Option
+            </button>
+          </div>
+          <div class="w-full my-3">
+            <button (click)="removeQuestion(i)" class="btn btn-error w-full">
+              Delete Question
+            </button>
+          </div>
         </div>
-        <div class="w-full px-4">
-          <button
-            (click)="addoption(i); quizze.questions[i].hasOption = true"
-            class="btn w-full"
-          >
-            Add Option
-          </button>
-        </div>
+        <hr class="mt-6 border-b-1 border-blueGray-300" />
       </div>
-      <hr class="mt-6 border-b-1 border-blueGray-300" />
     </div>
   </div>
 

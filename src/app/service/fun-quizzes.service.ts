@@ -52,9 +52,6 @@ export class FunQuizzesService {
 
   }
 
-  getAll() {
-    return this.http.get("https://brochill.onrender.com/api/fansquiz/all");
-  }
 
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
@@ -67,8 +64,11 @@ export class FunQuizzesService {
     const formData = new FormData();
 
     quizze.questions.map((question: any) => {
-      if (question.questionType === 'image') {
-        formData.append("question", question.question)
+      if (question.questionType === 'both' || question.questionType === 'image') {
+        if (typeof question.imageQuestion !== 'string') {
+
+          formData.append("question", question.imageQuestion)
+        }
       }
     })
 
@@ -78,14 +78,19 @@ export class FunQuizzesService {
       if (question.optionType === 'image') {
 
         question.options.map((option: any) => {
-          formData.append("option", option.option);
+          if (typeof option.option !== 'string')
+
+            formData.append("option", option.option);
         })
       }
     });
 
 
     quizze.result.map((question: any) => {
-      formData.append("answer", question.resultImg);
+      if (typeof question.result !== 'string') {
+
+        formData.append("answer", question.resultImg);
+      }
     })
 
 
@@ -97,11 +102,13 @@ export class FunQuizzesService {
     formData.append("category", quizze.category);
     formData.append("subCategory", quizze.subCategory);
 
+    formData.append("isActive", quizze.isActive);
+
     formData.append("id", id);
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/fansquiz/add-quizze", formData, _options)
+    return this.http.put("http://localhost:3000/api/fansquiz/update", formData, _options)
 
   }
 

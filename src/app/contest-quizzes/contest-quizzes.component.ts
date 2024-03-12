@@ -175,12 +175,12 @@ export class ContestQuizzesComponent {
     this.textBox.push(text);
   }
 
-  addTextpos() {
+  addTextpos(y = 100, x = 150, width = 150, height = 100) {
     const text = new fabric.Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 50,
+      left: x,
+      top: y,
+      width,
+      height,
       fill: 'rgba(0, 0, 0, 0.5)',
       stroke: 'green',
       strokeWidth: 2,
@@ -273,8 +273,10 @@ export class ContestQuizzesComponent {
 
 
 
+    if (coordinates) {
 
-    this.quizze.result[this.currentFrame].coordinates = coordinates;
+      this.quizze.result[this.currentFrame].coordinates = coordinates;
+    }
     this.quizze.result[this.currentFrame].scorePosition = scorePosition;
     this.quizze.result[this.currentFrame].noOfImage = this.image
 
@@ -345,7 +347,7 @@ export class ContestQuizzesComponent {
   }
 
 
-  startResImage() {
+  async startResImage() {
     this.quizze["result"] = [{
       coordinates: [] as any[],
       noOfImage: this.image,
@@ -372,12 +374,75 @@ export class ContestQuizzesComponent {
 
   }
 
-  setUpdate(data: any) {
+  async setUpdate(data: any) {
+
     this.quizze = data;
     this.resultImage = data.resultImage;
     this.showUpdateButton = true
     this.idToUpdate = data._id
-    console.log(data)
+
+    if (data.resultImage) {
+      this.startResImage()
+
+      this.quizze.result = data.results;
+    }
+
+
+  }
+
+
+  removeQuestion(i: any) {
+    this.quizze.questions.splice(i, 1);
+  }
+  removeResult(i: any) {
+    this.quizze.result.splice(i, 1);
+  }
+
+  deleteResult() {
+    this.quizze.result = [];
+  }
+
+  setframne(result: any, i: any) {
+
+    this.currentFrame = i
+    this.canvas?.clear();
+    this.squares = [];
+    this.scoreBox = undefined;
+
+    this.width = result.frame_size.width
+    this.height = result.frame_size.height
+
+    this.setSize();
+    if (this.canvas) {
+
+      // Pre-load the image
+      const img = new Image();
+      img.onload = () => {
+        // Create a new Fabric.js image object
+        const fabricImage = new fabric.Image(img, {
+          scaleX: this.width / img.width, // Scale image to cover the entire canvas
+          scaleY: this.height / img.height,
+          originX: 'left',
+          originY: 'top',
+        });
+
+        // Add the image to the canvas background
+        this.canvas?.setBackgroundImage(fabricImage, () => {
+          this.canvas?.renderAll();
+        });
+      };
+      img.src = result.resultImg;
+    }
+
+
+    if (result.coordinates.length > 0) {
+      this.addSquare(result.coordinates.y, result.coordinates.x, result.coordinates.widht, result.coordinates.height)
+    }
+    if (result.scorePosition) {
+      this.addTextpos(result.scorePosition.y, result.scorePosition.x, result.scorePosition.widht, result.scorePosition.height)
+    }
+
+
   }
 
 
@@ -416,6 +481,7 @@ export class ContestQuizzesComponent {
       result: [] as any[],
       isActive: false
     }
+    this.canvas?.clear();
     this.showUpdateButton = false;
     this.resultImage = false;
   }

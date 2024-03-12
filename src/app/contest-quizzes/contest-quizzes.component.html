@@ -245,10 +245,16 @@
 
           <hr class="mt-6 border-b-1 border-blueGray-300" />
         </div>
-        <div class="w-full px-4">
+        <div class="w-full">
           <button (click)="addoption(i)" class="btn w-full">Add Option</button>
         </div>
+        <div class="w-full my-3">
+          <button (click)="removeQuestion(i)" class="btn btn-error w-full">
+            Delete Question
+          </button>
+        </div>
       </div>
+
       <hr class="mt-6 border-b-1 border-blueGray-300" />
     </div>
   </div>
@@ -263,7 +269,11 @@
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <p>Result Image (optional)</p>
     <div class="w-full px-4">
-      <button (click)="startResImage(); resultImage = true" class="btn w-full">
+      <button
+        *ngIf="!resultImage"
+        (click)="startResImage(); resultImage = true"
+        class="btn w-full"
+      >
         Add Result Image
       </button>
     </div>
@@ -368,6 +378,13 @@
       *ngFor="let res of quizze.result; let k = index"
       class="flex-auto px-4 lg:px-10 pt-5"
     >
+      <div *ngIf="showUpdateButton" class="w-full px-4">
+        <div class="relative w-full mb-3">
+          <button class="btn w-full" (click)="setframne(quizze.result[k], k)">
+            Update Postion
+          </button>
+        </div>
+      </div>
       <div class="w-full px-4">
         <div class="relative w-full mb-3">
           <label
@@ -412,6 +429,9 @@
             [(ngModel)]="quizze.result[k].maxScore"
           />
         </div>
+        <button (click)="removeResult(k)" class="btn-error btn w-full">
+          Delete Result
+        </button>
       </div>
     </div>
 
@@ -422,6 +442,16 @@
       <hr class="mt-6 border-b-1 border-blueGray-300" />
     </div>
   </ng-container>
+
+  <div *ngIf="resultImage" class="flex-auto px-4 lg:px-10 pt-5">
+    <p class="px-5">Remove Result</p>
+    <div class="w-full px-4">
+      <button (click)="deleteResult(); resultImage = false" class="btn w-full">
+        Remove Result
+      </button>
+    </div>
+    <hr class="mt-6 border-b-1 border-blueGray-300" />
+  </div>
 
   <div class="flex-auto px-4 lg:px-10 pt-5">
     <select
