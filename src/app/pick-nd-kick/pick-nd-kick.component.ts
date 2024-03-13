@@ -138,6 +138,8 @@ export class PickNdKickComponent {
     this.servic.draft(id).subscribe(data => this.getAll());
   }
 
-
+  delete(id: any) {
+    this.servic.delete(id).subscribe(data => this.getAll());
+  }
 
 }

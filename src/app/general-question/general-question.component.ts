@@ -397,6 +397,11 @@ export class GeneralQuestionComponent {
   }
 
 
+  delete(id: any) {
+    this.gen.delete(id).subscribe(data => { console.log(data) })
+  }
+
+
   setframne(result: any, i: any) {
 
     this.currentFrame = i

@@ -469,6 +469,11 @@ export class FunQuizzesComponent {
     this.im.draft(id).subscribe(data => this.getAll());
   }
 
+  delete(id: any) {
+    this.im.delete(id).subscribe(res => { console.log(res); this.getAll(); this.close(); });
+  }
+
+
   submit() {
     console.log(this.quizze)
     this.im.addQuestion(this.quizze).subscribe(res => { console.log(res); });

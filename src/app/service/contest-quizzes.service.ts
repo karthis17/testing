@@ -124,4 +124,12 @@ export class ContestQuizzesService {
 
   }
 
+  delete(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.delete("http://localhost:3000/api/contestquiz/delete/" + id, _options);
+  }
+
+
 }

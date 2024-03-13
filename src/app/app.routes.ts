@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { PostComponent } from './post/post.component';
 import { ReelsComponent } from './reels/reels.component';
 import { FeedComponent } from './feed/feed.component';
 import { QuizzeComponent } from './quizze/quizze.component';
@@ -13,9 +12,6 @@ import { PickNdKickComponent } from './pick-nd-kick/pick-nd-kick.component';
 import { GuessComponent } from './guess/guess.component';
 import { RiddlesComponent } from './riddles/riddles.component';
 import { LoginComponent } from './login/login.component';
-import { RandomImageComponent } from './random-image/random-image.component';
-import { PercentageTypeComponent } from './percentage-type/percentage-type.component';
-import { RandomTextComponent } from './random-text/random-text.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthGuard } from './auth.guard';
 import { GeneralQuestionComponent } from './general-question/general-question.component';

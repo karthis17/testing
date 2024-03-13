@@ -53,12 +53,6 @@ export class FunQuizzesService {
   }
 
 
-  delete(id: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/fansquiz/delete/' + id, _options);
-  }
-
 
   update(quizze: any, id: any) {
     const formData = new FormData();
@@ -119,6 +113,13 @@ export class FunQuizzesService {
   draft(id: any) {
     return this.http.get("http://localhost:3000/api/fansquiz/draft/" + id);
 
+  }
+
+  delete(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.delete("http://localhost:3000/api/fansquiz/delete/" + id, _options);
   }
 
   all() {

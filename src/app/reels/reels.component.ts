@@ -43,10 +43,6 @@ export class ReelsComponent {
 
   ngOnInit(): void {
     this.getAll();
-    this.Category.getCategory("english").subscribe(data1 => {
-      this.categoryOptions = data1;
-      console.log(this.categoryOptions);
-    });
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
 
   }

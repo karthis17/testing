@@ -107,7 +107,7 @@ export class PollService {
   deletePoll(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/polls/delete/' + id, _options);
+    return this.http.delete('http://localhost:3000/api/polls/delete/' + id, _options);
   }
 
   publish(id: any) {

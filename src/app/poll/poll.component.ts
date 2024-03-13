@@ -150,4 +150,9 @@ export class PollComponent {
     this.poll.draft(id).subscribe(data => this.getAll());
   }
 
+
+  delete(id: any) {
+    this.poll.deletePoll(id).subscribe(data => { this.getAll(); console.log(data) });
+  }
+
 }

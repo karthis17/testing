@@ -58,7 +58,7 @@ export class GuessService {
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/guess-game/delete/' + id, _options);
+    return this.http.delete('https://brochill.onrender.com/api/gkquiz/delete/' + id, _options);
   }
 
 }

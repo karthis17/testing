@@ -49,10 +49,11 @@ export class FeedService {
     return this.http.post('https://brochill.onrender.com/api/feeds/add-comment', { feedId, comment }, _options)
   }
 
-  deleteFeed(id: any) {
+  delete(id: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.delete('https://brochill.onrender.com/api/feeds/delete/' + id, _options);
+
+    return this.http.delete("http://localhost:3000/api/feeds/delete/" + id, _options);
   }
 
   updateFeed(file: any = null, description: any, category: any, title: any, imageUrl: string, language: string, id: any, isActive: any) {

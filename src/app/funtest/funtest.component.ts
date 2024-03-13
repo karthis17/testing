@@ -50,6 +50,8 @@ export class FuntestComponent {
   noOfimage: any = 0;
   thumb: any;
 
+  referenceImage: any;
+
   addTumb(e: any) {
     this.thumb = e.target.files[0];
   }
@@ -316,12 +318,15 @@ export class FuntestComponent {
   submit() {
 
 
-    this.funtest.addQuestion(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive).subscribe(frame => {
+    this.funtest.addQuestion(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive, this.referenceImage).subscribe(frame => {
       console.log(frame); this.getAll(); this.close();
 
     });
   }
 
+  addReff(e: any) {
+    this.referenceImage = e.target.files[0];
+  }
 
 
   setUpdate(data: any) {
@@ -376,7 +381,7 @@ export class FuntestComponent {
 
   update() {
 
-    this.funtest.update(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive, this.idToUpdate).subscribe(frame => { console.log(frame); this.close(); });
+    this.funtest.update(this.question, this.texts, this.frames, this.description, this.language, this.thumb, this.type, this.file, this.noOfimage, this.range, this.isActive, this.idToUpdate, this.referenceImage).subscribe(frame => { console.log(frame); this.close(); });
   }
 
   submitAns(id: any) {
@@ -392,7 +397,7 @@ export class FuntestComponent {
   }
 
   delete(id: any) {
-    this.perType.delete(id).subscribe(data => {
+    this.funtest.delete(id).subscribe(data => {
       console.log(data); this.getAll();
     })
   }

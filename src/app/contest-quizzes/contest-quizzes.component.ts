@@ -494,6 +494,10 @@ export class ContestQuizzesComponent {
     this.contest.draft(id).subscribe(data => this.getAll());
   }
 
+  delete(id: any) {
+    this.contest.delete(id).subscribe(data => this.getAll());
+  }
+
 }
 
 

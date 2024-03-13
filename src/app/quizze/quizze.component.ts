@@ -473,4 +473,8 @@ export class QuizzeComponent {
 
   }
 
+  delete(id: any) {
+    this.im.delete(id).subscribe(res => { console.log(res); this.getAll(); this.close(); });
+  }
+
 }

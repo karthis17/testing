@@ -10,62 +10,6 @@ export class ImageServiceService {
   constructor(private http: HttpClient) { }
 
 
-  getUsers() {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-
-
-
-    return this.http.get('https://brochill.onrender.com/api/users/me', _options)
-  }
-  uploadImage(file: any, description: string, category: any, title: any, type: any, descriptionDifLang: any, titleDifLang: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('description', description);
-    formData.append('category', category);
-    formData.append('type', type);
-    formData.append('title', title);
-    formData.append('titleDifLang', JSON.stringify(titleDifLang));
-    formData.append('descriptionDifLang', JSON.stringify(descriptionDifLang));
-
-    return this.http.post('https://brochill.onrender.com/api/img/upload', formData, _options);
-  }
-
-  getCategory(lang: any) {
-    return this.http.get('https://brochill.onrender.com/api/img/categories', { params: { lang: lang } });
-
-  }
-  addCategory(category: any, title: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('https://brochill.onrender.com/api/img/add-category', { category, title }, _options);
-
-  }
-
-  getPost(category: any) {
-
-    return this.http.get('https://brochill.onrender.com/api/img/post-category/' + category, { params: { lang: 'tamil' } });
-  }
-
-  like(postId: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post('https://brochill.onrender.com/api/img/likes', { postId }, _options)
-  }
-
-  share(postId: any) {
-    return this.http.post('https://brochill.onrender.com/api/img/share', { postId }, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
-  }
-
-  commet(postId: any, comment: any) {
-    const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.post('https://brochill.onrender.com/api/img/add-comment', { postId, comment }, _options)
-  }
-
 
   upload(quizze: any) {
 
@@ -176,5 +120,12 @@ export class ImageServiceService {
     return this.http.get("http://localhost:3000/api/personalityquiz/all");
   }
 
+
+  delete(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.delete("http://localhost:3000/api/personalityquiz/delete/" + id, _options);
+  }
 
 }

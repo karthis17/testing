@@ -287,7 +287,10 @@
           <td class="text-center" *ngIf="da.isActive">Published</td>
           <td class="text-center" *ngIf="!da.isActive">Draft</td>
           <td class="text-center flex gap-5 py-4 justify-center">
-            <i class="text-red-500 bi cursor-pointer bi-trash-fill"></i>
+            <i
+              (click)="delete(da._id)"
+              class="text-red-500 bi cursor-pointer bi-trash-fill"
+            ></i>
             <i
               (click)="setUpdate(da)"
               class="text-teal-500 bi cursor-pointer bi-pencil-square"

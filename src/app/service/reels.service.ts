@@ -39,7 +39,7 @@ export class ReelsService {
   deleteReel(reelId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.delete('https://brochill.onrender.com/api/reels/delete/' + reelId, _options);
+    return this.http.delete('http://localhost:3000/api/reels/delete/' + reelId, _options);
   }
 
   updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, language: string, id: any, isActive: any) {

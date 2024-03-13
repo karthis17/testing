@@ -55,13 +55,12 @@ export class PickKickService {
   play(id: any, option: any) {
     return this.http.post("https://brochill.onrender.com/api/partygames/play", { questionId: id, option });
   }
-
   delete(id: any) {
     const token: string | null = localStorage.getItem('token');
-    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
-    return this.http.delete('https://brochill.onrender.com/api/partygames/delete/' + id, _options);
-  }
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
+    return this.http.delete("http://localhost:3000/api/partygames/delete/" + id, _options);
+  }
 
   all() {
     return this.http.get("http://localhost:3000/api/partygames/all");

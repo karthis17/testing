@@ -473,4 +473,9 @@ export class NameingComponent {
     return index;
   }
 
+
+  delete(id: any) {
+    this.nameing.delete(id).subscribe(data => { this.getAll(); console.log(data); this.close() });
+  }
+
 }

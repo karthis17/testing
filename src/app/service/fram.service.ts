@@ -72,10 +72,20 @@ export class FramService {
   }
 
   delete(id: any) {
-    return this.http.delete('https://brochill.onrender.com/api/frame/delete/' + id);
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.delete("http://localhost:3000/api/frames/delete/" + id, _options);
   }
 
-  updateFrame(fileName: string, file: File, frame_size: any, coordinates: any, textBox: any[], frameUrl: any, framePath: any, id: any) {
+
+
+
+
+
+
+
+  update(fileName: string, file: File, thumbnail: any, reff: any, language: any, description: any, isActive: any, id: any) {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -83,25 +93,31 @@ export class FramService {
     const formData = new FormData;
 
     formData.append('frameName', fileName);
-    formData.append('texts', JSON.stringify(textBox));
-    formData.append('frame_size', JSON.stringify(frame_size));
-    formData.append('coordinates', JSON.stringify(coordinates));
     formData.append('frame', file);
-    formData.append('frameUrl', frameUrl);
-    formData.append('imagePath', framePath);
+    formData.append("thumbnail", thumbnail);
+    formData.append("referenceImage", reff);
+    formData.append('language', language);
+    formData.append('description', description);
+    formData.append('isActive', isActive);
     formData.append('id', id);
 
-    return this.http.put("http://localhost:3000/api/frame/update", formData, _options);
+    return this.http.post("http://localhost:3000/api/frames/update", formData, _options);
 
   }
 
+
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/contestquiz/publish/" + id);
+    return this.http.get("http://localhost:3000/api/frames/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/contestquiz/draft/" + id);
+    return this.http.get("http://localhost:3000/api/frames/draft/" + id);
 
+  }
+
+
+  getAll() {
+    return this.http.get("http://localhost:3000/api/frames/all");
   }
 
 }

@@ -94,4 +94,13 @@ export class NamingService {
     return this.http.get("http://localhost:3000/api/nametest/draft/" + id);
 
   }
+
+
+  delete(id: any) {
+    const token: string | null = localStorage.getItem('token');
+    let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
+
+    return this.http.delete("http://localhost:3000/api/nametest/delete/" + id, _options);
+  }
+
 }

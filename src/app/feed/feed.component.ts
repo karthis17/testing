@@ -76,7 +76,7 @@ export class FeedComponent {
   }
 
   delete(id: any) {
-    this.feeds.deleteFeed(id).subscribe(data => {
+    this.feeds.delete(id).subscribe(data => {
       console.log(data); this.getAll();
     })
   }

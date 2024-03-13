@@ -142,4 +142,8 @@ export class RiddlesComponent {
   }
 
 
+  delete(id: any) {
+    this.riddlesService.deleteRiddle(id).subscribe(data => this.getAll());
+  }
+
 }
