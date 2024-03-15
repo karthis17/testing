@@ -34,7 +34,9 @@ export class PollService {
 
     if (optionType === 'image') {
       options.map((m: any) => {
-        formData.append('option', m);
+
+        console.log(m);
+        formData.append('option', m.option);
       })
     }
 
