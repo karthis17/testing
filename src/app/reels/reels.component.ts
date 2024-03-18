@@ -34,12 +34,18 @@ export class ReelsComponent {
   id: any;
 
   language: any;
-
+  thub: any;
   langg: any[] = []
 
   addFile(e: any): void {
     this.file = e.target.files[0];
   }
+
+  addThumbnail(e: any): void {
+    this.thub = e.target.files[0];
+
+  }
+
 
   ngOnInit(): void {
     this.getAll();
@@ -60,7 +66,7 @@ export class ReelsComponent {
 
 
   submit() {
-    this.reelsService.addReel(this.file, this.discription, this.category, this.title, this.language, this.isActive).subscribe(data => { console.log(data); this.getAll() })
+    this.reelsService.addReel(this.file, this.discription, this.category, this.title, this.language, this.isActive, this.thub).subscribe(data => { console.log(data); this.getAll() })
   }
 
 
@@ -80,6 +86,7 @@ export class ReelsComponent {
     this.category = data.category;
     this.fileUrl = data.fileUrl;
     this.id = data._id;
+    this.thub = data.thumbnail;
 
     this.language = data.language;
 
@@ -87,7 +94,7 @@ export class ReelsComponent {
   }
 
   update() {
-    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.language, this.id, this.isActive).subscribe(data => {
+    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.language, this.id, this.isActive, this.thub).subscribe(data => {
       console.log(data); this.getAll(); this.close()
     })
   }

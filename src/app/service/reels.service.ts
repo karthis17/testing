@@ -8,7 +8,7 @@ export class ReelsService {
 
   constructor(private http: HttpClient) { }
 
-  addReel(file: File, description: any, category: any, title: any, language: any, isActive: any) {
+  addReel(file: File, description: any, category: any, title: any, language: any, isActive: any, thumbnail: any) {
     const formData = new FormData();
 
     console.log(title, description)
@@ -18,6 +18,7 @@ export class ReelsService {
     formData.append('category', category);
     formData.append('description', description);
     formData.append('language', language);
+    formData.append('thumbnail', thumbnail);
 
 
     const token: string | null = localStorage.getItem('token');
@@ -42,7 +43,7 @@ export class ReelsService {
     return this.http.delete('http://localhost:3000/api/reels/delete/' + reelId, _options);
   }
 
-  updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, language: string, id: any, isActive: any) {
+  updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, language: string, id: any, isActive: any, thumbnail: any) {
     const formData = new FormData();
 
 
@@ -55,6 +56,7 @@ export class ReelsService {
     formData.append('language', language);
     formData.append('id', id);
     formData.append('isActive', isActive);
+    formData.append('thumbnail', thumbnail);
 
 
     const token: string | null = localStorage.getItem('token');
