@@ -37,6 +37,7 @@ export class RiddlesService {
     formData.append("questions", JSON.stringify(quizze.questions));
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
+    formData.append("subCategory", quizze.subCategory);
     formData.append("isActive", quizze.isActive);
     formData.append("referencesImage", quizze.referenceImage);
 

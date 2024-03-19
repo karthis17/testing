@@ -50,7 +50,7 @@ export class ReelsService {
     formData.append('reel', file);
 
     formData.append('title', title);
-    formData.append('category', category);
+    formData.append('subCategory', category);
     formData.append('description', description);
     formData.append('fileUrl', fileUrl);
     formData.append('language', language);

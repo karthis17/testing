@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { FeedService } from '../service/feed.service';
 import { ImageServiceService } from '../service/image-service.service';
 import { LanguageService } from '../service/language.service';
+import { SubcategoryComponent } from '../subcategory/subcategory.component';
 
 @Component({
   selector: 'app-feed',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SubcategoryComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.css'
 })
@@ -33,13 +34,16 @@ export class FeedComponent {
   imagePath!: string;
   id: any;
 
+  setSubCategory(e: any) {
+    this.subCategory = e;
+  }
 
   language: any;
   ress: any;
 
   langg: any[] = []
 
-  category: any = "";
+  subCategory: any = "";
 
 
   addFile(e: any): void {
@@ -60,8 +64,8 @@ export class FeedComponent {
 
 
   submit() {
-    console.log(this.file, this.discription, this.category, this.title)
-    this.feeds.addFeed(this.file, this.isActive, this.discription, this.category, this.title, this.language).subscribe(data => { console.log(data); this.getAll(); this.close() })
+    console.log(this.file, this.discription, this.subCategory, this.title)
+    this.feeds.addFeed(this.file, this.isActive, this.discription, this.subCategory, this.title, this.language).subscribe(data => { console.log(data); this.getAll(); this.close() })
   }
 
   like(id: any) {
@@ -87,7 +91,7 @@ export class FeedComponent {
     console.log(data)
     this.title = data.title;
     this.discription = data.description;
-    this.category = data.category;
+    this.subCategory = data.category;
     this.imageUrl = data.fileUrl;
     this.id = data._id;
 
@@ -97,7 +101,7 @@ export class FeedComponent {
   }
 
   update() {
-    this.feeds.updateFeed(this.file, this.discription, this.category, this.title, this.imageUrl, this.language, this.id, this.isActive).subscribe(data => {
+    this.feeds.updateFeed(this.file, this.discription, this.subCategory, this.title, this.imageUrl, this.language, this.id, this.isActive).subscribe(data => {
       console.log(data); this.getAll(); this.close()
     })
   }

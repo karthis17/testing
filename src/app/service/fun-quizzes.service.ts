@@ -41,7 +41,7 @@ export class FunQuizzesService {
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
-    formData.append("category", quizze.category);
+
     formData.append("subCategory", quizze.subCategory);
 
     formData.append("isActive", quizze.isActive);
@@ -93,7 +93,7 @@ export class FunQuizzesService {
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
-    formData.append("category", quizze.category);
+
     formData.append("subCategory", quizze.subCategory);
 
     formData.append("isActive", quizze.isActive);

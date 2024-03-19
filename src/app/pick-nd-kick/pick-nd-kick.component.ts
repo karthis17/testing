@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PickKickService } from '../service/pick-kick.service';
 import { LanguageService } from '../service/language.service';
+import { SubcategoryComponent } from '../subcategory/subcategory.component';
 
 @Component({
   selector: 'app-pick-nd-kick',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SubcategoryComponent],
   templateUrl: './pick-nd-kick.component.html',
   styleUrl: './pick-nd-kick.component.css'
 })
@@ -26,6 +27,10 @@ export class PickNdKickComponent {
   data: any[] = [];
 
 
+  setSubCategory(e: any) {
+    this.quizze.subCategory = e;
+  }
+
   quizze = {
     questions: [{
       textQuestion: '',
@@ -38,7 +43,7 @@ export class PickNdKickComponent {
     }],
     language: 'english',
     isActive: false,
-    category: '',
+
     subCategory: '',
     description: '',
     referenceImage: '',
@@ -121,7 +126,7 @@ export class PickNdKickComponent {
         }]
       }],
       language: 'english',
-      category: '',
+
       subCategory: '',
       description: '',
       referenceImage: '',

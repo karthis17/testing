@@ -34,6 +34,7 @@ export class PickKickService {
 
     formData.append("questions", JSON.stringify(quizze.questions));
     formData.append("description", quizze.description);
+    formData.append("subCategory", quizze.subCategory);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
 

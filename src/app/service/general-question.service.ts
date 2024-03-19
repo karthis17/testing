@@ -47,7 +47,7 @@ export class GeneralQuestionService {
     formData.append("isActive", quizze.isActive);
 
     formData.append("resultImage", resultImage)
-    formData.append("category", quizze.category);
+
     formData.append("subCategory", quizze.subCategory);
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
@@ -106,7 +106,7 @@ export class GeneralQuestionService {
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
-    formData.append("category", quizze.category);
+
     formData.append("subCategory", quizze.subCategory);
 
     formData.append("resultImage", resultImage)

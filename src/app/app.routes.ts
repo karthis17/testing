@@ -19,6 +19,7 @@ import { FuntestComponent } from './funtest/funtest.component';
 import { NameingComponent } from './nameing/nameing.component';
 import { LanguageComponent } from './language/language.component';
 import { ContestQuizzesComponent } from './contest-quizzes/contest-quizzes.component';
+import { CategoryTumbnailComponent } from './category-tumbnail/category-tumbnail.component';
 
 export const routes: Routes = [
     { path: '', component: WelcomeComponent },
@@ -40,4 +41,5 @@ export const routes: Routes = [
     { path: 'naming-type', component: NameingComponent, canActivate: [AuthGuard] },
     { path: 'language', component: LanguageComponent, canActivate: [AuthGuard] },
     { path: 'contest-quizzes', component: ContestQuizzesComponent, canActivate: [AuthGuard] },
+    { path: 'category-thumbnail', component: CategoryTumbnailComponent, canActivate: [AuthGuard] },
 ];

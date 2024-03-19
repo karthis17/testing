@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   open = true;
   contents = [
     { text: "Language", link: "/language" },
+    { text: "Category Tumbnail", link: "/category-thumbnail" },
     { text: "Reels", link: "/reels" },
     { text: "Feeds", link: "/feeds" },
     { text: "Poll", link: "/poll" },

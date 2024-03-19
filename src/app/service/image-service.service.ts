@@ -43,7 +43,7 @@ export class ImageServiceService {
     formData.append("results", JSON.stringify(quizze.result));
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
-    formData.append("category", quizze.category);
+
     formData.append("isActive", quizze.isActive);
     formData.append("subCategory", quizze.subCategory);
     formData.append("referencesImage", quizze.referenceImage);
@@ -94,7 +94,7 @@ export class ImageServiceService {
     formData.append("description", quizze.description);
     formData.append("language", quizze.language);
     formData.append("referencesImage", quizze.referenceImage);
-    formData.append("category", quizze.category);
+
     formData.append("subCategory", quizze.subCategory);
 
     formData.append("isActive", quizze.isActive);

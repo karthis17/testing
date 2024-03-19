@@ -88,10 +88,11 @@ export class FuntestComponent {
   @ViewChild('fileInput') fileInput!: ElementRef;
   private canvas: fabric.Canvas | undefined;
 
-  squares: fabric.Rect[] = [];
+  square: fabric.Rect | undefined;
   // textBox: fabric.Rect[] = [];
-  textPosition!: fabric.Rect;
-  percentagePosition!: fabric.Rect;
+  username!: fabric.Rect | undefined;
+  textPosition!: fabric.Rect | undefined;
+  percentagePosition!: fabric.Rect | undefined;
 
 
   handleFileInput(event: any) {
@@ -120,16 +121,16 @@ export class FuntestComponent {
   }
 
   addFrame() {
-    let coord = this.squares.map((square) => {
+    // let coord = this.squares.map((square) => {
 
-      const width = (square.width ?? 0) * (square.scaleX ?? 1);
-      const height = (square.height ?? 0) * (square.scaleY ?? 1);
+    //   const width = (square.width ?? 0) * (square.scaleX ?? 1);
+    //   const height = (square.height ?? 0) * (square.scaleY ?? 1);
 
-      this.noOfimage++;
-      this.canvas?.remove(square);
-      return { x: square.left, y: square.top, width, height };
+    //   this.noOfimage++;
+    //   this.canvas?.remove(square);
+    //   return { x: square.left, y: square.top, width, height };
 
-    });
+    // });
 
     // let text = this.textBox.map((text, i) => {
     //   const width = (text.width ?? 0) * (text.scaleX ?? 1);
@@ -140,12 +141,28 @@ export class FuntestComponent {
 
     // });
 
+    let coord;
+
+    if (this.square) {
+      const width = (this.square.width ?? 0) * (this.square.scaleX ?? 1);
+      const height = (this.square.height ?? 0) * (this.square.scaleY ?? 1);
+      coord = { x: this.square.left, y: this.square.top, width: width, height: height };
+    }
+
     let textPosition;
 
     if (this.textPosition) {
       const width = (this.textPosition.width ?? 0) * (this.textPosition.scaleX ?? 1);
       const height = (this.textPosition.height ?? 0) * (this.textPosition.scaleY ?? 1);
       textPosition = { x: this.textPosition.left, y: this.textPosition.top, width: width, height: height };
+    }
+
+    let username;
+
+    if (this.username) {
+      const width = (this.username.width ?? 0) * (this.username.scaleX ?? 1);
+      const height = (this.username.height ?? 0) * (this.username.scaleY ?? 1);
+      username = { x: this.username.left, y: this.username.top, width: width, height: height };
     }
 
     let percentagePosition;
@@ -156,10 +173,10 @@ export class FuntestComponent {
       percentagePosition = { x: this.percentagePosition.left, y: this.percentagePosition.top, width: width, height: height };
     }
 
-    this.squares = [];
+    this.square = undefined;
     // this.textBox = [];
 
-    this.frames.push({ coordinates: coord, frame_size: { width: this.width, height: this.height }, textPosition, percentagePosition });
+    this.frames.push({ coordinates: coord, frame_size: { width: this.width, height: this.height }, textPosition, percentagePosition, nameCoord: username });
 
     this.canvas?.clear();
 
@@ -168,16 +185,6 @@ export class FuntestComponent {
 
   }
 
-  removeSquare(index: number) {
-    if (index < 0 || index >= this.squares.length) {
-      console.error('Invalid index:', index);
-      return;
-    }
-
-    this.canvas?.remove(this.squares[index]);
-
-    this.squares.splice(index, 1);
-  }
 
   // removeTextBox(index: number) {
   //   if (index < 0 || index >= this.textBox.length) {
@@ -276,11 +283,11 @@ export class FuntestComponent {
 
   logSquareProperties() {
 
-    console.log(this.squares);
+    console.log(this.square);
 
   }
 
-  addSquare(top = 100, left = 100, widht = 150, height = 100) {
+  addSquare(top = 100, left = 100, widht = 100, height = 100) {
 
     const square = new fabric.Rect({
       left: left,
@@ -294,9 +301,38 @@ export class FuntestComponent {
       hasControls: true,
       lockRotation: true,
     });
+    if (this.square) {
+      this.canvas?.remove(this.square);
+    }
     this.canvas?.add(square);
-    this.squares.push(square);
+    this.square = square;
 
+
+  }
+
+
+
+
+  addnamepos(top: number = 100, left: number = 100, width: number = 150, height: number = 50) {
+    const text = new fabric.Rect({
+      left,
+      top,
+      width,
+      height,
+      fill: 'rgba(0, 0, 0, 0.5)',
+      stroke: 'blue',
+      strokeWidth: 2,
+      selectable: true,
+      hasControls: true,
+      lockRotation: true,
+    });
+
+
+    if (this.username) {
+      this.canvas?.remove(this.username)
+    }
+    this.canvas?.add(text);
+    this.username = text;
   }
 
 

@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ImageServiceService } from '../service/image-service.service';
 import { LanguageService } from '../service/language.service';
+import { SubcategoryComponent } from '../subcategory/subcategory.component';
 
 @Component({
   selector: 'app-reels',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SubcategoryComponent],
   templateUrl: './reels.component.html',
   styleUrl: './reels.component.css'
 })
@@ -46,7 +47,11 @@ export class ReelsComponent {
 
   }
 
+  setSubCategory(e: any) {
+    this.subCategory = e;
+  }
 
+  subCategory: any;
   ngOnInit(): void {
     this.getAll();
     this.languagee.getlanguage().subscribe((data: any) => { console.log(data); this.langg = data });
@@ -94,7 +99,7 @@ export class ReelsComponent {
   }
 
   update() {
-    this.reelsService.updateReel(this.file, this.discription, this.category, this.title, this.fileUrl, this.language, this.id, this.isActive, this.thub).subscribe(data => {
+    this.reelsService.updateReel(this.file, this.discription, this.subCategory, this.title, this.fileUrl, this.language, this.id, this.isActive, this.thub).subscribe(data => {
       console.log(data); this.getAll(); this.close()
     })
   }

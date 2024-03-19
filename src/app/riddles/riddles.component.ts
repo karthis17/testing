@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RiddlesService } from '../service/riddles.service';
 import { LanguageService } from '../service/language.service';
+import { SubcategoryComponent } from '../subcategory/subcategory.component';
 
 @Component({
   selector: 'app-riddles',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SubcategoryComponent],
   templateUrl: './riddles.component.html',
   styleUrl: './riddles.component.css'
 })
@@ -27,6 +28,11 @@ export class RiddlesComponent {
     this.quizze.referenceImage = e.target.files[0];
   }
 
+
+  setSubCategory(e: any) {
+    this.quizze.subCategory = e;
+  }
+
   quizze = {
     questions: [{
       textQuestion: '',
@@ -37,7 +43,7 @@ export class RiddlesComponent {
       hasOption: false,
     }],
     language: 'english',
-    category: '',
+
     subCategory: '',
     isActive: false,
     description: '',
@@ -124,7 +130,7 @@ export class RiddlesComponent {
         options: []
       }],
       language: 'english',
-      category: '',
+
       subCategory: '',
       description: '',
       referenceImage: '',

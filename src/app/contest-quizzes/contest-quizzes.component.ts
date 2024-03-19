@@ -4,11 +4,12 @@ import { LanguageService } from '../service/language.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ContestQuizzesService } from '../service/contest-quizzes.service';
+import { SubcategoryComponent } from '../subcategory/subcategory.component';
 
 @Component({
   selector: 'app-contest-quizzes',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SubcategoryComponent],
   templateUrl: './contest-quizzes.component.html',
   styleUrl: './contest-quizzes.component.css'
 })
@@ -29,6 +30,10 @@ export class ContestQuizzesComponent {
   resultImage = false;
 
   showUpdateButton: Boolean = false;
+
+  setSubCategory(e: any) {
+    this.quizze.subCategory = e;
+  }
 
   addFile(e: any) {
     this.quizze.referenceImage = e.target.files[0];
@@ -76,9 +81,10 @@ export class ContestQuizzesComponent {
 
   @ViewChild('canvasElement') canvasContainer!: ElementRef<HTMLCanvasElement>;
   private canvas: fabric.Canvas | undefined;
-  squares: fabric.Rect[] = [];
-  textBox: fabric.Rect[] = [];
+
   scoreBox!: fabric.Rect | undefined;
+  username!: fabric.Rect | undefined;
+  square!: fabric.Rect | undefined;
 
   currentFrame!: number;
   handleFileInput(event: any, i: any) {
@@ -134,46 +140,17 @@ export class ContestQuizzesComponent {
       hasControls: true,
       lockRotation: true,
     });
+    if (this.square) {
+      this.canvas?.remove(this.square);
+    }
     this.canvas?.add(square);
-    this.squares.push(square);
+    this.square = square;
 
 
   }
 
-  removeSquare(index: number) {
-    if (index < 0 || index >= this.squares.length) {
-      console.error('Invalid index:', index);
-      return;
-    }
-
-    this.canvas?.remove(this.squares[index]);
-
-    this.squares.splice(index, 1);
-  }
 
 
-  addTextBox(top = 100, left = 100, widht = 100, height = 100) {
-    if (!this.canvas) {
-      console.error('Canvas not initialized.');
-      return;
-    }
-
-    const text = new fabric.Rect({
-      left: left,
-      top: top,
-      width: widht,
-      height: height,
-      fill: 'rgba(0, 0, 0, 0.5)',
-      stroke: 'green',
-      strokeWidth: 2,
-      selectable: true,
-      hasControls: true,
-      lockRotation: true,
-    });
-
-    this.canvas.add(text);
-    this.textBox.push(text);
-  }
 
   addTextpos(y = 100, x = 150, width = 150, height = 100) {
     const text = new fabric.Rect({
@@ -196,23 +173,34 @@ export class ContestQuizzesComponent {
     this.scoreBox = text;
   }
 
-  removeTextBox(index: number) {
-    if (index < 0 || index >= this.textBox.length) {
-      console.error('Invalid index:', index);
-      return;
+
+  addnamepos(top: number = 100, left: number = 100, width: number = 150, height: number = 50) {
+    const text = new fabric.Rect({
+      left,
+      top,
+      width,
+      height,
+      fill: 'rgba(0, 0, 0, 0.5)',
+      stroke: 'blue',
+      strokeWidth: 2,
+      selectable: true,
+      hasControls: true,
+      lockRotation: true,
+    });
+
+
+    if (this.username) {
+      this.canvas?.remove(this.username)
     }
-
-    this.canvas?.remove(this.textBox[index]);
-
-    this.textBox.splice(index, 1);
-    this.texts_container.splice(index, 1);
+    this.canvas?.add(text);
+    this.username = text;
   }
 
 
   logSquareProperties() {
-    for (const square of this.squares) {
-      console.log(square);
-    }
+
+    console.log(this.square);
+
   }
 
   setSize() {
@@ -228,30 +216,23 @@ export class ContestQuizzesComponent {
 
   saveframe() {
 
-    let coordinates: any[] = [];
+    let coordinates;
     // let textCoordinates: any[] = [];
 
-    this.squares.map((square) => {
+    if (this.square) {
 
-      const width = (square.width ?? 0) * (square.scaleX ?? 1);
-      const height = (square.height ?? 0) * (square.scaleY ?? 1);
-      coordinates.push({ x: square.left, y: square.top, width, height });
+      const width = (this.square.width ?? 0) * (this.square.scaleX ?? 1);
+      const height = (this.square.height ?? 0) * (this.square.scaleY ?? 1);
+      coordinates = { x: this.square.left, y: this.square.top, width, height };
       this.image++
 
-      this.canvas?.remove(square);
-    });
+      this.canvas?.remove(this.square);
+    };
 
-    // this.textBox.map((text, i) => {
-    //   const width = (text.width ?? 0) * (text.scaleX ?? 1);
-    //   const height = (text.height ?? 0) * (text.scaleY ?? 1);
-    //   let noOfName = this.texts_container[i].split(' ').filter(x => x.trim().includes('<fname'))
-    //   textCoordinates.push({ x: text.left, y: text.top, width, height, text: this.texts_container[i], noOfName });
 
-    //   this.canvas?.remove(text);
-    // })
 
-    this.squares = [];
-    this.textBox = [];
+    this.square = undefined;
+
 
     let scorePosition;
 
@@ -261,22 +242,18 @@ export class ContestQuizzesComponent {
       const height = (this.scoreBox.height ?? 0) * (this.scoreBox.scaleY ?? 1);
       scorePosition = { x: this.scoreBox.left, y: this.scoreBox.top, width: width, height: height };
     }
+    let nameCoord;
 
+    if (this.username) {
 
-    // this.scoreBox.map((square) => {
-
-    //   const width = (square.width ?? 0) * (square.scaleX ?? 1);
-    //   const height = (square.height ?? 0) * (square.scaleY ?? 1);
-    //   this.quizze.result[this.currentFrame].scoreCoordinates = { x: square.left, y: square.top, width, height };
-    // });
-
-
-
-
-    if (coordinates) {
-
-      this.quizze.result[this.currentFrame].coordinates = coordinates;
+      const width = (this.username.width ?? 0) * (this.username.scaleX ?? 1);
+      const height = (this.username.height ?? 0) * (this.username.scaleY ?? 1);
+      nameCoord = { x: this.username.left, y: this.username.top, width: width, height: height };
     }
+
+
+    this.quizze.result[this.currentFrame].coordinates = coordinates;
+    this.quizze.result[this.currentFrame].nameCoord = nameCoord;
     this.quizze.result[this.currentFrame].scorePosition = scorePosition;
     this.quizze.result[this.currentFrame].noOfImage = this.image
 
@@ -291,7 +268,6 @@ export class ContestQuizzesComponent {
 
   }
 
-
   quizze = {
     questions: [{
       textQuestion: '',
@@ -304,7 +280,7 @@ export class ContestQuizzesComponent {
       }]
     }],
     language: 'english',
-    category: '',
+
     subCategory: '',
     description: '',
     referenceImage: '',
@@ -339,23 +315,24 @@ export class ContestQuizzesComponent {
       maxScore: 0,
       resultImg: '',
       noOfImage: this.image,
-      coordinates: [] as any,
+      coordinates: {} as any,
       frame_size: { width: 0, height: 0 },
       scorePosition: {} as any,
-
+      nameCoord: {} as any,
     })
   }
 
 
   async startResImage() {
     this.quizze["result"] = [{
-      coordinates: [] as any[],
+      coordinates: {} as any,
       noOfImage: this.image,
       scorePosition: {} as any,
       frame_size: { width: 0, height: 0 },
       maxScore: 1,
       minScore: 0,
       resultImg: '',
+      nameCoord: {} as any,
     }]
 
     setTimeout(() => {
@@ -404,9 +381,10 @@ export class ContestQuizzesComponent {
 
   setframne(result: any, i: any) {
 
-    this.currentFrame = i
+    this.currentFrame = i;
     this.canvas?.clear();
-    this.squares = [];
+    this.square = undefined;
+    this.username = undefined;
     this.scoreBox = undefined;
 
     this.width = result.frame_size.width
@@ -435,11 +413,14 @@ export class ContestQuizzesComponent {
     }
 
 
-    if (result.coordinates.length > 0) {
+    if (result.coordinates) {
       this.addSquare(result.coordinates.y, result.coordinates.x, result.coordinates.widht, result.coordinates.height)
     }
     if (result.scorePosition) {
       this.addTextpos(result.scorePosition.y, result.scorePosition.x, result.scorePosition.widht, result.scorePosition.height)
+    }
+    if (result.nameCoord) {
+      this.addnamepos(result.nameCoord.y, result.nameCoord.x, result.nameCoord.widht, result.nameCoord.height)
     }
 
 
@@ -474,7 +455,6 @@ export class ContestQuizzesComponent {
         }]
       }],
       language: 'english',
-      category: '',
       subCategory: '',
       description: '',
       referenceImage: '',

@@ -13,7 +13,7 @@ export class FeedService {
 
     formData.append('feed', file);
     formData.append('title', title);
-    formData.append('category', category);
+    formData.append('subCategory', category);
     formData.append('description', description);
     formData.append("language", language);
     formData.append("isActive", isActive);
@@ -63,7 +63,7 @@ export class FeedService {
     formData.append('new_feed', file);
 
     formData.append('title', title);
-    formData.append('category', category);
+    formData.append('subCategory', category);
     formData.append('description', description);
     formData.append('imageUrl', imageUrl);
     formData.append('language', language);
