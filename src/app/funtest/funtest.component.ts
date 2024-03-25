@@ -93,6 +93,7 @@ export class FuntestComponent {
   username!: fabric.Rect | undefined;
   textPosition!: fabric.Rect | undefined;
   percentagePosition!: fabric.Rect | undefined;
+  secondpercentagePosition!: fabric.Rect | undefined;
 
 
   handleFileInput(event: any) {
@@ -157,6 +158,14 @@ export class FuntestComponent {
       textPosition = { x: this.textPosition.left, y: this.textPosition.top, width: width, height: height };
     }
 
+    let secondPercentage;
+
+    if (this.secondpercentagePosition) {
+      const width = (this.secondpercentagePosition.width ?? 0) * (this.secondpercentagePosition.scaleX ?? 1);
+      const height = (this.secondpercentagePosition.height ?? 0) * (this.secondpercentagePosition.scaleY ?? 1);
+      secondPercentage = { x: this.secondpercentagePosition.left, y: this.secondpercentagePosition.top, width: width, height: height };
+    }
+
     let username;
 
     if (this.username) {
@@ -176,7 +185,7 @@ export class FuntestComponent {
     this.square = undefined;
     // this.textBox = [];
 
-    this.frames.push({ coordinates: coord, frame_size: { width: this.width, height: this.height }, textPosition, percentagePosition, nameCoord: username });
+    this.frames.push({ coordinates: coord, frame_size: { width: this.width, height: this.height }, textPosition, percentagePosition, secondPercentage, nameCoord: username });
 
     this.canvas?.clear();
 
@@ -265,8 +274,31 @@ export class FuntestComponent {
       lockRotation: true,
     });
 
+    if (this.percentagePosition) {
+      this.canvas?.remove(this.percentagePosition);
+    }
+
     this.canvas?.add(text);
     this.percentagePosition = text;
+  }
+  addPerPos2() {
+    const text = new fabric.Rect({
+      left: 100,
+      top: 100,
+      width: 100,
+      height: 50,
+      fill: 'rgba(0, 0, 0, 0.5)',
+      stroke: 'blue',
+      strokeWidth: 2,
+      selectable: true,
+      hasControls: true,
+      lockRotation: true,
+    });
+    if (this.secondpercentagePosition) {
+      this.canvas?.remove(this.secondpercentagePosition)
+    }
+    this.canvas?.add(text);
+    this.secondpercentagePosition = text;
   }
 
 
