@@ -13,13 +13,13 @@ export class LanguageService {
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}`, 'Content-Type': 'application/json' }) };
 
 
-    return this.http.post("http://localhost:3000/api/language/add-language", { language: language, native }, _options)
+    return this.http.post("https://brochill.onrender.com/api/language/add-language", { language: language, native }, _options)
 
   }
 
   getlanguage() {
 
-    return this.http.get("http://localhost:3000/api/language");
+    return this.http.get("https://brochill.onrender.com/api/language");
 
   }
 
@@ -34,7 +34,7 @@ export class LanguageService {
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
 
-    return this.http.post("http://localhost:3000/api/menu/add-thumbnail", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/menu/add-thumbnail", formData, _options)
 
 
   }
@@ -50,12 +50,12 @@ export class LanguageService {
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
 
-    return this.http.post("http://localhost:3000/api/menu/add-subcategory", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/menu/add-subcategory", formData, _options)
 
   }
 
   getSub(category: any) {
-    return this.http.get("http://localhost:3000/api/menu/get-subcategory/" + category)
+    return this.http.get("https://brochill.onrender.com/api/menu/get-subcategory/" + category)
   }
 
 

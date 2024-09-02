@@ -30,7 +30,7 @@ export class FlamesService {
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api");
+    return this.http.get("https://brochill.onrender.com/api");
   }
 
   delete(id: any) {

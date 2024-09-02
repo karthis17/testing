@@ -40,7 +40,7 @@ export class NamingService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/nametest/add", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/nametest/add", formData, _options)
 
   }
   update(frames: any, description: any, language: any, thumb: any, type: any, file: any[], fact: any, meaning: any, percentageTexts: any, isActive: any, id: any) {
@@ -78,20 +78,20 @@ export class NamingService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/nametest/update", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/nametest/update", formData, _options)
 
   }
 
   all() {
-    return this.http.get("http://localhost:3000/api/nametest/all");
+    return this.http.get("https://brochill.onrender.com/api/nametest/all");
   }
 
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/nametest/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/nametest/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/nametest/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/nametest/draft/" + id);
 
   }
 
@@ -100,7 +100,7 @@ export class NamingService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/nametest/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/nametest/delete/" + id, _options);
   }
 
 }

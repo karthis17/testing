@@ -24,7 +24,7 @@ export class ReelsService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/reels/upload-reel", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/reels/upload-reel", formData, _options)
 
   }
 
@@ -33,14 +33,14 @@ export class ReelsService {
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/reels/all");
+    return this.http.get("https://brochill.onrender.com/api/reels/all");
   }
 
 
   deleteReel(reelId: any) {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.delete('http://localhost:3000/api/reels/delete/' + reelId, _options);
+    return this.http.delete('https://brochill.onrender.com/api/reels/delete/' + reelId, _options);
   }
 
   updateReel(file: any = null, description: any, category: any, title: any, fileUrl: string, language: string, id: any, isActive: any, thumbnail: any) {
@@ -62,17 +62,17 @@ export class ReelsService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("http://localhost:3000/api/reels/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/reels/update", formData, _options)
 
   }
 
 
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/reels/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/reels/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/reels/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/reels/draft/" + id);
 
   }
 

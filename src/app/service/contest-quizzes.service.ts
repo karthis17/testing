@@ -51,12 +51,12 @@ export class ContestQuizzesService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/contestquiz/add-quizze", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/contestquiz/add-quizze", formData, _options)
 
   }
 
   all() {
-    return this.http.get("http://localhost:3000/api/contestquiz/all");
+    return this.http.get("https://brochill.onrender.com/api/contestquiz/all");
   }
 
 
@@ -110,15 +110,15 @@ export class ContestQuizzesService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.put("http://localhost:3000/api/contestquiz/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/contestquiz/update", formData, _options)
 
   }
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/contestquiz/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/contestquiz/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/contestquiz/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/contestquiz/draft/" + id);
 
   }
 
@@ -126,7 +126,7 @@ export class ContestQuizzesService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/contestquiz/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/contestquiz/delete/" + id, _options);
   }
 
 

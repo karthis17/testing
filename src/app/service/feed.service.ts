@@ -21,7 +21,7 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/feeds/upload-feed", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/feeds/upload-feed", formData, _options)
 
   }
 
@@ -30,7 +30,7 @@ export class FeedService {
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/feeds/all");
+    return this.http.get("https://brochill.onrender.com/api/feeds/all");
   }
 
   like(feedId: any) {
@@ -53,7 +53,7 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/feeds/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/feeds/delete/" + id, _options);
   }
 
   updateFeed(file: any = null, description: any, category: any, title: any, imageUrl: string, language: string, id: any, isActive: any) {
@@ -74,16 +74,16 @@ export class FeedService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.put("http://localhost:3000/api/feeds/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/feeds/update", formData, _options)
 
   }
 
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/feeds/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/feeds/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/feeds/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/feeds/draft/" + id);
 
   }
 

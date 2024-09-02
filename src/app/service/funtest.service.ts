@@ -36,7 +36,7 @@ export class FuntestService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/funtest/add-question", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/funtest/add-question", formData, _options)
 
   }
 
@@ -69,20 +69,20 @@ export class FuntestService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/funtest/update", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/funtest/update", formData, _options)
 
   }
 
   all() {
-    return this.http.get("http://localhost:3000/api/funtest/all");
+    return this.http.get("https://brochill.onrender.com/api/funtest/all");
   }
 
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/funtest/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/funtest/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/funtest/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/funtest/draft/" + id);
 
   }
 
@@ -90,7 +90,7 @@ export class FuntestService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/funtest/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/funtest/delete/" + id, _options);
   }
 
 }

@@ -43,7 +43,7 @@ export class PickKickService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.post("http://localhost:3000/api/partygames/add-question", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/partygames/add-question", formData, _options);
 
   }
 
@@ -60,11 +60,11 @@ export class PickKickService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/partygames/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/partygames/delete/" + id, _options);
   }
 
   all() {
-    return this.http.get("http://localhost:3000/api/partygames/all");
+    return this.http.get("https://brochill.onrender.com/api/partygames/all");
   }
 
 
@@ -111,15 +111,15 @@ export class PickKickService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.put("http://localhost:3000/api/partygames/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/partygames/update", formData, _options)
 
   }
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/partygames/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/partygames/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/partygames/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/partygames/draft/" + id);
 
   }
 

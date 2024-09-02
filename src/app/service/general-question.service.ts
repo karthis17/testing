@@ -51,17 +51,17 @@ export class GeneralQuestionService {
     formData.append("subCategory", quizze.subCategory);
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/gkquiz/add-question", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/gkquiz/add-question", formData, _options)
 
   }
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/gkquiz/all");
+    return this.http.get("https://brochill.onrender.com/api/gkquiz/all");
   }
 
 
   all() {
-    return this.http.get("http://localhost:3000/api/gkquiz/all");
+    return this.http.get("https://brochill.onrender.com/api/gkquiz/all");
   }
 
 
@@ -116,15 +116,15 @@ export class GeneralQuestionService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.put("http://localhost:3000/api/gkquiz/update", formData, _options)
+    return this.http.put("https://brochill.onrender.com/api/gkquiz/update", formData, _options)
 
   }
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/gkquiz/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/gkquiz/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/gkquiz/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/gkquiz/draft/" + id);
 
   }
 
@@ -133,7 +133,7 @@ export class GeneralQuestionService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/gkquiz/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/gkquiz/delete/" + id, _options);
   }
 
 }

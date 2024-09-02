@@ -75,7 +75,7 @@ export class FramService {
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
 
-    return this.http.delete("http://localhost:3000/api/frames/delete/" + id, _options);
+    return this.http.delete("https://brochill.onrender.com/api/frames/delete/" + id, _options);
   }
 
 
@@ -101,23 +101,23 @@ export class FramService {
     formData.append('isActive', isActive);
     formData.append('id', id);
 
-    return this.http.post("http://localhost:3000/api/frames/update", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/frames/update", formData, _options);
 
   }
 
 
   publish(id: any) {
-    return this.http.get("http://localhost:3000/api/frames/publish/" + id);
+    return this.http.get("https://brochill.onrender.com/api/frames/publish/" + id);
   }
 
   draft(id: any) {
-    return this.http.get("http://localhost:3000/api/frames/draft/" + id);
+    return this.http.get("https://brochill.onrender.com/api/frames/draft/" + id);
 
   }
 
 
   getAll() {
-    return this.http.get("http://localhost:3000/api/frames/all");
+    return this.http.get("https://brochill.onrender.com/api/frames/all");
   }
 
 }

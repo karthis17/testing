@@ -28,7 +28,7 @@ export class PercentageTypeService {
     }
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/percentage-type/add-frame", formData, _options);
+    return this.http.post("https://brochill.onrender.com/api/percentage-type/add-frame", formData, _options);
 
   }
 

@@ -47,7 +47,7 @@ export class GuessService {
 
     const token: string | null = localStorage.getItem('token');
     let _options = { headers: new HttpHeaders({ 'Authorization': `Bearer ${token ? JSON.parse(token).token : ""}` }) };
-    return this.http.post("http://localhost:3000/api/guess-game/add-question", formData, _options)
+    return this.http.post("https://brochill.onrender.com/api/guess-game/add-question", formData, _options)
 
   }
 
